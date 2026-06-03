@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+@font-face {
+  font-family: 'P22GrosvenorW00-Regular';
+  src: url('/fonts/P22 Grosvenor W00 Regular (1).ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --font-instrument-serif: 'Instrument Serif', serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-p22: 'P22GrosvenorW00-Regular', serif;
+  --font-hanken: 'Hanken Grotesk', sans-serif;
+}

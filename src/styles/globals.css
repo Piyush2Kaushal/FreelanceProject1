@@ -1,0 +1,178 @@
+/* ─── Responsive: Navbar ──────────────────────────────────────────────────── */
+/* Desktop navbar: visible on ≥768px */
+.navbar-desktop {
+  display: block;
+}
+/* Mobile hamburger: hidden on desktop */
+.navbar-mobile-btn {
+  display: none !important;
+}
+
+/* Desktop bottom panels: visible on ≥768px */
+.colors-panel-desktop,
+.styles-panel-desktop {
+  display: block;
+}
+/* Mobile bottom bar (legacy): hidden on desktop */
+.mobile-bottom-bar {
+  display: none !important;
+}
+/* New octagon-pill mobile bars: CSS controlled in component via inline <style> */
+.mobile-bottom-bar-v2,
+.mobile-detail-bar {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  /* Hide desktop nav */
+  .navbar-desktop {
+    display: none !important;
+  }
+  /* Show mobile hamburger */
+  .navbar-mobile-btn {
+    display: flex !important;
+  }
+
+  /* Hide desktop bottom panels */
+  .colors-panel-desktop,
+  .styles-panel-desktop {
+    display: none !important;
+  }
+  /* Show mobile bottom bar — new octagon pill version */
+  .mobile-bottom-bar {
+    display: none !important; /* old style stays hidden */
+  }
+  .mobile-bottom-bar-v2,
+  .mobile-detail-bar {
+    display: flex !important;
+  }
+
+  /* Logo: slightly smaller on mobile */
+  .logo-fixed {
+    width: 78px !important;
+    height: 39px !important;
+    top: 22px !important;
+    left: 12px !important;
+  }
+
+  /* Zoom controls: move up on mobile to clear the 2-pill stack (~128px total) */
+  .zoom-controls-fixed {
+    bottom: 148px !important;
+    right: 14px !important;
+  }
+
+  /* Drag hint: lift above mobile bottom bar */
+  .drag-hint-fixed {
+    bottom: 160px !important;
+  }
+
+  /* Prevent horizontal overflow globally */
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablet: navbar is visible but we scale it slightly if needed */
+  .navbar-desktop {
+    /* Keep original — it fits at 768px+ */
+    display: block;
+  }
+}
+
+/* Touch devices: hide custom cursor */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor-svg {
+    display: none !important;
+  }
+}
+
+/* ─── Zoom buttons ───────────────────────────────────────────────────────── */
+.zoom-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #7B4A1E;
+  background: #D7C9AB;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  touch-action: manipulation;
+  transition: background 0.18s, transform 0.12s;
+}
+
+.zoom-btn:hover {
+  background: #C9B898;
+  transform: scale(1.08);
+}
+.zoom-btn:active {
+  transform: scale(0.94);
+}
+
+/* iOS Safari fix */
+[data-object='true'] .overflow-hidden {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+/* ─── Detail page back button on mobile ─────────────────────────────────── */
+@media (max-width: 767px) {
+  .detail-back-btn {
+    top: 76px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ─── Viewport meta & safe areas ────────────────────────────────────────── */
+/* Prevent iOS rubber-band bounce from showing white */
+html, body {
+  overscroll-behavior: none;
+}
+
+/* Safe area support for notched phones */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-bottom-bar-v2,
+  .mobile-detail-bar {
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* ─── Detail page moodboard image: better sizing on mobile ──────────────── */
+@media (max-width: 767px) {
+  /* The image uses inline styles with min() — already responsive.
+     Just ensure it has breathing room above the bottom bar */
+  .detail-image-wrapper {
+    padding-bottom: 140px;
+  }
+}
+
+/* ─── Smooth scrolling everywhere ───────────────────────────────────────── */
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+/* Improve touch button targets */
+@media (max-width: 767px) {
+  button {
+    min-height: 40px;
+    min-width: 40px;
+  }
+  /* But don't override swatch buttons which have explicit sizes */
+  button[aria-label*="color"],
+  button[aria-label*="Color"] {
+    min-height: unset;
+    min-width: unset;
+  }
+
+  .zoom-btn {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  
+}
