@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import imgTexture from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.png";
 
 interface Article {
@@ -56,6 +57,7 @@ const articles: Article[] = [
 export function JournalArticles() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
+  const navigate = useNavigate();
 
   const expanded = articles.find((a) => a.id === expandedId) ?? null;
 
@@ -173,6 +175,7 @@ export function JournalArticles() {
           </p>
           <div>
             <button
+              onClick={() => navigate("/journal/article")}
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontWeight: 500,
