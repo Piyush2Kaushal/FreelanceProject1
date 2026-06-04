@@ -108,7 +108,7 @@ function MobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           {navItems.map((item, index) => (
             <a
               key={item}
-              href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : "#"}
+              href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : item === "Projects" ? "/projects/project-1" : "#"}
               onClick={
                 item === "Journal"
                   ? (e) => { e.preventDefault(); onClose(); navigate("/journal"); }
@@ -116,6 +116,8 @@ function MobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                   ? (e) => { e.preventDefault(); onClose(); navigate("/about"); }
                   : item === "Home"
                   ? (e) => { e.preventDefault(); onClose(); navigate("/home"); }
+                  : item === "Projects"
+                  ? (e) => { e.preventDefault(); onClose(); navigate("/projects/project-1"); }
                   : onClose
               }
               style={{
@@ -231,7 +233,7 @@ export default function Navbar() {
                   <span className="h-8 w-px shrink-0 bg-[#442b00]" aria-hidden />
                 )}
                 <a
-                  href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : "#"}
+                  href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : item === "Projects" ? "/projects/project-1" : "#"}
                   onClick={
                     item === "Journal"
                       ? (e) => { e.preventDefault(); navigate("/journal"); }
@@ -239,6 +241,8 @@ export default function Navbar() {
                       ? (e) => { e.preventDefault(); navigate("/about"); }
                       : item === "Home"
                       ? (e) => { e.preventDefault(); navigate("/home"); }
+                      : item === "Projects"
+                      ? (e) => { e.preventDefault(); navigate("/projects/project-1"); }
                       : undefined
                   }
                   className="text-[14px] leading-[1.21] tracking-[0em] text-[#442b00] transition-opacity hover:opacity-80 no-underline whitespace-nowrap" style={{ fontWeight: 450 }}

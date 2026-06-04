@@ -13,6 +13,7 @@ import ArticlePage from "../imports/ArticlePage/ArticlePage";
 import HomePage from "../imports/Home1/Home1";
 import { SelectionProvider } from "./context/SelectionContext";
 import PageTransitionOverlay from "./components/PageTransitionOverlay";
+import { projectRoutes } from "./router/projectRoutes";
 
 export default function App() {
   return (
@@ -31,6 +32,14 @@ export default function App() {
           <Route path="/detail/beige/scandinavian" element={<MoodboardPage5 />} />
           <Route path="/detail/beige/transitional" element={<MoodboardPage6 />} />
           <Route path="/detail/beige/midcentury"   element={<MoodboardPage7 />} />
+          {/* ── Project Pages ───────────────────────────────────────────── */}
+          {projectRoutes.map((route) => (
+            <Route
+              key={route.path as string}
+              path={route.path as string}
+              element={route.element}
+            />
+          ))}
         </Routes>
         <PageTransitionOverlay />
       </div>
