@@ -10,6 +10,7 @@ import ContactPage from "../imports/Frame2106258854/Frame2106258854";
 import JournalPage from "../imports/Journal/JournalPage";
 import AboutPage from "./pages/About/AboutPage";
 import ArticlePage from "../imports/ArticlePage/ArticlePage";
+import HomePage from "../imports/Home1/Home1";
 import { SelectionProvider } from "./context/SelectionContext";
 import PageTransitionOverlay from "./components/PageTransitionOverlay";
 
@@ -19,6 +20,7 @@ export default function App() {
       <div className="size-full">
         <Routes>
           <Route path="/"                          element={<FinalMoodboard />} />
+          <Route path="/home"                      element={<HomePage />} />
           <Route path="/about"                     element={<AboutPage />} />
           <Route path="/contact"                   element={<ContactPage />} />
           <Route path="/journal"                   element={<JournalPage />} />

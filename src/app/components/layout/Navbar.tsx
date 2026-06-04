@@ -108,12 +108,14 @@ function MobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           {navItems.map((item, index) => (
             <a
               key={item}
-              href={item === "Journal" ? "/journal" : item === "About" ? "/about" : "#"}
+              href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : "#"}
               onClick={
                 item === "Journal"
                   ? (e) => { e.preventDefault(); onClose(); navigate("/journal"); }
                   : item === "About"
                   ? (e) => { e.preventDefault(); onClose(); navigate("/about"); }
+                  : item === "Home"
+                  ? (e) => { e.preventDefault(); onClose(); navigate("/home"); }
                   : onClose
               }
               style={{
@@ -229,12 +231,14 @@ export default function Navbar() {
                   <span className="h-8 w-px shrink-0 bg-[#442b00]" aria-hidden />
                 )}
                 <a
-                  href={item === "Journal" ? "/journal" : item === "About" ? "/about" : "#"}
+                  href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : "#"}
                   onClick={
                     item === "Journal"
                       ? (e) => { e.preventDefault(); navigate("/journal"); }
                       : item === "About"
                       ? (e) => { e.preventDefault(); navigate("/about"); }
+                      : item === "Home"
+                      ? (e) => { e.preventDefault(); navigate("/home"); }
                       : undefined
                   }
                   className="text-[14px] leading-[1.21] tracking-[0em] text-[#442b00] transition-opacity hover:opacity-80 no-underline whitespace-nowrap" style={{ fontWeight: 450 }}
