@@ -1,7 +1,6 @@
 import svgPaths from "./svg-n029qayjm7";
+import JournalHeader from "../../app/components/layout/JournalHeader";
 import imgEntireWebsite from "../../assets/0dd65294414a90d32335209969f40ac5042eb287.png";
-import imgComponent20 from "../../assets/b00689a4e710d92b1f3dbd433c68cba70f10fc2e.png";
-import imgVector51 from "../../assets/324e3e3b81cbd7f108c8a317161c7ec2822d930c.png";
 import imgFrame2106258500 from "../../assets/86bf7c0a9e2c9ce1971e67dfc02e8d7713a8c5f3.png";
 import imgFrame2106258502 from "../../assets/e7d8029b679abc3818d7b0073eb12f469c5282c0.png";
 import imgFrame2106258503 from "../../assets/78998cedd18b8246f027b5575f3ff5264b04c564.png";
@@ -23,66 +22,7 @@ import imgContactPage from "../../assets/afae93e180d21f30c2ae138886efb63bc064a5e
 import imgPrimaryLogos2 from "../../assets/4e454c35d52b905142f0f45a93315e3a6c51ea01.png";
 import img1169HuntingtonDrShot111 from "../../assets/27a5004a3a9d6a0677c5c4cca11af5e3be0fe6bc.png";
 
-function Frame() {
-  return (
-    <div className="absolute content-stretch flex gap-[16px] items-center left-[24px] top-[16px]">
-      <p className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[13px] tracking-[-0.39px] whitespace-nowrap">MENU</p>
-      <div className="flex h-[32px] items-center justify-center relative shrink-0 w-0">
-        <div className="flex-none rotate-90">
-          <div className="h-0 relative w-[32px]">
-            <div className="absolute inset-[-1px_0_0_0]">
-              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 1">
-                <line id="Line 1" stroke="var(--stroke-0, #442B00)" x2="32" y1="0.5" y2="0.5" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[13px] tracking-[-0.39px] whitespace-nowrap">Home</p>
-      <p className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[13px] tracking-[-0.39px] whitespace-nowrap">About</p>
-      <p className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[13px] tracking-[-0.39px] whitespace-nowrap">Projects</p>
-      <p className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[13px] tracking-[-0.39px] whitespace-nowrap">Moodboard</p>
-      <p className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[13px] tracking-[-0.39px] whitespace-nowrap">Journal</p>
-    </div>
-  );
-}
 
-function Frame3() {
-  return (
-    <div className="h-[63px] relative shrink-0 w-[426px]">
-      <div className="absolute h-[63px] left-[0.5px] top-0 w-[426px]">
-        <div className="absolute inset-[-1.59%_-0.23%]">
-          <img alt="" className="block max-w-none size-full" height="65" src={imgVector51} width="428" />
-        </div>
-      </div>
-      <Frame />
-    </div>
-  );
-}
-
-function Frame6() {
-  return (
-    <div className="bg-[#703000] h-[41px] relative rounded-[4px] shrink-0">
-      <div className="flex flex-row items-center justify-center size-full">
-        <div className="content-stretch flex items-center justify-center px-[28px] py-[24px] relative size-full">
-          <p className="[word-break:break-word] font-['Inter:Medium',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[16px] text-white tracking-[-0.48px] whitespace-nowrap">Contact</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Frame42() {
-  return (
-    <div className="-translate-x-1/2 absolute content-stretch flex items-start justify-between left-[calc(50%-1px)] top-[23px] w-[1392px]">
-      <div className="h-[51px] relative shrink-0 w-[104px]" data-name="Component 20">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
-      </div>
-      <Frame3 />
-      <Frame6 />
-    </div>
-  );
-}
 
 function Frame7() {
   return (
@@ -114,7 +54,7 @@ function Frame9() {
 
 function Frame43() {
   return (
-    <div className="absolute content-stretch flex gap-[20px] items-end left-[23px] top-[281px]">
+    <div className="absolute content-stretch flex gap-[20px] items-end left-[33px] top-[281px]">
       <Frame7 />
       <Frame8 />
       <Frame9 />
@@ -124,20 +64,20 @@ function Frame43() {
 
 function EntireWebsite() {
   return (
-    <div className="absolute h-[770px] left-0 overflow-clip top-0 w-[1440px]" data-name="Entire Website">
+    <div className="absolute h-[770px] left-0 overflow-clip top-0 w-full" data-name="Entire Website">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute bg-[rgba(254,244,219,0.95)] inset-0" />
         <img alt="" className="absolute max-w-none object-cover size-full" src={imgEntireWebsite} />
       </div>
-      <Frame42 />
+      <JournalHeader activePage="Home" />
       <Frame43 />
-      <p className="-translate-x-full [word-break:break-word] absolute capitalize font-['IBM_Plex_Serif:Regular',sans-serif] h-[66px] leading-[0] left-[calc(58.33%+579px)] not-italic text-[#553319] text-[0px] text-right top-[566px] tracking-[-0.88px] w-[558px]">
-        <span className="font-['IBM_Plex_Serif:SemiBold',sans-serif] leading-[1.2] text-[22px]">A Boutique interior design studio</span>
+      <p className="-translate-x-full [word-break:break-word] absolute capitalize font-['IBM_Plex_Serif',serif] h-[66px] leading-[0] left-[calc(59.50%+579px)] not-italic text-[#553319] text-[0px] text-right top-[566px] tracking-[-0.88px] w-[558px]">
+        <span className="font-['IBM_Plex_Serif',serif] leading-[1.2] text-[22px] font font-semibold">A Boutique interior design studio</span>
         <span className="leading-[1.2] text-[22px]">{` creating spaces`}</span>
         <span className="leading-[1.2] text-[22px]">{` `}</span>
         <span className="leading-[1.2] text-[22px]">that are rooted, intentional, and designed for you.</span>
       </p>
-      <p className="-translate-x-1/2 [word-break:break-word] absolute capitalize font-['Instrument_Serif:Italic',sans-serif] italic leading-[1.2] left-[calc(58.33%+317px)] text-[#703000] text-[96px] text-center top-[632px] tracking-[-3.84px] w-[524px]">Studio Inside eye</p>
+      <p className="-translate-x-1/2 [word-break:break-word] absolute capitalize font-['Instrument_Serif'] italic leading-[1.2] left-[calc(59.50%+317px)] text-[#703000] text-[96px] text-center top-[632px] tracking-[-3.84px] w-[524px]">Studio Inside eye</p>
       <div className="absolute h-[319px] left-[calc(58.33%+82px)] top-[-63px] w-[237px]" data-name="image 48">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
       </div>
@@ -159,11 +99,11 @@ function Frame4() {
 function Group() {
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute contents left-[calc(50%+1px)] top-[calc(50%+1.5px)]">
-      <div className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[0] left-[calc(50%-0.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%+67.5px)] tracking-[-1px] w-[683px] whitespace-pre-wrap">
+      <div className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(50%-0.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%+67.5px)] tracking-[-1px] w-[683px] whitespace-pre-wrap">
         <p className="leading-[normal] mb-0">At Studio Inside Eye, every space starts with you.</p>
         <p className="leading-[normal]">{`We design around how you live,              what you need, what you value.`}</p>
       </div>
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[normal] left-[calc(50%+2.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%-220.5px)] tracking-[-1px] w-[683px]">
+      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[normal] left-[calc(50%+2.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%-220.5px)] tracking-[-1px] w-[683px]">
         Designing timeless residential interiors for modern
         <br aria-hidden />
         California, across San Jose and the Bay Area.
@@ -183,7 +123,7 @@ function Frame5() {
 
 function FeatureWhySie() {
   return (
-    <div className="absolute bg-[#faf0d7] h-[1267px] left-0 overflow-clip top-[770px] w-[1440px]" data-name="Feature why SIE">
+    <div className="absolute bg-[#faf0d7] h-[1267px] left-0 overflow-clip top-[770px] w-full" data-name="Feature why SIE">
       <Group />
       <Frame5 />
       <div className="-translate-x-1/2 absolute flex h-[274px] items-center justify-center left-[calc(50%-1px)] top-[20px] w-0">
@@ -271,16 +211,16 @@ function Frame1() {
 
 function Component() {
   return (
-    <div className="absolute h-[780px] left-0 overflow-clip top-0 w-[1440px]" data-name="19">
+    <div className="absolute h-[780px] left-0 overflow-clip top-0 w-full" data-name="19">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute bg-[#6d703c] inset-0" />
         <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={img28} />
       </div>
-      <div className="absolute bg-size-[auto_auto,1490px_1053.4765625px] bg-top-left h-[1024px] left-[-48px] top-[-634px] w-[1536px]" style={{ backgroundImage: `linear-gradient(90deg, rgba(109, 112, 60, 0.4) 0%, rgba(109, 112, 60, 0.4) 100%), url("${imgImage155}")` }} data-name="image 155" />
+      <div className="absolute bg-size-[auto_auto,1490px_1053.4765625px] bg-top-left h-[1024px]  top-[-634px] w-full" style={{ backgroundImage: `linear-gradient(90deg, rgba(109, 112, 60, 0.4) 0%, rgba(109, 112, 60, 0.4) 100%), url("${imgImage155}")` }} data-name="image 155" />
       <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] left-[calc(95.83%+14px)] not-italic text-[20px] text-center text-white top-[27px] whitespace-nowrap">​</p>
       <Frame1 />
-      <p className="[word-break:break-word] absolute bottom-[144px] font-['Canela_Web:Light',sans-serif] leading-[normal] left-[24px] not-italic text-[#b3ae85] text-[100px] translate-y-full uppercase whitespace-nowrap">Pewter</p>
-      <p className="[word-break:break-word] absolute bottom-[108px] font-['Inter:Regular',sans-serif] font-normal leading-[normal] left-[calc(75%+26px)] not-italic text-[#fffcdf] text-[14px] translate-y-full w-[307px]">Designed to reflect the clients’ love for a calm and airy home, this full interior and exterior renovation layered warm tones, rich textures, and thoughtful details to create a space that feels both inviting and intentional.</p>
+      <p className="[word-break:break-word] absolute bottom-[144px] font-['Cormorant_Garamond',serif] font-light leading-[normal] left-[33px] not-italic text-[#b3ae85] text-[100px] translate-y-full uppercase whitespace-nowrap">Pewter</p>
+      <p className="[word-break:break-word] absolute bottom-[108px] font-['Inter',sans-serif] font-normal leading-[normal] left-[calc(76%+26px)] not-italic text-[#fffcdf] text-[14px] translate-y-full w-[307px]">Designed to reflect the clients’ love for a calm and airy home, this full interior and exterior renovation layered warm tones, rich textures, and thoughtful details to create a space that feels both inviting and intentional.</p>
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
@@ -298,7 +238,7 @@ function Group2() {
 
 function Component1() {
   return (
-    <div className="absolute h-[780px] left-0 overflow-clip top-0 w-[1440px]" data-name="28">
+    <div className="absolute h-[780px] left-0 overflow-clip top-0 w-full" data-name="28">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute bg-[#6d703c] inset-0" />
         <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={img28} />
@@ -319,7 +259,7 @@ function Component1() {
         <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgImage55} />
         <div aria-hidden className="absolute border-5 border-[#fff6d9] border-solid inset-[-5px]" />
       </div>
-      <div className="absolute h-[780px] left-[11px] top-0 w-[1440px]">
+      <div className="absolute h-[780px] left-[11px] top-0 w-full">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(124,80,76,0.1)] inset-0" />
           <img alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
@@ -342,7 +282,7 @@ function Group1() {
 
 function Component2() {
   return (
-    <div className="absolute bg-[#5c593e] h-[780px] left-0 overflow-clip top-[2037px] w-[1440px]" data-name="1171">
+    <div className="absolute bg-[#5c593e] h-[780px] left-0 overflow-clip top-[2037px] w-full" data-name="1171">
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
@@ -356,8 +296,8 @@ function Component2() {
 function Frame16() {
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[20px] items-start not-italic relative shrink-0">
-      <p className="capitalize font-['Instrument_Serif:Regular',sans-serif] leading-none relative shrink-0 text-[#5d5e36] text-[76px] w-[476px]">Full-Service Residential interior design</p>
-      <p className="font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[1.3] relative shrink-0 text-[#5c5d36] text-[24px] tracking-[0.5px] w-[476px]">Thoughtfully designed residential spaces from initial concept to final installation</p>
+      <p className="capitalize font-['Instrument_Serif',sans-serif] leading-none relative shrink-0 text-[#5d5e36] text-[76px] w-[476px]">Full-Service Residential interior design</p>
+      <p className="font-['Hanken_Grotesk',sans-serif] leading-[1.3] relative shrink-0 text-[#5c5d36] text-[22px] tracking-[0.5px] w-[476px]">Thoughtfully designed residential spaces from initial concept to final installation</p>
     </div>
   );
 }
@@ -370,7 +310,7 @@ function Frame10() {
         <img alt="" className="absolute max-w-none object-cover opacity-76 rounded-[4px] size-full" src={imgFrame2106258506} />
       </div>
       <div aria-hidden className="absolute border border-[#391900] border-solid inset-0 pointer-events-none rounded-[4px]" />
-      <p className="[word-break:break-word] font-['Inter:Medium',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[20px] text-white tracking-[-0.6px] whitespace-nowrap">VIEW ALL PROJECTS</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[20px] text-white tracking-[-0.6px] whitespace-nowrap">VIEW ALL PROJECTS</p>
     </div>
   );
 }
@@ -387,7 +327,7 @@ function Frame13() {
 function Frame23() {
   return (
     <div className="absolute content-stretch flex flex-col gap-[12px] items-start left-[101px] top-[174px] w-[129px]">
-      <p className="[word-break:break-word] font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-none min-w-full not-italic relative shrink-0 text-[#5d5e36] text-[14px] tracking-[2.8px] uppercase w-[min-content]">Our Services</p>
+      <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-none min-w-full not-italic relative shrink-0 text-[#5d5e36] text-[14px] tracking-[2.8px] uppercase w-[min-content]">Our Services</p>
       <div className="h-0 relative shrink-0 w-[82px]">
         <div className="absolute inset-[-0.6px_0_0_0]">
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 82 0.6">
@@ -402,12 +342,12 @@ function Frame23() {
 function Frame11() {
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start justify-center leading-[normal] not-italic relative shrink-0 text-[#5c5d36]">
-      <p className="font-['Instrument_Serif:Regular',sans-serif] relative shrink-0 text-[32px] whitespace-pre">
+      <p className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-pre">
         {`Renovation, remodel `}
         <br aria-hidden />
         {`& New construction        `}
       </p>
-      <p className="font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] relative shrink-0 text-[20px] w-[356px]">Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.</p>
+      <p className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[356px]">Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.</p>
     </div>
   );
 }
@@ -415,7 +355,7 @@ function Frame11() {
 function Frame14() {
   return (
     <div className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+47px)] top-[223px]">
-      <p className="[word-break:break-word] font-['Instrument_Serif:Regular',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">01</p>
+      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">01</p>
       <div className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
         <div className="flex-none rotate-90">
           <div className="h-0 relative w-[117px]">
@@ -440,8 +380,8 @@ function Frame14() {
 function Frame12() {
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start justify-center leading-[normal] not-italic relative shrink-0 text-[#5c5d36]">
-      <p className="font-['Instrument_Serif:Regular',sans-serif] relative shrink-0 text-[32px] whitespace-nowrap">{`Furnishing & Styling`}</p>
-      <p className="font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] relative shrink-0 text-[20px] w-[312px]">Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.</p>
+      <p className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-nowrap">{`Furnishing & Styling`}</p>
+      <p className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[312px]">Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.</p>
     </div>
   );
 }
@@ -449,7 +389,7 @@ function Frame12() {
 function Frame15() {
   return (
     <div className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+40px)] top-[465px]">
-      <p className="[word-break:break-word] font-['Instrument_Serif:Regular',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">02</p>
+      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">02</p>
       <div className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
         <div className="flex-none rotate-90">
           <div className="h-0 relative w-[117px]">
@@ -531,7 +471,7 @@ function Frame19() {
 
 function ServicesSection() {
   return (
-    <div className="absolute h-[832px] left-0 overflow-clip top-[2817px] w-[1440px]" data-name="Services section">
+    <div className="absolute h-[832px] left-0 overflow-clip top-[2817px] w-full" data-name="Services section">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <img alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
         <div className="absolute bg-[rgba(218,208,173,0.95)] inset-0" />
@@ -691,7 +631,7 @@ function Frame22() {
 function Frame36() {
   return (
     <div className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
-      <p className="[word-break:break-word] font-['Inter:Medium',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[20px] tracking-[-0.6px] whitespace-nowrap">{` Start your project`}</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[20px] tracking-[-0.6px] whitespace-nowrap">{` Start your project`}</p>
     </div>
   );
 }
@@ -702,7 +642,7 @@ function Frame38() {
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos1} />
       </div>
-      <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular:Regular',sans-serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
+      <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
       <Frame36 />
     </div>
   );
@@ -731,7 +671,7 @@ function Frame29() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center relative shrink-0 w-[231px]">
       <p className="leading-none relative shrink-0 text-[36px] w-full">Contact</p>
-      <p className="leading-[1.4] relative shrink-0 text-[20px] w-full">
+      <p className="leading-[1.4] relative shrink-0 text-[19px] w-full">
         (831) 234-2532
         <br aria-hidden />
         3265 Whipple Rd
@@ -744,7 +684,7 @@ function Frame29() {
 
 function Frame31() {
   return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
       <p className="relative shrink-0 w-full">Home</p>
       <p className="relative shrink-0 w-full">Moodboard</p>
       <p className="relative shrink-0 w-full">Philosophy</p>
@@ -765,7 +705,7 @@ function Frame30() {
 
 function Frame33() {
   return (
-    <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[20px] w-full">
+    <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[19px] w-full">
       <p className="relative shrink-0 w-full">SIENNA</p>
       <p className="relative shrink-0 w-full">Villa</p>
       <p className="relative shrink-0 w-full">Luxhill</p>
@@ -785,7 +725,7 @@ function Frame32() {
 
 function Frame35() {
   return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
       <p className="relative shrink-0 w-full">Linkedin</p>
       <p className="relative shrink-0 w-full">Instagram</p>
       <p className="relative shrink-0 w-full">X</p>
@@ -816,13 +756,13 @@ function Frame28() {
 
 function ContactPage() {
   return (
-    <div className="absolute h-[774px] left-0 top-[-57px] w-[1440px]" data-name="Contact Page">
+    <div className="absolute h-[774px] left-0 top-[-57px] w-full" data-name="Contact Page">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute bg-[#6d703c] inset-0" />
         <img alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
       <Frame28 />
-      <div className="absolute h-0 left-0 top-px w-[1440px]">
+      <div className="absolute h-0 left-0 top-px w-full">
         <div className="absolute inset-[-0.8px_0_0_0]">
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1440 0.8">
             <line id="Line 90" stroke="var(--stroke-0, #DACDAC)" strokeWidth="0.8" x2="1440" y1="0.4" y2="0.4" />
@@ -841,7 +781,7 @@ function ContactPage() {
 function Frame37() {
   return (
     <div className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
-      <p className="[word-break:break-word] font-['Inter:Medium',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#6d703c] text-[20px] tracking-[-0.6px] whitespace-nowrap">{` Start your project`}</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#6d703c] text-[20px] tracking-[-0.6px] whitespace-nowrap">{` Start your project`}</p>
     </div>
   );
 }
@@ -852,7 +792,7 @@ function Frame41() {
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos2} />
       </div>
-      <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular:Regular',sans-serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
+      <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
       <Frame37 />
     </div>
   );
@@ -860,8 +800,8 @@ function Frame41() {
 
 function FeatureWhySie1() {
   return (
-    <div className="absolute bg-[#504d39] h-[586px] left-0 overflow-clip top-[4477px] w-[1440px]" data-name="Feature why SIE">
-      <div className="absolute h-[660px] left-0 top-0 w-[1440px]">
+    <div className="absolute bg-[#504d39] h-[620px] left-0 overflow-clip top-[4477px] w-full" data-name="Feature why SIE">
+      <div className="absolute h-[660px] left-0 top-0 w-full">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(124,80,76,0.1)] inset-0" />
           <img alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
@@ -878,12 +818,12 @@ function FeatureWhySie1() {
 
 function ServicesSection1() {
   return (
-    <div className="absolute h-[877px] left-0 overflow-clip top-0 w-[1440px]" data-name="Services section">
+    <div className="absolute h-[877px] left-0 overflow-clip top-0 w-full" data-name="Services section">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <img alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
         <div className="absolute bg-[rgba(218,208,173,0.95)] inset-0" />
       </div>
-      <div className="absolute h-[751px] left-[34px] top-[63px] w-[1371px]" data-name="1169HuntingtonDr-Shot.11 1">
+      <div className="absolute h-[751px] left-[33px] top-[63px]  right-[33px]" data-name="1169HuntingtonDr-Shot.11 1">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img alt="" className="absolute h-[130.42%] left-[-0.02%] max-w-none top-0 w-[100.03%]" src={img1169HuntingtonDrShot111} />
         </div>
@@ -894,7 +834,7 @@ function ServicesSection1() {
 
 function Component3() {
   return (
-    <div className="absolute bg-[#dad0ad] h-[868px] left-0 overflow-clip top-[3609px] w-[1440px]" data-name="1172">
+    <div className="absolute bg-[#dad0ad] h-[868px] left-0 overflow-clip top-[3609px] w-full" data-name="1172">
       <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] left-[calc(95.83%+14px)] not-italic text-[20px] text-center text-white top-[27px] whitespace-nowrap">​</p>
       <ServicesSection1 />
     </div>

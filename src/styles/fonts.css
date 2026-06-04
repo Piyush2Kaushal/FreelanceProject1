@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
 @font-face {
   font-family: 'P22GrosvenorW00-Regular';
@@ -12,4 +12,5 @@
   --font-inter: 'Inter', sans-serif;
   --font-p22: 'P22GrosvenorW00-Regular', serif;
   --font-hanken: 'Hanken Grotesk', sans-serif;
+  --font-ibm-plex-serif: 'IBM Plex Serif', serif;
 }
