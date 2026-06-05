@@ -1,28 +1,58 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Home1.tsx  —  Studio Inside Eye · Home Page
+//
+// AUTO-CYCLING HERO:
+//   Every CYCLE_MS milliseconds the hero section smoothly transitions to the
+//   next project in HOME_PROJECTS (data/index.ts).
+//
+//   Things that change per project:
+//     • Hero section background color  (intro.heroPanelBg)
+//     • Pattern / texture overlay      (intro.patternImg  |  intro.decorativeTopRightImg)
+//     • Portrait image in the frame    (intro.heroPortraitImg)
+//     • Project name heading           (intro.projectName)
+//     • Description paragraph          (intro.description)
+//     • Contact / footer section bg    (intro.heroPanelBg)
+//     • Big hero image in the light section (intro.heroPortraitImg)
+//
+//   Everything else (navbar, services text, footer links, etc.) is STATIC.
+//
+// TO ADD A NEW PROJECT:
+//   Just add it to data/index.ts → HOME_PROJECTS array.
+//   Home page will automatically include it in the cycle. Done.
+// ─────────────────────────────────────────────────────────────────────────────
+
+import { useState, useEffect, useRef } from "react";
 import svgPaths from "./svg-n029qayjm7";
 import JournalHeader from "../../app/components/layout/JournalHeader";
-import imgEntireWebsite from "../../assets/0dd65294414a90d32335209969f40ac5042eb287.png";
-import imgFrame2106258500 from "../../assets/86bf7c0a9e2c9ce1971e67dfc02e8d7713a8c5f3.png";
-import imgFrame2106258502 from "../../assets/e7d8029b679abc3818d7b0073eb12f469c5282c0.png";
-import imgFrame2106258503 from "../../assets/78998cedd18b8246f027b5575f3ff5264b04c564.png";
-import imgImage48 from "../../assets/d0553f6129a7fac1b174ec3e794d941d51287eea.png";
-import imgFrame2106258466 from "../../assets/3c69fed734b46e09bcbca5fd64d204e588c1d31e.png";
-import imgComponent21 from "../../assets/51db19e7ba1176f759ee55b5c3fc2f8561581637.png";
-import imgPrimaryLogos from "../../assets/752d89eaef873a887cf65268bf35b398d34fcd07.png";
-import imgImage55 from "../../assets/d0771eeb465df0dcf09bc934a4e09e95eb4e483d.png";
-import img28 from "../../assets/adbe511abb684cf81f1cb3187f8b71a3a00b3c31.png";
-import imgPattern64 from "../../assets/95a80092b73db2ef00faba24cace5f66a65bce57.png";
-import imgComponent22 from "../../assets/ef5789f32fa9b15364e39033c5d7cb0a9747ec22.png";
-import imgRectangle30 from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.png";
-import imgImage155 from "../../assets/aebe02d3d339cdc59b4730399fc4b35a1fa1b42b.png";
-import imgImage56 from "../../assets/d0789128c56050759d379207723c165109533bf7.png";
-import imgServicesSection from "../../assets/79ba139c3a44f7977c3a8ad1f6ade8cf14fbb105.png";
-import imgFrame2106258506 from "../../assets/75226685f4f76f704b886f96c7d3f66fad2ea681.png";
-import imgPrimaryLogos1 from "../../assets/088c9c2511f4f4a6d40114530c14c0b9ef4ace9e.png";
-import imgContactPage from "../../assets/afae93e180d21f30c2ae138886efb63bc064a5e6.png";
-import imgPrimaryLogos2 from "../../assets/4e454c35d52b905142f0f45a93315e3a6c51ea01.png";
-import img1169HuntingtonDrShot111 from "../../assets/27a5004a3a9d6a0677c5c4cca11af5e3be0fe6bc.png";
+
+// ── Static assets (never change) ─────────────────────────────────────────────
+import imgEntireWebsite    from "../../assets/0dd65294414a90d32335209969f40ac5042eb287.png";
+import imgFrame2106258500  from "../../assets/86bf7c0a9e2c9ce1971e67dfc02e8d7713a8c5f3.png";
+import imgFrame2106258502  from "../../assets/e7d8029b679abc3818d7b0073eb12f469c5282c0.png";
+import imgFrame2106258503  from "../../assets/78998cedd18b8246f027b5575f3ff5264b04c564.png";
+import imgImage48          from "../../assets/d0553f6129a7fac1b174ec3e794d941d51287eea.png";
+import imgFrame2106258466  from "../../assets/3c69fed734b46e09bcbca5fd64d204e588c1d31e.png";
+import imgComponent21      from "../../assets/51db19e7ba1176f759ee55b5c3fc2f8561581637.png";
+import imgPrimaryLogos     from "../../assets/752d89eaef873a887cf65268bf35b398d34fcd07.png";
+import imgComponent22      from "../../assets/ef5789f32fa9b15364e39033c5d7cb0a9747ec22.png";
+import imgRectangle30      from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.png";
+import imgServicesSection  from "../../assets/79ba139c3a44f7977c3a8ad1f6ade8cf14fbb105.png";
+import imgFrame2106258506  from "../../assets/75226685f4f76f704b886f96c7d3f66fad2ea681.png";
+import imgPrimaryLogos1    from "../../assets/088c9c2511f4f4a6d40114530c14c0b9ef4ace9e.png";
+import imgContactPage      from "../../assets/afae93e180d21f30c2ae138886efb63bc064a5e6.png";
+import imgPrimaryLogos2    from "../../assets/4e454c35d52b905142f0f45a93315e3a6c51ea01.png";
+
+// ── Project data ──────────────────────────────────────────────────────────────
+import { HOME_PROJECTS, CYCLE_MS, FADE_MS } from "../../data/homeProjects";
+import type { HomeProject } from "../../data/homeProjects";
+
+// ── Auto-cycle interval ───────────────────────────────────────────────────────
 
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STATIC SECTIONS  (unchanged from original)
+// ─────────────────────────────────────────────────────────────────────────────
 
 function Frame7() {
   return (
@@ -188,39 +218,104 @@ function FeatureWhySie() {
   );
 }
 
-function Frame2() {
+function Frame2({ heroPortraitImg }: { heroPortraitImg: string }) {
   return (
     <div className="absolute content-stretch flex flex-col items-center left-[calc(33.33%+49px)] top-[233px] w-[382px]">
       <div className="h-[268px] relative shrink-0 w-[210px]" data-name="image 55">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage55} />
+        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={heroPortraitImg} />
       </div>
     </div>
   );
 }
 
-function Frame1() {
+// ─────────────────────────────────────────────────────────────────────────────
+// DYNAMIC HERO SECTION  (changes every CYCLE_MS)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** The framed portrait inside the hero panel */
+function Frame1({ heroPortraitImg }: { heroPortraitImg: string }) {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%-0.5px)] top-[238px] w-[255px]">
       <div className="h-[262.368px] pointer-events-none relative shrink-0 w-[205px]" data-name="image 55">
-        <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgImage56} />
+        <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={heroPortraitImg} />
         <div aria-hidden className="absolute border-[#d5c9a8] border-[5.4px] border-solid inset-[-5.4px]" />
       </div>
     </div>
   );
 }
 
-function Component() {
+interface HeroPanelProps {
+  bgColor: string;
+  patternImg?: string;
+  texturImg: string;
+  heroPortraitImg: string;
+  projectName: string;
+  description: string;
+  /** 0–1, controls fade transition */
+  opacity: number;
+}
+
+/** The full-bleed colored hero panel — everything inside it changes per project */
+function HeroPanel({
+  bgColor,
+  patternImg,
+  texturImg,
+  heroPortraitImg,
+  projectName,
+  description,
+  opacity,
+}: HeroPanelProps) {
   return (
-    <div className="absolute h-[780px] left-0 overflow-clip top-0 w-full" data-name="19">
+    <div
+      className="absolute h-[780px] left-0 overflow-clip top-0 w-full"
+      style={{
+        opacity,
+        clipPath: opacity < 1
+          ? 'inset(0 100% 0 0)'
+          : 'inset(0 0% 0 0)',
+        transition: `
+          opacity 200ms ease,
+          clip-path 900ms cubic-bezier(0.76,0,0.24,1)
+        `,
+        willChange: 'opacity, clip-path',
+      }}
+      data-name="hero-panel"
+    >
+      {/* Solid colour fill */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <div className="absolute bg-[#6d703c] inset-0" />
-        <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={img28} />
+        <div className="absolute inset-0" style={{ backgroundColor: bgColor }} />
+        <img
+          alt=""
+          className="absolute max-w-none object-cover opacity-3 size-full"
+          src={texturImg}
+        />
       </div>
-      <div className="absolute bg-size-[auto_auto,1490px_1053.4765625px] bg-top-left h-[1024px]  top-[-634px] w-full" style={{ backgroundImage: `linear-gradient(90deg, rgba(109, 112, 60, 0.4) 0%, rgba(109, 112, 60, 0.4) 100%), url("${imgImage155}")` }} data-name="image 155" />
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] left-[calc(95.83%+14px)] not-italic text-[20px] text-center text-white top-[27px] whitespace-nowrap">​</p>
-      <Frame1 />
-      <p className="[word-break:break-word] absolute bottom-[144px] font-['Cormorant_Garamond',serif] font-light leading-[normal] left-[33px] not-italic text-[#b3ae85] text-[100px] translate-y-full uppercase whitespace-nowrap">Pewter</p>
-      <p className="[word-break:break-word] absolute bottom-[108px] font-['Inter',sans-serif] font-normal leading-[normal] left-[calc(76%+26px)] not-italic text-[#fffcdf] text-[14px] translate-y-full w-[307px]">Designed to reflect the clients’ love for a calm and airy home, this full interior and exterior renovation layered warm tones, rich textures, and thoughtful details to create a space that feels both inviting and intentional.</p>
+
+      {/* Pattern / gradient overlay */}
+      {patternImg ? (
+        <div
+          className="absolute bg-size-[auto_auto,1490px_1053.4765625px] bg-top-left h-[1024px] top-[-634px] w-full"
+          style={{
+            backgroundImage: `linear-gradient(90deg, ${bgColor}66 0%, ${bgColor}66 100%), url("${patternImg}")`,
+          }}
+          data-name="pattern-overlay"
+        />
+      ) : null}
+
+      {/* Framed portrait */}
+      <Frame1 heroPortraitImg={heroPortraitImg} />
+
+      {/* Project name */}
+      <p className="[word-break:break-word] absolute bottom-[144px] font-['Cormorant_Garamond',serif] font-light leading-[normal] left-[33px] not-italic text-[#b3ae85] text-[100px] translate-y-full uppercase whitespace-nowrap">
+        {projectName}
+      </p>
+
+      {/* Description */}
+      <p className="[word-break:break-word] absolute bottom-[108px] font-['Inter',sans-serif] font-normal leading-[normal] left-[calc(74%+26px)] not-italic text-[#fffcdf] text-[14px] translate-y-full w-[335px]">
+        {description}
+      </p> 
+
+      {/* Logo */}
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
@@ -228,35 +323,113 @@ function Component() {
   );
 }
 
-function Group2() {
+// ─────────────────────────────────────────────────────────────────────────────
+// Component (was Group2 wrapper — now holds the cycling hero)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function CyclingHero() {
+  const [currentIdx, setCurrentIdx]   = useState(0);
+  const [nextIdx, setNextIdx]         = useState<number | null>(null);
+  const [nextOpacity, setNextOpacity] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    // Start the auto-cycle
+    timerRef.current = setTimeout(function cycle() {
+      const next = (currentIdx + 1) % HOME_PROJECTS.length;
+
+      // 1. Mount next panel at opacity 0
+      setNextIdx(next);
+      setNextOpacity(0);
+
+      // 2. Next frame: fade next panel in
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setNextOpacity(1);
+        });
+      });
+
+      // 3. After fade completes, promote next → current and clean up
+      setTimeout(() => {
+        setCurrentIdx(next);
+        setNextIdx(null);
+        setNextOpacity(0);
+        // Schedule the next cycle
+        timerRef.current = setTimeout(cycle, CYCLE_MS);
+      }, FADE_MS + 50);
+    }, CYCLE_MS);
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [currentIdx]);
+
+  const current = HOME_PROJECTS[currentIdx];
+  const next    = nextIdx !== null ? HOME_PROJECTS[nextIdx] : null;
+
   return (
-    <div className="absolute contents left-0 top-0">
-      <Component />
+    <div className="absolute h-[780px] left-0 top-0 w-full" style={{ zIndex: 0 }}>
+      {/* Current project — always fully visible underneath */}
+      <HeroPanel
+        bgColor={current.bgColor}
+        patternImg={current.patternImg}
+        texturImg={current.textureImg}
+        heroPortraitImg={current.heroImg}
+        projectName={current.projectName}
+        description={current.description}
+        opacity={1}
+      />
+
+      {/* Next project — fades in on top */}
+      {next && (
+        <HeroPanel
+          bgColor={next.bgColor}
+          patternImg={next.patternImg}
+          texturImg={next.textureImg}
+          heroPortraitImg={next.heroImg}
+          projectName={next.projectName}
+          description={next.description}
+          opacity={nextOpacity}
+        />
+      )}
     </div>
   );
 }
 
-function Component1() {
+// ─────────────────────────────────────────────────────────────────────────────
+// MIDDLE SECTION  (Component2 — project image + Component1 overlay)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function Component1({ project }: { project: HomeProject }) {
   return (
-    <div className="absolute h-[780px] left-0 overflow-clip top-0 w-full" data-name="28">
+    <div
+      className="absolute h-[780px] left-0 overflow-clip top-0 w-full"
+      data-name="28"
+      style={{ backgroundColor: project.bgColor }}
+    >
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <div className="absolute bg-[#6d703c] inset-0" />
-        <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={img28} />
+        <div className="absolute inset-0" style={{ backgroundColor: project.bgColor }} />
+        <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={project.textureImg} />
       </div>
-      <div className="absolute h-[486px] left-[-47px] top-[-96px] w-[1534px]" data-name="Pattern6 4">
-        <div className="absolute inset-0 opacity-20 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[239.47%] left-[-5.09%] max-w-none top-[-139.47%] w-[107.26%]" src={imgPattern64} />
+      {project.patternImg && (
+        <div className="absolute h-[486px] left-[-47px] top-[-96px] w-[1534px]" data-name="Pattern6 4">
+          <div className="absolute inset-0 opacity-20 overflow-hidden pointer-events-none">
+            <img alt="" className="absolute h-[239.47%] left-[-5.09%] max-w-none top-[-139.47%] w-[107.26%]" src={project.patternImg} />
+          </div>
         </div>
-      </div>
-      <p className="[word-break:break-word] absolute bottom-[140px] font-['Canela_Web:Light',sans-serif] leading-[normal] left-[24px] not-italic text-[112px] text-[rgba(253,235,206,0.49)] translate-y-full uppercase whitespace-nowrap">Sienna</p>
+      )}
+      <p className="[word-break:break-word] absolute bottom-[140px] font-['Canela_Web:Light',sans-serif] leading-[normal] left-[24px] not-italic text-[112px] text-[rgba(253,235,206,0.49)] translate-y-full uppercase whitespace-nowrap">
+        {project.projectName}
+      </p>
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos" />
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] left-[calc(95.83%+14px)] not-italic text-[20px] text-center text-white top-[27px] whitespace-nowrap">​</p>
-      <p className="[word-break:break-word] absolute bottom-[98px] font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[normal] left-[calc(75%+25px)] not-italic text-[#fbe1d7] text-[12px] translate-y-full w-[305px]">{`A full interior renovation that also included a 1,200 sq. ft. addition for clients who wanted their new home to feel warm, collected, intentional, and deeply rooted in the pieces and memories they’ve gathered over the years, including art and décor collected from different parts of India. `}</p>
+      <p className="[word-break:break-word] absolute bottom-[98px] font-['Hanken_Grotesk',sans-serif] leading-[normal] left-[calc(75%+25px)] not-italic text-[#fbe1d7] text-[12px] translate-y-full w-[305px]">
+        {project.description}
+      </p>
       <div className="absolute h-[52px] left-[11px] top-[20px] w-[104px]" data-name="Component 20">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent22} />
       </div>
       <div className="absolute h-[268px] left-[calc(41.67%+3px)] pointer-events-none top-[233px] w-[210px]" data-name="image 55">
-        <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgImage55} />
+        <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={project.heroImg} />
         <div aria-hidden className="absolute border-5 border-[#fff6d9] border-solid inset-[-5px]" />
       </div>
       <div className="absolute h-[780px] left-[11px] top-0 w-full">
@@ -265,33 +438,40 @@ function Component1() {
           <img alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
         </div>
       </div>
-      <Group2 />
+      {/* Cycling hero overlaid inside this panel */}
+      <CyclingHero />
     </div>
   );
 }
 
-function Group1() {
+function Group1({ project }: { project: HomeProject }) {
   return (
     <div className="absolute contents left-0 top-0">
-      <p className="[word-break:break-word] absolute bottom-[94px] font-['Neue_Haas_Grotesk_Display_Pro:45_Light',sans-serif] leading-[normal] left-[calc(75%+85px)] not-italic text-[14px] text-white tracking-[1px] translate-y-full w-[245px]">subtle, layerred, and deeply calming, every corner is desingid to be felt as much as it is seen.</p>
-      <Frame2 />
-      <Component1 />
+      <p className="[word-break:break-word] absolute bottom-[94px] font-['Neue_Haas_Grotesk_Display_Pro:45_Light',sans-serif] leading-[normal] left-[calc(75%+85px)] not-italic text-[14px] text-white tracking-[1px] translate-y-full w-[245px]">subtle, layered, and deeply calming, every corner is designed to be felt as much as it is seen.</p>
+      <Frame2 heroPortraitImg={project.heroImg} />
+      <Component1 project={project} />
     </div>
   );
 }
 
-function Component2() {
+function Component2({ project }: { project: HomeProject }) {
   return (
-    <div className="absolute bg-[#5c593e] h-[780px] left-0 overflow-clip top-[2037px] w-full" data-name="1171">
+    <div
+      className="absolute h-[780px] left-0 overflow-clip top-[2037px] w-full"
+      data-name="1171"
+      style={{ backgroundColor: project.bgColor }}
+    >
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] left-[calc(95.83%+14px)] not-italic text-[20px] text-center text-white top-[27px] whitespace-nowrap">​</p>
-      <p className="[word-break:break-word] absolute bottom-[98px] font-['Neue_Haas_Grotesk_Display_Pro:45_Light',sans-serif] leading-[normal] left-[calc(75%+85px)] not-italic text-[14px] text-white tracking-[1px] translate-y-full w-[245px]">subtle, layerred, and deeply calming, every corner is desingid to be felt as much as it is seen.</p>
-      <Group1 />
+      <Group1 project={project} />
     </div>
   );
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SERVICES SECTION  (static except the big photo)
+// ─────────────────────────────────────────────────────────────────────────────
 
 function Frame16() {
   return (
@@ -342,11 +522,7 @@ function Frame23() {
 function Frame11() {
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start justify-center leading-[normal] not-italic relative shrink-0 text-[#5c5d36]">
-      <p className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-pre">
-        {`Renovation, remodel `}
-        <br aria-hidden />
-        {`& New construction        `}
-      </p>
+      <p className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-pre">{`Renovation, remodel \n& New construction        `}</p>
       <p className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[356px]">Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.</p>
     </div>
   );
@@ -429,25 +605,11 @@ function Frame18() {
       <div aria-hidden className="absolute bg-[rgba(255,255,255,0.04)] inset-0 pointer-events-none rounded-[50px]" />
       <div className="overflow-clip relative rounded-[inherit] size-full">
         <div className="-translate-x-1/2 -translate-y-1/2 absolute flex items-center justify-center left-[calc(50%+0.5px)] size-[38px] top-[calc(50%+0.5px)]">
-          <div className="-rotate-90 flex-none">
-            <ArrowNarrowDownSvgrepoCom />
-          </div>
+          <div className="-rotate-90 flex-none"><ArrowNarrowDownSvgrepoCom /></div>
         </div>
       </div>
       <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_0px_4px_0px_rgba(0,0,0,0.25)]" />
       <div aria-hidden className="absolute border border-[#a69d83] border-solid inset-0 pointer-events-none rounded-[50px]" />
-    </div>
-  );
-}
-
-function ArrowNarrowDownSvgrepoCom1() {
-  return (
-    <div className="relative size-[38px]" data-name="arrow-narrow-down-svgrepo-com 2">
-      <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 38 38">
-        <g id="arrow-narrow-down-svgrepo-com 1">
-          <path d={svgPaths.pf347200} id="Vector" stroke="var(--stroke-0, #703000)" strokeLinecap="round" strokeLinejoin="round" />
-        </g>
-      </svg>
     </div>
   );
 }
@@ -458,9 +620,7 @@ function Frame19() {
       <div aria-hidden className="absolute bg-[rgba(255,255,255,0.04)] inset-0 pointer-events-none rounded-[50px]" />
       <div className="overflow-clip relative rounded-[inherit] size-full">
         <div className="-translate-x-1/2 -translate-y-1/2 absolute flex items-center justify-center left-[calc(50%+0.5px)] size-[38px] top-[calc(50%+0.5px)]">
-          <div className="-rotate-90 flex-none">
-            <ArrowNarrowDownSvgrepoCom1 />
-          </div>
+          <div className="-rotate-90 flex-none"><ArrowNarrowDownSvgrepoCom /></div>
         </div>
       </div>
       <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_0px_4px_0px_rgba(0,0,0,0.25)]" />
@@ -542,29 +702,15 @@ function ServicesSection() {
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// FOOTER / CONTACT  (bg color cycles with project)
+// ─────────────────────────────────────────────────────────────────────────────
+
 function Frame20() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center relative shrink-0 w-[231px]">
       <p className="leading-none relative shrink-0 text-[36px] w-full">Contact</p>
-      <p className="leading-[1.4] relative shrink-0 text-[20px] w-full">
-        (831) 234-2532
-        <br aria-hidden />
-        3265 Whipple Rd
-        <br aria-hidden />
-        Union City, California(CA), 94587
-      </p>
-    </div>
-  );
-}
-
-function Frame17() {
-  return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
-      <p className="relative shrink-0 w-full">Home</p>
-      <p className="relative shrink-0 w-full">Moodboard</p>
-      <p className="relative shrink-0 w-full">Philosophy</p>
-      <p className="relative shrink-0 w-full">Services</p>
-      <p className="relative shrink-0 w-full">Projects</p>
+      <p className="leading-[1.4] relative shrink-0 text-[20px] w-full">(831) 234-2532<br aria-hidden />3265 Whipple Rd<br aria-hidden />Union City, California(CA), 94587</p>
     </div>
   );
 }
@@ -573,18 +719,9 @@ function Frame21() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
       <p className="relative shrink-0 text-[32px] w-full">Menu</p>
-      <Frame17 />
-    </div>
-  );
-}
-
-function Frame25() {
-  return (
-    <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[20px] w-full">
-      <p className="relative shrink-0 w-full">SIENNA</p>
-      <p className="relative shrink-0 w-full">Villa</p>
-      <p className="relative shrink-0 w-full">Luxhill</p>
-      <p className="relative shrink-0 w-full">Remeos</p>
+      <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+        {["Home","Moodboard","Philosophy","Services","Projects"].map(t => <p key={t} className="relative shrink-0 w-full">{t}</p>)}
+      </div>
     </div>
   );
 }
@@ -593,17 +730,9 @@ function Frame24() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
       <p className="relative shrink-0 text-[32px] w-full">Projects</p>
-      <Frame25 />
-    </div>
-  );
-}
-
-function Frame27() {
-  return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
-      <p className="relative shrink-0 w-full">Linkedin</p>
-      <p className="relative shrink-0 w-full">Instagram</p>
-      <p className="relative shrink-0 w-full">Yelp</p>
+      <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[20px] w-full">
+        {["SIENNA","Villa","Luxhill","Remeos"].map(t => <p key={t} className="relative shrink-0 w-full">{t}</p>)}
+      </div>
     </div>
   );
 }
@@ -612,18 +741,17 @@ function Frame26() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
       <p className="relative shrink-0 text-[32px] w-full">Socials</p>
-      <Frame27 />
+      <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+        {["Linkedin","Instagram","Yelp"].map(t => <p key={t} className="relative shrink-0 w-full">{t}</p>)}
+      </div>
     </div>
   );
 }
 
 function Frame22() {
   return (
-    <div className="[word-break:break-word] absolute content-stretch flex font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] gap-[82px] items-start left-[calc(16.67%+1px)] not-italic text-[#d5c9a8] top-[394px]">
-      <Frame20 />
-      <Frame21 />
-      <Frame24 />
-      <Frame26 />
+    <div className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(16.67%+1px)] not-italic text-[#d5c9a8] top-[394px]">
+      <Frame20 /><Frame21 /><Frame24 /><Frame26 />
     </div>
   );
 }
@@ -648,120 +776,29 @@ function Frame38() {
   );
 }
 
-function Frame39() {
-  return (
-    <div className="content-stretch flex gap-[51px] items-center relative shrink-0">
-      <p className="relative shrink-0">Privacy policy</p>
-      <p className="relative shrink-0">Terms of service</p>
-      <p className="relative shrink-0">Cookies Settings</p>
-    </div>
-  );
-}
-
 function Frame40() {
   return (
-    <div className="[word-break:break-word] absolute content-stretch flex font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] items-center justify-between leading-[normal] left-[34px] not-italic text-[12px] text-[rgba(238,221,160,0.7)] top-[810px] tracking-[0.5px] w-[1372px] whitespace-nowrap">
+    <div className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] items-center justify-between leading-[normal] left-[34px] not-italic text-[12px] text-[rgba(238,221,160,0.7)] top-[810px] tracking-[0.5px] w-[1372px] whitespace-nowrap">
       <p className="relative shrink-0">©️2025 Studio Inside Eye. All rights reserved</p>
-      <Frame39 />
+      <div className="content-stretch flex gap-[51px] items-center relative shrink-0">
+        {["Privacy policy","Terms of service","Cookies Settings"].map(t => <p key={t} className="relative shrink-0">{t}</p>)}
+      </div>
     </div>
   );
 }
 
-function Frame29() {
-  return (
-    <div className="content-stretch flex flex-col gap-[16px] items-center justify-center relative shrink-0 w-[231px]">
-      <p className="leading-none relative shrink-0 text-[36px] w-full">Contact</p>
-      <p className="leading-[1.4] relative shrink-0 text-[19px] w-full">
-        (831) 234-2532
-        <br aria-hidden />
-        3265 Whipple Rd
-        <br aria-hidden />
-        Union City, California(CA), 94587
-      </p>
-    </div>
-  );
-}
-
-function Frame31() {
-  return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
-      <p className="relative shrink-0 w-full">Home</p>
-      <p className="relative shrink-0 w-full">Moodboard</p>
-      <p className="relative shrink-0 w-full">Philosophy</p>
-      <p className="relative shrink-0 w-full">Services</p>
-      <p className="relative shrink-0 w-full">Projects</p>
-    </div>
-  );
-}
-
-function Frame30() {
-  return (
-    <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
-      <p className="relative shrink-0 text-[32px] w-full">Menu</p>
-      <Frame31 />
-    </div>
-  );
-}
-
-function Frame33() {
-  return (
-    <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[19px] w-full">
-      <p className="relative shrink-0 w-full">SIENNA</p>
-      <p className="relative shrink-0 w-full">Villa</p>
-      <p className="relative shrink-0 w-full">Luxhill</p>
-      <p className="relative shrink-0 w-full">Remeos</p>
-    </div>
-  );
-}
-
-function Frame32() {
-  return (
-    <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
-      <p className="relative shrink-0 text-[32px] w-full">Projects</p>
-      <Frame33 />
-    </div>
-  );
-}
-
-function Frame35() {
-  return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
-      <p className="relative shrink-0 w-full">Linkedin</p>
-      <p className="relative shrink-0 w-full">Instagram</p>
-      <p className="relative shrink-0 w-full">X</p>
-      <p className="relative shrink-0 w-full">Yelp</p>
-    </div>
-  );
-}
-
-function Frame34() {
-  return (
-    <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
-      <p className="relative shrink-0 text-[32px] w-full">Socials</p>
-      <Frame35 />
-    </div>
-  );
-}
-
-function Frame28() {
-  return (
-    <div className="[word-break:break-word] absolute content-stretch flex font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
-      <Frame29 />
-      <Frame30 />
-      <Frame32 />
-      <Frame34 />
-    </div>
-  );
-}
-
-function ContactPage() {
+function ContactPage({ bgColor }: { bgColor: string }) {
   return (
     <div className="absolute h-[774px] left-0 top-[-57px] w-full" data-name="Contact Page">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <div className="absolute bg-[#6d703c] inset-0" />
+        {/* Dynamic bg color matching active project */}
+        <div className="absolute inset-0" style={{ backgroundColor: bgColor, transition: `background-color ${FADE_MS}ms ease-in-out` }} />
         <img alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
-      <Frame28 />
+      {/* Footer nav columns */}
+      <div className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
+        <Frame20 /><Frame21 /><Frame24 /><Frame26 />
+      </div>
       <div className="absolute h-0 left-0 top-px w-full">
         <div className="absolute inset-[-0.8px_0_0_0]">
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1440 0.8">
@@ -778,29 +815,36 @@ function ContactPage() {
   );
 }
 
-function Frame37() {
+function Frame37({ bgColor }: { bgColor: string }) {
   return (
     <div className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
-      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#6d703c] text-[20px] tracking-[-0.6px] whitespace-nowrap">{` Start your project`}</p>
+      <p
+        className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[20px] tracking-[-0.6px] whitespace-nowrap"
+        style={{ color: bgColor, transition: `color ${FADE_MS}ms ease-in-out` }}
+      >{` Start your project`}</p>
     </div>
   );
 }
 
-function Frame41() {
+function Frame41({ bgColor }: { bgColor: string }) {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+3px)] top-[97px]">
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos2} />
       </div>
       <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
-      <Frame37 />
+      <Frame37 bgColor={bgColor} />
     </div>
   );
 }
 
-function FeatureWhySie1() {
+function FeatureWhySie1({ project }: { project: HomeProject }) {
   return (
-    <div className="absolute bg-[#504d39] h-[620px] left-0 overflow-clip top-[4477px] w-full" data-name="Feature why SIE">
+    <div
+      className="absolute h-[620px] left-0 overflow-clip top-[4477px] w-full"
+      data-name="Feature why SIE"
+      style={{ backgroundColor: "#504d39" }}
+    >
       <div className="absolute h-[660px] left-0 top-0 w-full">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(124,80,76,0.1)] inset-0" />
@@ -810,46 +854,75 @@ function FeatureWhySie1() {
       <Frame22 />
       <Frame38 />
       <Frame40 />
-      <ContactPage />
-      <Frame41 />
+      <ContactPage bgColor={project.bgColor} />
+      <Frame41 bgColor={project.bgColor} />
     </div>
   );
 }
 
-function ServicesSection1() {
+// ─────────────────────────────────────────────────────────────────────────────
+// HERO IMAGE SECTION  (Component3 — shows the big landscape photo)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function ServicesSection1({ heroPortraitImg }: { heroPortraitImg: string }) {
   return (
     <div className="absolute h-[877px] left-0 overflow-clip top-0 w-full" data-name="Services section">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <img alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
         <div className="absolute bg-[rgba(218,208,173,0.95)] inset-0" />
       </div>
-      <div className="absolute h-[751px] left-[33px] top-[63px]  right-[33px]" data-name="1169HuntingtonDr-Shot.11 1">
+      <div className="absolute h-[751px] left-[33px] top-[63px] right-[33px]" data-name="hero-photo">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[130.42%] left-[-0.02%] max-w-none top-0 w-[100.03%]" src={img1169HuntingtonDrShot111} />
+          <img
+            alt=""
+            className="absolute h-[130.42%] left-[-0.02%] max-w-none top-0 w-[100.03%]"
+            src={heroPortraitImg}
+            style={{ transition: `opacity ${FADE_MS}ms ease-in-out` }}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-function Component3() {
+function Component3({ project }: { project: HomeProject }) {
   return (
     <div className="absolute bg-[#dad0ad] h-[868px] left-0 overflow-clip top-[3609px] w-full" data-name="1172">
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] left-[calc(95.83%+14px)] not-italic text-[20px] text-center text-white top-[27px] whitespace-nowrap">​</p>
-      <ServicesSection1 />
+      <ServicesSection1 heroPortraitImg={project.heroImgLandscape ?? project.heroImg} />
     </div>
   );
 }
 
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ROOT HOME COMPONENT
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function Home() {
+  // Single source of truth for the active project index
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  // Keep in sync with CyclingHero — listen to same CYCLE_MS
+  // (CyclingHero manages its own internal state; this drives the
+  //  outer sections that CyclingHero doesn't control)
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % HOME_PROJECTS.length);
+    }, CYCLE_MS);
+    return () => clearInterval(id);
+  }, []);
+
+  const project = HOME_PROJECTS[activeIdx];
+
   return (
     <div className="relative size-full" data-name="HOME 1">
       <EntireWebsite />
       <FeatureWhySie />
-      <Component2 />
+      <Component2 project={project} />
       <ServicesSection />
-      <FeatureWhySie1 />
-      <Component3 />
+      <FeatureWhySie1 project={project} />
+      <Component3 project={project} />
     </div>
   );
 }
