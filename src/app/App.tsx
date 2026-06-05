@@ -20,18 +20,25 @@ export default function App() {
     <SelectionProvider>
       <div className="size-full">
         <Routes>
-          <Route path="/"                          element={<FinalMoodboard />} />
-          <Route path="/home"                      element={<HomePage />} />
-          <Route path="/about"                     element={<AboutPage />} />
-          <Route path="/contact"                   element={<ContactPage />} />
-          <Route path="/journal"                   element={<JournalPage />} />
-          <Route path="/journal/article"           element={<ArticlePage />} />
-          <Route path="/detail/red/scandinavian"   element={<MoodboardPage2 />} />
-          <Route path="/detail/red/transitional"   element={<MoodboardPage3 />} />
-          <Route path="/detail/red/midcentury"     element={<MoodboardPage4 />} />
-          <Route path="/detail/beige/scandinavian" element={<MoodboardPage5 />} />
-          <Route path="/detail/beige/transitional" element={<MoodboardPage6 />} />
-          <Route path="/detail/beige/midcentury"   element={<MoodboardPage7 />} />
+          <Route path="/"                                element={<FinalMoodboard />} />
+          <Route path="/home"                            element={<HomePage />} />
+          <Route path="/about"                           element={<AboutPage />} />
+          <Route path="/contact"                         element={<ContactPage />} />
+          <Route path="/journal"                         element={<JournalPage />} />
+
+          {/* Legacy route — renders article01 by default (no slug) */}
+          <Route path="/journal/article"                 element={<ArticlePage />} />
+
+          {/* Dynamic slug-based article route — each slug maps to its ArticleData */}
+          <Route path="/journal/article/:slug"           element={<ArticlePage />} />
+
+          <Route path="/detail/red/scandinavian"         element={<MoodboardPage2 />} />
+          <Route path="/detail/red/transitional"         element={<MoodboardPage3 />} />
+          <Route path="/detail/red/midcentury"           element={<MoodboardPage4 />} />
+          <Route path="/detail/beige/scandinavian"       element={<MoodboardPage5 />} />
+          <Route path="/detail/beige/transitional"       element={<MoodboardPage6 />} />
+          <Route path="/detail/beige/midcentury"         element={<MoodboardPage7 />} />
+
           {/* ── Project Pages ───────────────────────────────────────────── */}
           {projectRoutes.map((route) => (
             <Route

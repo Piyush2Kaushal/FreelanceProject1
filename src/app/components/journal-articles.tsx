@@ -1,65 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import imgTexture from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.png";
+import { ALL_ARTICLES } from "../../data/articles";
+import type { ArticleData } from "../../data/articles";
 
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  bg: string;
-  gap: number;
-  leftOffset: number;
-  tracking?: string;
-}
-
-const articles: Article[] = [
-  {
-    id: "01",
-    title: "Bay Area Home Owners Guide",
-    description:
-      "Learn how much interior design costs in San Jose, including hourly rates, flat fees, remodel design costs, and what affects your final budget.",
-    bg: "#5f3223",
-    gap: 24,
-    leftOffset: 39,
-  },
-  {
-    id: "02",
-    title: "Best Interior Design Ideas for Remodels and Renovations",
-    description:
-      "Explore the most impactful design ideas for residential remodels — from open-plan living to material upgrades that transform every room.",
-    bg: "#8f781e",
-    gap: 24,
-    leftOffset: 41,
-    tracking: "0.22px",
-  },
-  {
-    id: "03",
-    title: "A complete Guide to Full-Service Interior Design",
-    description:
-      "Understand what full-service interior design includes, how to find the right studio for your home, and what to expect from the process.",
-    bg: "#a23e2c",
-    gap: 24,
-    leftOffset: 41,
-    tracking: "0.22px",
-  },
-  {
-    id: "04",
-    title: "Modern Interior Design Ideas for Calm Living Spaces",
-    description:
-      "Discover how thoughtful layouts, curated materials, and restrained color palettes create interiors that feel serene and intentional.",
-    bg: "#559baa",
-    gap: 30,
-    leftOffset: 41,
-    tracking: "0.22px",
-  },
-];
+// Build the article list from the data file — no hardcoded data here
+// The strip card properties (bg, gap, leftOffset, tracking) all come from ArticleData
 
 export function JournalArticles() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const navigate = useNavigate();
 
-  const expanded = articles.find((a) => a.id === expandedId) ?? null;
+  const expanded: ArticleData | null =
+    ALL_ARTICLES.find((a) => a.id === expandedId) ?? null;
 
   const handleClose = () => {
     setIsClosing(true);
@@ -96,9 +50,9 @@ export function JournalArticles() {
           bottom: 0,
           backgroundColor: expanded?.bg ?? "transparent",
           clipPath: getClipPath(),
-       transition: isClosing
-  ? "clip-path 1.5s cubic-bezier(0.22, 1, 0.36, 1)"
-  : "clip-path 0.85s cubic-bezier(0.22, 1, 0.36, 1)",
+          transition: isClosing
+            ? "clip-path 1.5s cubic-bezier(0.22, 1, 0.36, 1)"
+            : "clip-path 0.85s cubic-bezier(0.22, 1, 0.36, 1)",
           zIndex: 4,
           pointerEvents: expanded && !isClosing ? "all" : "none",
         }}
@@ -175,7 +129,9 @@ export function JournalArticles() {
           </p>
           <div>
             <button
-              onClick={() => navigate("/journal/article")}
+              onClick={() =>
+                expanded && navigate(`/journal/article/${expanded.slug}`)
+              }
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontWeight: 500,
@@ -208,7 +164,7 @@ export function JournalArticles() {
       >
         <div className="flex-none" style={{ transform: "rotate(-90deg)" }}>
           <div className="relative" style={{ width: "736px", height: "400px" }}>
-            {articles.map((article, index) => (
+            {ALL_ARTICLES.map((article, index) => (
               <button
                 key={article.id}
                 className="absolute left-0 right-0 overflow-hidden cursor-pointer block"

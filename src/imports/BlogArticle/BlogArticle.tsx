@@ -3,13 +3,7 @@ import { useNavigate } from "react-router-dom";
 import imgRectangle29 from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.png";
 import imgComponent20 from "../../assets/4e454c35d52b905142f0f45a93315e3a6c51ea01.png";
 import imgTexture from "../../assets/texture.png";
-import imgFrame2106258761 from "../../assets/c3f115f4d118ac4fcbf1d74ef8815d734c335bdf.png";
-import imgFrame2106258762 from "../../assets/ac6073d80e685fa7af1967de631c324197e86adf.png";
-import imgFrame2106258778 from "../../assets/e64d564294abdd4a684dd40d8a036f83e3763166.png";
-import imgFrame2106258777 from "../../assets/4d2a01b2e517b7fee0f5f5b5f044518b28f7b7aa.png";
-import imgFrame2106258779 from "../../assets/1a634773f3f63ad2485cb6c8342972dda6c1c84b.png";
-import imgFrame2106258780 from "../../assets/d6a2ec2ae594fcd9566c40dbfd2f2939a0ece108.png";
-import imgFrame2106258781 from "../../assets/212bee59b64bea89100d5d03e37b74df2cf0d4e4.png";
+import type { ArticleData } from "../../data/articles";
 
 // ─── Nav items ────────────────────────────────────────────────────────────────
 const navItems = [
@@ -171,7 +165,7 @@ function BlogMobileDrawer({
   );
 }
 
-// ─── Navbar (only center octagon pill changed; logo + contact = original) ─────
+// ─── Navbar ───────────────────────────────────────────────────────────────────
 function BlogNavbar() {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -192,7 +186,7 @@ function BlogNavbar() {
           />
         </div>
 
-        {/* ── CENTER: Octagon navbar pill (JournalHeader style) ── */}
+        {/* ── CENTER: Octagon navbar pill ── */}
         <nav
           className="navbar-desktop relative h-[63px] z-10"
           style={{ width: "450px", pointerEvents: "auto" }}
@@ -318,348 +312,282 @@ function BlogNavbar() {
   );
 }
 
-// ─── Rest of original components (unchanged) ─────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Section components — each reads from ArticleData prop
+// Pixel-perfect copies of the original hardcoded Frame components.
+// ─────────────────────────────────────────────────────────────────────────────
 
-function Frame4() {
-  return (
-    <div className="content-stretch flex flex-col gap-[16px] h-[262px] items-start relative shrink-0">
-      <p className="font-['Instrument_Serif',sans-serif] leading-[normal] relative shrink-0 text-[72px] whitespace-nowrap">Bay Area home owners guide</p>
-      <p className="font-['Inter',sans-serif] font-normal h-[116px] leading-[1.3] relative shrink-0 text-[24px] tracking-[-0.96px] w-[574px]">Learn how much interior design costs in San Jose, including hourly rates, flat fees, remodel design costs, and what affects your final budget.</p>
-    </div>
-  );
-}
-
-function Frame5() {
+/** Hero heading + date (Frame5) */
+function ArticleHero({ article }: { article: ArticleData }) {
   return (
     <div className="[word-break:break-word] absolute content-stretch flex items-end justify-between left-[33px] right-[33px] not-italic text-[#dcd1b1] top-[162px]">
-      <Frame4 />
-      <p className="font-['Instrument_Serif',sans-serif] leading-[normal] relative shrink-0 text-[84px] whitespace-nowrap">2/2026</p>
-    </div>
-  );
-}
-
-function Frame6() {
-  return (
-    <div className="h-[451px] relative shrink-0 w-[699px]">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258761} />
-    </div>
-  );
-}
-
-function Frame8() {
-  return (
-    <div className="h-[285px] relative shrink-0 w-[14px]">
-      <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 285">
-        <g id="Frame 2106258775">
-          <circle cx="7" cy="7" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
-          <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.49999" x2="7.5" y1="13" y2="285" />
-        </g>
-      </svg>
-    </div>
-  );
-}
-
-function Frame9() {
-  return (
-    <div className="[word-break:break-word] content-stretch flex flex-col font-['Hanken_Grotesk',sans-serif] gap-[24px] items-start leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-[565px]">
-      <p className="h-[214px] relative shrink-0 w-full">Hiring an interior designer in San Jose can feel confusing at first because every home, scope, and designer works differently. A single-room refresh, a furnishing project, and a full-home renovation are very different investments. For Bay Area homeowners, the cost is also influenced by local labor rates, permit needs, material choices, project complexity, and the level of customization.</p>
-      <p className="h-[213px] relative shrink-0 w-full">In general, interior designers may charge hourly, flat-fee, percentage of project cost, square-foot pricing, or a hybrid model. Industry pricing references commonly place traditional interior designer fees around $2,000 to $15,000+ excluding furniture, depending on project size and complexity. Hourly rates can often range from $75 to $250+ per hour depending on experience and location.</p>
-    </div>
-  );
-}
-
-function Frame13() {
-  return (
-    <div className="absolute content-stretch flex gap-[82px] items-end left-[33px] top-[509px] w-[calc(100%-56px)]">
-      <Frame6 />
-      <Frame8 />
-      <Frame9 />
-    </div>
-  );
-}
-
-function Frame7() {
-  return (
-    <div className="h-[510px] relative shrink-0 w-[662px]">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258762} />
-    </div>
-  );
-}
-
-function Frame10() {
-  return (
-    <div className="h-[380px] relative shrink-0 w-[14px]">
-      <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 380">
-        <g id="Frame 2106258775">
-          <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.5" x2="7.50002" y1="14" y2="367" />
-          <circle cx="7" cy="373" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
-        </g>
-      </svg>
-    </div>
-  );
-}
-
-function Frame25() {
-  return (
-    <div className="content-stretch flex flex-col items-start relative shrink-0 w-[602px]">
-      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">What Affects Interior Design Cost?</p>
-    </div>
-  );
-}
-
-function Frame11() {
-  return (
-    <div className="content-stretch flex flex-col items-start relative shrink-0 w-[565px]">
-      <ul className="[word-break:break-word] block font-['Hanken_Grotesk',sans-serif] leading-[0] list-disc not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full">
-        <li className="mb-0 ms-[33px]">
-          <span className="leading-[1.4]">Scope of work: Furnishing one room costs less than redesigning an entire home.</span>
-        </li>
-        <li className="mb-0 ms-[33px]">
-          <span className="leading-[1.4]">{`Level of service: Full-service design costs more than consultation-only support.  `}</span>
-        </li>
-        <li className="mb-0 ms-[33px]">
-          <span className="leading-[1.4]">{`Custom work: Built-ins, custom furniture, and specialty finishes increase investment.  `}</span>
-        </li>
-        <li className="mb-0 ms-[33px]">
-          <span className="leading-[1.4]">{`Remodel complexity: Moving walls, plumbing, electrical, or structural elements requires more coordination. `}</span>
-        </li>
-        <li className="mb-0 ms-[33px]">
-          <span className="leading-[1.4]">{` Material quality: Natural stone, custom cabinetry, designer lighting, and premium textiles increase the budget.`}</span>
-        </li>
-        <li className="ms-[33px]">
-          <span className="leading-[1.4]">Procurement and installation: Ordering, tracking, receiving, inspecting, and installing items takes time and expertise.</span>
-        </li>
-      </ul>
-    </div>
-  );
-}
-
-function Frame26() {
-  return (
-    <div className="content-stretch flex flex-col gap-[55px] items-start justify-end relative shrink-0">
-      <Frame25 />
-      <Frame11 />
-    </div>
-  );
-}
-
-function Frame14() {
-  return (
-    <div className="absolute content-stretch flex gap-[82px] items-end left-[33px] top-[2000px] w-[calc(100%-56px)]">
-      <Frame7 />
-      <Frame10 />
-      <Frame26 />
-    </div>
-  );
-}
-
-function Frame24() {
-  return (
-    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">Common Interior Design Cost Ranges</p>
-    </div>
-  );
-}
-
-function Frame12() {
-  return (
-    <div className="[word-break:break-word] content-stretch flex flex-col font-['Hanken_Grotesk',sans-serif] gap-[24px] h-[572px] items-start leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full">
-      <p className="h-[154px] relative shrink-0 w-full">A design consultation may be a few hundred dollars to over $1,000 depending on the designer and session length. A singleroom design may range from a few thousand dollars upward, especially if it includes furniture selection, layout, custom finishes, procurement, and installation.</p>
-      <p className="h-[185px] relative shrink-0 w-full">A full-service interior design project for a living room, kitchen, primary suite, or multiple rooms can move into a higher investment range because the designer is not just choosing furniture. They may handle space planning, finish selection, lighting, custom cabinetry direction, vendor coordination, construction documentation, and styling.</p>
-      <p className="h-[185px] relative shrink-0 w-full">For major remodels, the design fee is only one part of the overall budget. Bay Area kitchen remodels are often cited in the $50,000 to $150,000 range depending on scope and finish level, while bathroom remodels can move from basic to luxury ranges depending on plumbing, tile, fixtures, lighting, and layout changes.</p>
-    </div>
-  );
-}
-
-function Frame27() {
-  return (
-    <div className="content-stretch flex flex-col gap-[22px] items-start relative shrink-0 w-[602px]">
-      <Frame24 />
-      <Frame12 />
-    </div>
-  );
-}
-
-function Frame15() {
-  return (
-    <div className="h-[285px] relative shrink-0 w-[14px]">
-      <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 285">
-        <g id="Frame 2106258775">
-          <circle cx="7" cy="7" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
-          <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.49999" x2="7.5" y1="13" y2="285" />
-        </g>
-      </svg>
-    </div>
-  );
-}
-
-function Frame16() {
-  return (
-    <div className="flex-[1_0_0] h-[558px] min-w-px relative">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258778} />
-    </div>
-  );
-}
-
-function Frame17() {
-  return (
-    <div className="flex-[1_0_0] h-[566px] min-w-px relative">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258777} />
-    </div>
-  );
-}
-
-function Frame28() {
-  return (
-    <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-[668px]">
-      <Frame16 />
-      <Frame17 />
-    </div>
-  );
-}
-
-function Frame29() {
-  return (
-    <div className="absolute content-stretch flex gap-[82px] items-end left-[33px] top-[1104px] w-[calc(100%-48px)]">
-      <Frame27 />
-      <Frame15 />
-      <Frame28 />
-    </div>
-  );
-}
-
-function Frame32() {
-  return (
-    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">Why a Boutique Studio Can Be Worth the Investment</p>
-    </div>
-  );
-}
-
-function Frame18() {
-  return (
-    <div className="content-stretch flex flex-col items-start relative shrink-0 w-[565px]">
-      <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] h-[340px] leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full whitespace-pre-wrap">
-        {`A boutique residential interior design studio like Studio Inside Eye gives homeowners a more personal, highly involved process. Instead of receiving a generic design package, clients get a home shaped around their personality, routines, architecture, and long-term lifestyle. `}
-        <br aria-hidden />
-        <br aria-hidden />
-        For San Jose homeowners, the real value of hiring an interior designer is not only making a home look beautiful. It is avoiding costly mistakes, choosing the right materials the first time, planning spaces properly, and creating a home that feels cohesive from room to room.
+      {/* Left: title + description */}
+      <div className="content-stretch flex flex-col gap-[16px] h-[262px] items-start relative shrink-0">
+        <p className="font-['Instrument_Serif',sans-serif] leading-[normal] relative shrink-0 text-[72px] whitespace-nowrap">
+          {article.pageHeading}
+        </p>
+        <p className="font-['Inter',sans-serif] font-normal h-[116px] leading-[1.3] relative shrink-0 text-[24px] tracking-[-0.96px] w-[574px]">
+          {article.pageSubHeading}
+        </p>
+      </div>
+      {/* Right: date */}
+      <p className="font-['Instrument_Serif',sans-serif] leading-[normal] relative shrink-0 text-[84px] whitespace-nowrap">
+        {article.pageDate}
       </p>
     </div>
   );
 }
 
-function Frame31() {
-  return (
-    <div className="content-stretch flex flex-col gap-[22px] items-start relative shrink-0 w-[602px]">
-      <Frame32 />
-      <Frame18 />
-    </div>
-  );
-}
+/** Section 1 — Image LEFT | dotLine-top | Text RIGHT (Frame13, top: 509px) */
+function ArticleSection1Block({ article }: { article: ArticleData }) {
+  const { section1 } = article;
 
-function Frame19() {
   return (
-    <div className="h-[380px] relative shrink-0 w-[14px]">
-      <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 380">
-        <g id="Frame 2106258775">
-          <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.5" x2="7.50002" y1="14" y2="367" />
-          <circle cx="7" cy="373" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
-        </g>
-      </svg>
-    </div>
-  );
-}
+    <div className="absolute content-stretch flex gap-[82px] items-end left-[33px] top-[509px] w-[calc(100%-56px)]">
+      {/* Image */}
+      <div className="h-[451px] relative shrink-0 w-[699px]">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={section1.image}
+        />
+      </div>
 
-function Frame20() {
-  return (
-    <div className="flex-[1_0_0] h-[558px] min-w-px relative">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258779} />
-    </div>
-  );
-}
+      {/* Dot-line: circle top, line down */}
+      <div className="h-[285px] relative shrink-0 w-[14px]">
+        <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 285">
+          <g id="Frame 2106258775">
+            <circle cx="7" cy="7" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
+            <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.49999" x2="7.5" y1="13" y2="285" />
+          </g>
+        </svg>
+      </div>
 
-function Frame21() {
-  return (
-    <div className="flex-[1_0_0] h-[566px] min-w-px relative">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258780} />
-    </div>
-  );
-}
-
-function Frame33() {
-  return (
-    <div className="content-stretch flex flex-[1_0_0] right-[23px] gap-[20px] items-start  relative">
-      <Frame20 />
-      <Frame21 />
-    </div>
-  );
-}
-
-function Frame30() {
-  return (
-    <div className="absolute content-stretch flex gap-[54px] items-end left-[33px] top-[2765px] w-[calc(100%-48px)]">
-      <Frame31 />
-      <Frame19 />
-      <Frame33 />
-    </div>
-  );
-}
-
-function Frame22() {
-  return (
-    <div className="h-full relative shrink-0 w-[754px]">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-[117.09%] left-0 max-w-none top-[-17.17%] w-full" src={imgFrame2106258781} />
+      {/* Text content */}
+      <div className="[word-break:break-word] content-stretch flex flex-col font-['Hanken_Grotesk',sans-serif] gap-[24px] items-start leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-[565px]">
+        {section1.content.type === "paragraphs" &&
+          section1.content.texts.map((text, i) => (
+            <p
+              key={i}
+              className={`relative shrink-0 w-full ${i === 0 ? "h-[214px]" : "h-[213px]"}`}
+            >
+              {text}
+            </p>
+          ))}
       </div>
     </div>
   );
 }
 
-function Frame35() {
+/** Section 2 — Text+heading LEFT | dotLine-top | DualImage RIGHT (Frame29, top: 1104px) */
+function ArticleSection2Block({ article }: { article: ArticleData }) {
+  const { section2 } = article;
+
   return (
-    <div className="content-stretch flex h-[527px] items-start relative shrink-0 w-[754px]">
-      <Frame22 />
+    <div className="absolute content-stretch flex gap-[82px] items-end left-[33px] top-[1104px] w-[calc(100%-48px)]">
+      {/* Text block */}
+      <div className="content-stretch flex flex-col gap-[22px] items-start relative shrink-0 w-[602px]">
+        {/* Heading */}
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
+          <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">
+            {section2.heading}
+          </p>
+        </div>
+        {/* Body */}
+        <div className="[word-break:break-word] content-stretch flex flex-col font-['Hanken_Grotesk',sans-serif] gap-[24px] h-[572px] items-start leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full">
+          {section2.content.type === "paragraphs" &&
+            section2.content.texts.map((text, i) => (
+              <p
+                key={i}
+                className={`relative shrink-0 w-full ${
+                  i === 0 ? "h-[154px]" : "h-[185px]"
+                }`}
+              >
+                {text}
+              </p>
+            ))}
+        </div>
+      </div>
+
+      {/* Dot-line: circle top, line down */}
+      <div className="h-[285px] relative shrink-0 w-[14px]">
+        <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 285">
+          <g id="Frame 2106258775">
+            <circle cx="7" cy="7" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
+            <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.49999" x2="7.5" y1="13" y2="285" />
+          </g>
+        </svg>
+      </div>
+
+      {/* Dual image */}
+      <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-[668px]">
+        <div className="flex-[1_0_0] h-[558px] min-w-px relative">
+          <img
+            alt=""
+            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+            src={section2.imageLeft}
+          />
+        </div>
+        <div className="flex-[1_0_0] h-[566px] min-w-px relative">
+          <img
+            alt=""
+            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+            src={section2.imageRight}
+          />
+        </div>
+      </div>
     </div>
   );
 }
 
-function Frame37() {
+/** Cost Factors Section — Image LEFT | dotLine-bottom | Bullets RIGHT (Frame14, top: 2000px) */
+function ArticleSectionCostFactorsBlock({ article }: { article: ArticleData }) {
+  const { sectionCostFactors } = article;
+
   return (
-    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">Final Takeaway</p>
+    <div className="absolute content-stretch flex gap-[82px] items-end left-[33px] top-[2000px] w-[calc(100%-56px)]">
+      {/* Image */}
+      <div className="h-[510px] relative shrink-0 w-[662px]">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={sectionCostFactors.image}
+        />
+      </div>
+
+      {/* Dot-line: line top, circle bottom */}
+      <div className="h-[380px] relative shrink-0 w-[14px]">
+        <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 380">
+          <g id="Frame 2106258775">
+            <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.5" x2="7.50002" y1="14" y2="367" />
+            <circle cx="7" cy="373" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
+          </g>
+        </svg>
+      </div>
+
+      {/* Heading + bullets */}
+      <div className="content-stretch flex flex-col gap-[55px] items-start justify-end relative shrink-0">
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-[602px]">
+          <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">
+            {sectionCostFactors.heading}
+          </p>
+        </div>
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-[565px]">
+          <ul className="[word-break:break-word] block font-['Hanken_Grotesk',sans-serif] leading-[0] list-disc not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full">
+            {sectionCostFactors.bullets.map((bullet, i) => (
+              <li
+                key={i}
+                className={`ms-[33px] ${i < sectionCostFactors.bullets.length - 1 ? "mb-0" : ""}`}
+              >
+                <span className="leading-[1.4]">{bullet.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
 
-function Frame23() {
+/** Section 3 — Text+heading LEFT | dotLine-bottom | DualImage RIGHT (Frame30, top: 2765px) */
+function ArticleSection3Block({ article }: { article: ArticleData }) {
+  const { section3 } = article;
+
   return (
-    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-      <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] h-[216px] leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-[608px]">{`Interior design in San Jose can range widely, but the right way to think about cost is not "What is the cheapest option?" It is "What level of design support does my home actually need?" If you are planning a remodel, furnishing a new home, or upgrading a long-term residence, working with a boutique designer can help you make smarter decisions from the beginning`}</p>
+    <div className="absolute content-stretch flex gap-[54px] items-end left-[33px] top-[2765px] w-[calc(100%-48px)]">
+      {/* Text block */}
+      <div className="content-stretch flex flex-col gap-[22px] items-start relative shrink-0 w-[602px]">
+        {/* Heading */}
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
+          <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">
+            {section3.heading}
+          </p>
+        </div>
+        {/* Body */}
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-[565px]">
+          {section3.content.type === "paragraphs" &&
+            section3.content.texts.map((text, i) => (
+              <p
+                key={i}
+                className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] h-[340px] leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full whitespace-pre-wrap"
+              >
+                {text}
+              </p>
+            ))}
+        </div>
+      </div>
+
+      {/* Dot-line: line top, circle bottom */}
+      <div className="h-[380px] relative shrink-0 w-[14px]">
+        <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 380">
+          <g id="Frame 2106258775">
+            <line id="Line 83" stroke="var(--stroke-0, #DCD1B1)" x1="7.5" x2="7.50002" y1="14" y2="367" />
+            <circle cx="7" cy="373" fill="var(--fill-0, #DCD1B1)" id="Ellipse 31" r="7" />
+          </g>
+        </svg>
+      </div>
+
+      {/* Dual image */}
+      <div className="content-stretch flex flex-[1_0_0] right-[23px] gap-[20px] items-start relative">
+        <div className="flex-[1_0_0] h-[558px] min-w-px relative">
+          <img
+            alt=""
+            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+            src={section3.imageLeft}
+          />
+        </div>
+        <div className="flex-[1_0_0] h-[566px] min-w-px relative">
+          <img
+            alt=""
+            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+            src={section3.imageRight}
+          />
+        </div>
+      </div>
     </div>
   );
 }
 
-function Frame36() {
-  return (
-    <div className="content-stretch flex flex-[1_0_0] flex-col gap-[22px] items-start min-w-px relative">
-      <Frame37 />
-      <Frame23 />
-    </div>
-  );
-}
+/** Section 4 — Image LEFT | Text+heading RIGHT (Frame34, top: 3562px) */
+function ArticleSection4Block({ article }: { article: ArticleData }) {
+  const { section4 } = article;
 
-function Frame34() {
   return (
     <div className="absolute content-stretch flex gap-[82px] items-end left-[33px] top-[3562px] w-[calc(100%-48px)]">
-      <Frame35 />
-      <Frame36 />
+      {/* Image */}
+      <div className="content-stretch flex h-[527px] items-start relative shrink-0 w-[754px]">
+        <div className="h-full relative shrink-0 w-[754px]">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <img
+              alt=""
+              className="absolute h-[117.09%] left-0 max-w-none top-[-17.17%] w-full"
+              src={section4.image}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Text block */}
+      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[22px] items-start min-w-px relative">
+        {/* Heading */}
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
+          <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">
+            {section4.heading}
+          </p>
+        </div>
+        {/* Body */}
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
+          <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] h-[216px] leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-[608px]">
+            {section4.bodyText}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-export default function BlogArticle() {
+export default function BlogArticle({ article }: { article: ArticleData }) {
   return (
     <div className="bg-[#5f3223] relative size-full" data-name="BLOG ARTICLE">
       <div className="absolute h-[4120px] left-0 top-0 w-full">
@@ -669,17 +597,17 @@ export default function BlogArticle() {
         </div>
       </div>
 
-      {/* ← NEW navbar replaces Frame3 */}
       <BlogNavbar />
 
-      <Frame5 />
-      <Frame13 />
-      <Frame14 />
-      <Frame29 />
-      <Frame30 />
-      <Frame34 />
+      {/* ── Dynamic sections — data from ArticleData prop ── */}
+      <ArticleHero article={article} />
+      <ArticleSection1Block article={article} />
+      <ArticleSection2Block article={article} />
+      <ArticleSectionCostFactorsBlock article={article} />
+      <ArticleSection3Block article={article} />
+      <ArticleSection4Block article={article} />
 
-      {/* Divider lines */}
+      {/* Divider lines — pixel-perfect positions preserved */}
       <div className="absolute h-0 left-[24px] top-[1019px] w-[calc(100%-48px)]">
         <div className="absolute inset-[-1px_0_0_0]">
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1392 1">
