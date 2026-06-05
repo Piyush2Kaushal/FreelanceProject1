@@ -54,6 +54,7 @@ export const project1Data: ProjectData = {
     decorativeTopRightImg: imgDecorativeTopRight,
     heroPortraitImg:      imgHeroPortrait,
     patternImg:           undefined,
+    logoImg:              imgLogo, 
     navStrokeColor:       "#8C6C3C",
     navLeftCalc:          "calc(91.67% + 34px)",
   },

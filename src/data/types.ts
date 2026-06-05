@@ -62,6 +62,7 @@ export interface ProjectData {
     navStrokeColor: string;
     /** Nav left position calc string, e.g. "calc(91.67%+34px)" */
     navLeftCalc: string;
+    logoImg?: string; 
   };
 
   // ── Concept screen ───────────────────────────────────────────────────────

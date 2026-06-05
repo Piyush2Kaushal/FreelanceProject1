@@ -54,6 +54,8 @@ export const project2Data: ProjectData = {
     patternImg:           imgPattern65,
     navStrokeColor:       "#6B6E39",
     navLeftCalc:          "calc(91.67% + 34px)",
+    logoImg:              imgLogo2,
+    
   },
 
   concept: {

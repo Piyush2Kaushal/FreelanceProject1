@@ -93,6 +93,7 @@ const BackButton = memo(function BackButton() {
           Go back to Previous project
         </p>
       </div>
+      
       <div className="h-0 relative shrink-0 w-full">
         <div className="absolute inset-[-0.5px_0_0_0]">
           <svg
@@ -215,6 +216,19 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
             />
           </div>
         </div>
+
+          {/* ✅ LOGO YAHAN ADD KARO — ExperienceScreen se bilkul same */}
+          {data.logoImg && (
+  <div className="absolute h-[52px] left-[11px] top-[20px] w-[104px] z-10" data-name="Component 20">
+    <img
+      alt=""
+      className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+      src={data.logoImg}
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+)}
 
         <BackButton />
       </div>
