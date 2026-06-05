@@ -58,6 +58,7 @@ export const project2Data: ProjectData = {
 
   concept: {
     bgTextureImg:    imgConceptBgTexture,
+    bgPatternImg:    imgPattern65, 
     mainImg:         imgConceptMain,
     logoImg:         imgLogo,
     headingLine1:    "The Art of ",

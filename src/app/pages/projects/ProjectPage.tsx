@@ -49,7 +49,7 @@ const NavButton = memo(function NavButton({
       style={{ left: leftCalc, top }}
     >
       <p
-        className="[word-break:break-word] font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] not-italic relative shrink-0 text-[20px] text-center whitespace-nowrap"
+        className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.2] not-italic relative shrink-0 text-[20px] text-center whitespace-nowrap"
         style={{ color: strokeColor }}
       >
         ​{/* zero-width space preserved from Figma */}
@@ -89,7 +89,7 @@ const BackButton = memo(function BackButton() {
             </g>
           </svg>
         </div>
-        <p className="[word-break:break-word] font-['Instrument_Serif:Regular',sans-serif] leading-[1.2] not-italic relative shrink-0 text-[#dad0ad] text-[14px] text-center whitespace-nowrap">
+        <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.2] not-italic relative shrink-0 text-[#dad0ad] text-[14px] text-center whitespace-nowrap">
           Go back to Previous project
         </p>
       </div>
@@ -151,18 +151,18 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
       {/* Project name + description block */}
       <div className="absolute content-stretch flex flex-col gap-[12px] items-start left-[calc(50%+43px)] top-[97px] w-[332px]">
         <p
-          className="[word-break:break-word] font-['Instrument_Serif:Regular',sans-serif] leading-none not-italic relative shrink-0 text-[100px] tracking-[-4px] whitespace-nowrap"
+          className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[100px] tracking-[-4px] whitespace-nowrap"
           style={{ color: data.projectNameColor }}
         >
           {data.projectName}
         </p>
-        <p className="[word-break:break-word] font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[normal] not-italic relative shrink-0 text-[14px] text-[rgba(0,0,0,0.8)] w-full">
+        <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic relative shrink-0 text-[14px] text-[rgba(0,0,0,0.8)] w-full">
           {data.description}
         </p>
       </div>
 
       {/* Side paragraph bottom-right */}
-      <p className="[word-break:break-word] absolute bottom-[119px] font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[normal] not-italic right-[313px] text-[16px] text-[rgba(0,0,0,0.8)] translate-x-full translate-y-full w-[287px]">
+      <p className="[word-break:break-word] absolute bottom-[129px] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic right-[313px] text-[14px] text-[rgba(0,0,0,0.8)] translate-x-full translate-y-full w-[287px]">
         {data.sideParagraph}
       </p>
 
@@ -257,6 +257,20 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
           className="absolute bg-size-[1024px_1024px] bg-top-left inset-0 opacity-59"
           style={{ backgroundImage: `url("${data.bgTextureImg}")` }}
         />
+
+          {/* Pattern6 – 2% opacity cover layer (new) */}
+  {data.bgPatternImg && (
+    <div
+      className="absolute inset-0"
+      style={{
+        backgroundImage: `url("${data.bgPatternImg}")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        opacity: 0.02,
+      }}
+    />
+  )}
         {data.logoImg && (
           <img
             alt=""
@@ -306,7 +320,7 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
       )}
 
       {/* Main right-side image */}
-      <div className="absolute h-[668px] left-[calc(33.33%+15px)] top-[112px] w-[925px]" data-name="image 57">
+      <div className="absolute h-[670px] left-[calc(39.5%+15px)] top-[71px] w-[805px]" data-name="image 57">
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
@@ -318,30 +332,30 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
 
       {/* Concept heading */}
       <div
-        className="[word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[0] left-[calc(8.33%-96px)] not-italic text-[64px] top-[260px] whitespace-nowrap"
+        className="[word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(8.33%-96px)] not-italic text-[64px] top-[260px] whitespace-nowrap"
         style={{ color: data.headingColor }}
       >
         <p className="leading-[0.9] mb-0 whitespace-pre">{data.headingLine1}</p>
-        <p className="font-['Instrument_Serif:Italic',sans-serif] italic leading-[0.9] whitespace-pre">
+        <p className="font-['Instrument_Serif',sans-serif] italic leading-[0.9] whitespace-pre">
           {data.headingLine2}
         </p>
       </div>
 
       {/* "Concept" label */}
       <p
-        className="[word-break:break-word] absolute font-['Instrument_Serif:Regular',sans-serif] leading-[0.9] left-[calc(4.17%-31px)] not-italic text-[16px] top-[229px] whitespace-nowrap"
+        className="[word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0.9] left-[calc(4.17%-31px)] not-italic text-[16px] top-[229px] whitespace-nowrap"
         style={{ color: data.headingColor }}
       >
         Concept
       </p>
 
       {/* Sub-description */}
-      <p className="[word-break:break-word] absolute font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[normal] left-[24px] not-italic text-[13px] text-[rgba(0,0,0,0.6)] top-[392px] w-[233px]">
+      <p className="[word-break:break-word] absolute font-['Hanken_Grotesk',sans-serif] leading-[normal] left-[24px] not-italic text-[14px] text-[rgba(0,0,0,0.6)] top-[392px] w-[233px]">
         {data.subDescription}
       </p>
 
       {/* Body paragraphs */}
-      <div className="[word-break:break-word] absolute bottom-[251px] font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[0] left-[34px] not-italic text-[rgba(0,0,0,0.6)] translate-y-full w-[361px] whitespace-pre-wrap" style={{ fontSize: "18px" }}>
+      <div className="[word-break:break-word] absolute bottom-[251px] font-['Hanken_Grotesk',sans-serif] leading-[0] left-[24px] not-italic text-[rgba(0,0,0,0.6)] translate-y-full w-[467px] whitespace-pre-wrap" style={{ fontSize: "18px" }}>
         <p className="leading-[normal] mb-0">{data.bodyParagraph1}</p>
         <p className="leading-[normal] mb-0">​</p>
         <p className="leading-[normal]">{data.bodyParagraph2}</p>
@@ -390,13 +404,13 @@ const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: Projec
 
       {/* "The Experience" centred text block */}
       <div className="[word-break:break-word] absolute content-stretch flex flex-col gap-[20px] items-center left-[calc(33.33%+29px)] not-italic text-[#dad0ad] text-center top-[378px] w-[452px]">
-        <p className="font-['Instrument_Serif:Regular',sans-serif] leading-[0] min-w-full relative shrink-0 text-[0px] w-[min-content]">
+        <p className="font-['Instrument_Serif',sans-serif] leading-[0] min-w-full relative shrink-0 text-[0px] w-[min-content]">
           <span className="leading-[0.9] text-[84px]">The </span>
-          <span className="font-['Instrument_Serif:Italic',sans-serif] italic leading-[0.9] text-[84px]">
+          <span className="font-['Instrument_Serif',sans-serif] italic leading-[0.9] text-[84px]">
             Experience
           </span>
         </p>
-        <p className="font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[normal] relative shrink-0 text-[13px] w-[320px]">
+        <p className="font-['Hanken_Grotesk',sans-serif] leading-[normal] relative shrink-0 text-[13px] w-[320px]">
           {data.experienceSubtitle}
         </p>
       </div>
@@ -429,7 +443,8 @@ const GalleryScreenItem = memo(function GalleryScreenItem({
   bgColor: string;
   bgTextureImg: string;
 }) {
-  const containerH = screen.containerHeightClass ?? "h-full";
+  const containerH = screen.containerHeightClass ?? "h-[716px]";
+  const alignClass = screen.alignClass ?? "items-end";
 
   return (
     <div
@@ -452,7 +467,7 @@ const GalleryScreenItem = memo(function GalleryScreenItem({
 
       {/* Images container */}
       <div
-        className={`absolute content-stretch flex gap-[24px] ${containerH} items-end left-[24px] top-[39px] w-[1392px]`}
+        className={`absolute content-stretch flex gap-[24px] ${containerH} items-end left-[24px] top-[32px] w-[1392px]`}
       >
         {screen.images.map((img, i) => {
           const isFlexGrow = !img.widthClass;
@@ -539,23 +554,23 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
       <div className="absolute content-stretch flex flex-col gap-[16px] items-start left-[calc(33.33%+30px)] top-[191px] w-[587px]">
         <div className="content-stretch flex flex-col items-start relative shrink-0 w-[496px]">
           <p
-            className="[word-break:break-word] font-['Instrument_Serif:Regular',sans-serif] leading-[normal] not-italic relative shrink-0 text-[64px] text-center whitespace-nowrap"
+            className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[normal] not-italic relative shrink-0 text-[64px] text-center whitespace-nowrap"
             style={{ color: data.quoteAccentColor }}
           >
             Client Testimonial
           </p>
         </div>
-        <p className="[word-break:break-word] font-['Neue_Haas_Grotesk_Display_Pro:56_Roman_Italic',sans-serif] leading-[normal] min-w-full not-italic relative shrink-0 text-[22px] text-[rgba(58,54,54,0.8)] w-[min-content]">
+        <p className="[word-break:break-word] font-['Cormorant_Garamond',serif]  leading-[normal] min-w-full italic relative shrink-0 text-[22px] text-[#3A3636CC] w-[min-content]">
           {data.quote}
         </p>
-        <p className="[word-break:break-word] font-['Neue_Haas_Grotesk_Display_Pro:56_Roman_Italic',sans-serif] leading-[normal] min-w-full not-italic relative shrink-0 text-[18px] text-[rgba(0,0,0,0.5)] w-[min-content]">
+        <p className="[word-break:break-word] font-['Cormorant_Garamond',serif]  leading-[normal] min-w-full italic relative shrink-0 text-[18px] text-[#3A3636CC] w-[min-content]">
           {data.attribution}
         </p>
       </div>
 
       {/* Large quote mark */}
       <div
-        className="-translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Neue_Haas_Grotesk_Display_Pro:75_Bold',sans-serif] justify-center leading-[0] left-[calc(58.33%+83px)] not-italic text-[128px] top-[233px] whitespace-nowrap"
+        className="-translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Cormorant_Garamond',serif] font-semibold justify-center leading-[0] left-[calc(58.33%+83px)] not-italic text-[128px] top-[233px] whitespace-nowrap"
         style={{ color: data.quoteAccentColor }}
       >
         <p className="leading-[normal]">"</p>
@@ -563,7 +578,7 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
 
       {/* Accent line */}
       <div
-        className="absolute h-0 left-[calc(33.33%+32px)] top-[479px] w-[132px]"
+        className="absolute h-0 left-[calc(33.33%+32px)] top-[450px] w-[132px]"
       >
         <div className="absolute inset-[-1px_0_0_0]">
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 132 1">
@@ -605,7 +620,7 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
           {data.credits.map((credit, i) => (
             <React.Fragment key={i}>
               <div
-                className="[word-break:break-word] flex flex-col font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[24px] whitespace-nowrap"
+                className="[word-break:break-word] flex flex-col font-['Hanken_Grotesk',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[22px] whitespace-nowrap"
                 style={{ color: data.quoteAccentColor }}
               >
                 <p className="leading-[normal]">
@@ -628,10 +643,10 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
         {/* Enquiry block */}
         <div className="content-stretch flex flex-col h-[134px] items-end justify-between relative shrink-0">
           <div className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[0] not-italic relative shrink-0 text-[#747272] text-[0px] text-right w-[439px]">
-            <p className="font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[normal] mb-0 text-[24px]">
+            <p className="font-['Hanken_Grotesk',sans-serif] leading-[normal] mb-0 text-[22px]">
               We would love to hear from you;
             </p>
-            <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] decoration-from-font decoration-solid font-['Neue_Haas_Grotesk_Display_Pro:55_Roman',sans-serif] leading-[normal] text-[24px] underline">
+            <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] decoration-from-font decoration-solid font-['Hanken_Grotesk',sans-serif] leading-[normal] text-[22px] underline">
               {data.enquiryEmail}
             </p>
           </div>

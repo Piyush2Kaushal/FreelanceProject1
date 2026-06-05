@@ -60,6 +60,7 @@ export const project1Data: ProjectData = {
 
   concept: {
     bgTextureImg:    imgConceptBgTexture,
+    bgPatternImg:  imgDecorativeTopRight, 
     mainImg:         imgConceptMain,
     logoImg:         undefined, // Project 1 has no logo on the concept screen
     headingLine1:    "Rooted in",
@@ -110,11 +111,14 @@ export const project1Data: ProjectData = {
         { src: imgGal136, heightClass: "h-full" },                             // flex-grow
       ],
     },
+
     {
+      containerHeightClass: "h-[711px]",
+      alignClass: "items-center", // ← center aligned, niche nahi chipkegi
       images: [
         { src: imgGal141, heightClass: "h-[567px]", widthClass: "w-[454px]" },
         { src: imgGal142, heightClass: "h-[560px]", widthClass: "w-[348px]" },
-        { src: imgGal143, heightClass: "h-[721px]" },                          // flex-grow
+        { src: imgGal143, heightClass: "h-[721px]" },
       ],
     },
   ],

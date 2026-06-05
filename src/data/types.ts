@@ -14,10 +14,9 @@ export interface GalleryImage {
 /** A horizontal scroll screen showing 2-3 images in a gallery layout */
 export interface GalleryScreen {
   images: GalleryImage[];
-  /** Total container height, default "h-[716.58px]" */
   containerHeightClass?: string;
+  alignClass?: string; // ← add this
 }
-
 /** A full-width single-image screen (the 2 extra screens in Project 2) */
 export interface FullImageScreen {
   src: string;
@@ -69,6 +68,7 @@ export interface ProjectData {
   concept: {
     /** Background texture image for the noise overlay */
     bgTextureImg: string;
+    bgPatternImg?: string; 
     /** Full bleed image on the right side */
     mainImg: string;
     /** Logo image shown top-left */
@@ -107,6 +107,8 @@ export interface ProjectData {
 
   // ── Gallery screens (always 3 in both projects) ──────────────────────────
   galleryScreens: GalleryScreen[];
+
+  
 
   /** Background color shared by all gallery screens */
   galleryBgColor: string;
