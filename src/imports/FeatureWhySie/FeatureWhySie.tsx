@@ -138,8 +138,8 @@ function Frame13() {
 
 function Frame14() {
   return (
-    <div className="absolute content-stretch flex items-center justify-between left-[24px] top-[527px] w-[1392px]">
-      <p className="[word-break:break-word] font-['Neue_Haas_Grotesk_Display_Pro:45_Light',sans-serif] leading-[normal] not-italic relative shrink-0 text-[#fef4db] text-[20px] tracking-[-0.2px] w-[457px]">©️ 2025 Studio Inside Eye. All rights reserved</p>
+    <div className="absolute content-stretch flex items-center justify-between left-[33px] right-[33px] top-[527px]">
+      <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic relative shrink-0 text-[#fef4db] text-[19px] tracking-[-0.2px] w-[457px]">©️ 2025 Studio Inside Eye. All rights reserved</p>
       <Frame13 />
     </div>
   );
@@ -147,7 +147,7 @@ function Frame14() {
 
 function Frame6() {
   return (
-    <div className="absolute left-[20px] size-[32px] top-[337px]" data-name="Frame">
+    <div className="absolute left-[33px] size-[32px] top-[337px]" data-name="Frame">
       <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 32">
         <g id="Frame">
           <path d={svgPaths.p299ddb70} fill="var(--fill-0, #DFD0B1)" id="Vector" />
@@ -160,7 +160,7 @@ function Frame6() {
 function Frame7() {
   return (
     <div className="bg-[#dad0ad] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
-      <p className="[word-break:break-word] font-['Inter:Medium',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#504d39] text-[18px] tracking-[-0.54px] whitespace-nowrap">{` Start your project`}</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#504d39] text-[18px] tracking-[-0.54px] whitespace-nowrap">{` Start your project`}</p>
     </div>
   );
 }
@@ -169,7 +169,7 @@ function Frame8() {
   return (
     <div className="content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
       <div aria-hidden className="absolute border border-[#dad0ad] border-solid inset-0 pointer-events-none rounded-[4px]" />
-      <p className="[word-break:break-word] font-['Inter:Medium',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#dad0ad] text-[18px] tracking-[-0.54px] whitespace-nowrap">Discovery Call</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#dad0ad] text-[18px] tracking-[-0.54px] whitespace-nowrap">Discovery Call</p>
     </div>
   );
 }
@@ -186,7 +186,7 @@ function Frame9() {
 function Frame15() {
   return (
     <div className="absolute content-stretch flex flex-col gap-[32px] items-start left-[calc(66.67%+8px)] top-[225px] w-[443px]">
-      <p className="[word-break:break-word] font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#dacdac] text-[28px] tracking-[-0.4px] w-full">Lets shape your space.</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#dacdac] text-[28px] tracking-[-0.4px] w-full">Lets shape your space.</p>
       <Frame9 />
     </div>
   );
@@ -204,7 +204,7 @@ export default function FeatureWhySie() {
           <path d={svgPaths.p25b23d00} fill="var(--fill-0, #DAD0AD)" id="Star 9" />
         </svg>
       </div>
-      <div className="absolute left-[24px] size-[23px] top-[170px]">
+      <div className="absolute left-[33px] size-[23px] top-[170px]">
         <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 23 23">
           <path d={svgPaths.p25b23d00} fill="var(--fill-0, #DAD0AD)" id="Star 9" />
         </svg>
@@ -225,15 +225,11 @@ export default function FeatureWhySie() {
           </div>
         </div>
       </div>
-      <div className="absolute flex h-0 items-center justify-center left-[20px] top-[461px] w-[1396px]">
-        <div className="flex-none rotate-180">
-          <div className="h-0 relative w-[1396px]">
-            <div className="absolute inset-[-1.4px_0_0_0]">
-              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1396 1.4">
-                <line id="Line 10" stroke="var(--stroke-0, #DAD0AD)" strokeOpacity="0.6" strokeWidth="1.4" x2="1396" y1="0.7" y2="0.7" />
-              </svg>
-            </div>
-          </div>
+      <div className="absolute h-0 left-[20px] top-[461px] w-[calc(100%-40px)]">
+        <div className="absolute inset-[-1.4px_0_0_0]">
+          <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1396 1.4">
+            <line id="Line 10" stroke="var(--stroke-0, #DAD0AD)" strokeOpacity="0.6" strokeWidth="1.4" x2="1396" y1="0.7" y2="0.7" />
+          </svg>
         </div>
       </div>
       <div className="absolute flex h-[233px] items-center justify-center left-[calc(33.33%+64px)] top-[155px] w-0">
@@ -247,15 +243,15 @@ export default function FeatureWhySie() {
           </div>
         </div>
       </div>
-      <p className="[word-break:break-word] absolute font-['Inter:Regular',sans-serif] font-normal leading-[normal] left-[24px] not-italic text-[#decfae] text-[22px] top-[235px] whitespace-nowrap">R O O T E D. A U TE N T I C. Y O U R S</p>
+      <p className="[word-break:break-word] absolute font-['Inter',sans-serif] font-normal leading-[normal] left-[33px] not-italic text-[#decfae] text-[22px] top-[235px] whitespace-nowrap">R O O T E D. A U TE N T I C. Y O U R S</p>
       <Frame6 />
-      <p className="[word-break:break-word] absolute font-['Inter:Regular',sans-serif] font-normal leading-[normal] left-[70px] not-italic text-[#dacdac] text-[22px] top-[345px] whitespace-nowrap">
+      <p className="[word-break:break-word] absolute font-['Inter',sans-serif] font-normal leading-[normal] left-[80px] not-italic text-[#dacdac] text-[22px] top-[345px] whitespace-nowrap">
         Studio Inside Eye
         <br aria-hidden />
         San Jose, California
       </p>
       <Frame15 />
-      <div className="absolute h-[660px] left-0 top-0 w-[1440px]">
+      <div className="absolute h-[660px] left-0 top-0 w-full">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
           <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
