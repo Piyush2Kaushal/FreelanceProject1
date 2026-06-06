@@ -40,7 +40,7 @@ function BlogMobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
       <div
         style={{
           position: "fixed", top: 0, right: 0, bottom: 0, width: "min(280px, 80vw)",
-          background: "#7030003D", zIndex: 9999,
+          background: "#703000E6", zIndex: 9999,
           transform: isOpen ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
           display: "flex", flexDirection: "column",
@@ -240,6 +240,22 @@ function ArticleHero({ article }: { article: ArticleData }) {
 
       {/* MOBILE */}
       <div className="lg:hidden px-5 pt-8 pb-6 text-[#dcd1b1]">
+        {/* Back to Journal — above heading on mobile/tablet only */}
+        <a
+          href="/journal"
+          className="inline-flex items-center gap-2 no-underline mb-6"
+          style={{ color: "#DCD1B1", opacity: 0.75 }}
+        >
+          <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+            <path d="M15 5H1M1 5L5 1M1 5L5 9" stroke="#DCD1B1" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span
+            className="font-['Hanken_Grotesk',sans-serif] leading-normal"
+            style={{ fontSize: "clamp(13px, 3.5vw, 15px)", letterSpacing: "-0.01em" }}
+          >
+            Back to Journal
+          </span>
+        </a>
         {/* Date — subtle, placed above title */}
         <p
           className="font-['Instrument_Serif',sans-serif] leading-none mb-3"
@@ -543,22 +559,6 @@ function ArticleSection4Block({ article }: { article: ArticleData }) {
         </p>
         {/* Article end rule */}
         <SectionRule />
-        {/* Back to journal */}
-        <a
-          href="/journal"
-          className="inline-flex items-center gap-2 no-underline group"
-          style={{ color: "#DCD1B1", opacity: 0.75 }}
-        >
-          <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
-            <path d="M15 5H1M1 5L5 1M1 5L5 9" stroke="#DCD1B1" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span
-            className="font-['Hanken_Grotesk',sans-serif] leading-normal"
-            style={{ fontSize: "clamp(13px, 3.5vw, 15px)", letterSpacing: "-0.01em" }}
-          >
-            Back to Journal
-          </span>
-        </a>
       </div>
     </>
   );
