@@ -1,4 +1,3 @@
-
 /* ─── Responsive: Navbar ──────────────────────────────────────────────────── */
 /* Desktop navbar: visible on ≥768px */
 .navbar-desktop {
@@ -156,6 +155,29 @@ html, body {
 * {
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
+}
+
+/* ─── Journal Page Responsive Fixes ─────────────────────────────────────── */
+/* Logo on mobile: scale down slightly on small screens */
+@media (max-width: 767px) {
+  .journal-header-logo {
+    width: 86px !important;
+    height: 42px !important;
+    left: 16px !important;
+    top: 22px !important;
+  }
+}
+
+/* Journal hero: no horizontal overflow */
+.journal-hero-root {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Journal articles: no horizontal overflow */
+.journal-articles-root {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* Improve touch button targets */

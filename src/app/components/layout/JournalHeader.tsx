@@ -186,7 +186,7 @@ export default function JournalHeader({ activePage = "Journal" }: JournalHeaderP
     <>
       {/* Logo */}
       <div
-        className="absolute left-[33px] top-[30px] z-10 h-[51px] w-[104px] cursor-pointer"
+        className="journal-header-logo absolute left-[33px] top-[30px] z-10 h-[51px] w-[104px] cursor-pointer"
         onClick={() => navigate("/")}
       >
         <img
