@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import imgRectangle29 from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.png";
 import imgComponent20 from "../../assets/4e454c35d52b905142f0f45a93315e3a6c51ea01.png";
 import imgTexture from "../../assets/texture.png";
@@ -8,12 +8,22 @@ import type { ArticleData } from "../../data/articles";
 // ─── Nav items ────────────────────────────────────────────────────────────────
 const navItems = [
   { label: "MENU", to: null },
-  { label: "Home", to: "/" },
+  { label: "Home", to: "/home" },
   { label: "About", to: "/about" },
-  { label: "Projects", to: "/" },
+  { label: "Projects", to: "/projects/project-1" },
   { label: "Moodboard", to: "/" },
   { label: "Journal", to: "/journal" },
 ] as const;
+
+// Active check for blog/article navbar (text color: #DCD1B1)
+function isBlogActive(label: string, pathname: string): boolean {
+  if (label === "Home")     return pathname === "/home";
+  if (label === "Projects") return pathname.startsWith("/projects");
+  if (label === "About")    return pathname === "/about";
+  if (label === "Journal")  return pathname.startsWith("/journal");
+  if (label === "Moodboard") return pathname === "/";
+  return false;
+}
 
 // ─── Mobile Drawer ────────────────────────────────────────────────────────────
 function BlogMobileDrawer({
@@ -168,6 +178,7 @@ function BlogMobileDrawer({
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 function BlogNavbar() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
@@ -233,7 +244,9 @@ function BlogNavbar() {
 
           <div className="relative flex h-full items-center pl-6 pr-5">
             <ul className="flex items-center gap-4 list-none m-0 p-0">
-              {navItems.map((item, index) => (
+              {navItems.map((item, index) => {
+                const active = isBlogActive(item.label, pathname);
+                return (
                 <li key={item.label} className="flex items-center gap-4">
                   {index === 1 && (
                     <span className="h-8 w-px shrink-0 bg-[#DCD1B1]" aria-hidden />
@@ -255,19 +268,25 @@ function BlogNavbar() {
                       lineHeight: 1.21,
                       letterSpacing: index === 0 ? "0.08em" : "0em",
                       color: "#DCD1B1",
-                      textDecoration: "none",
+                      textDecoration: active ? "underline" : "none",
+                      textDecorationColor: "#DCD1B1",
+                      textUnderlineOffset: "3px",
                     }}
                   >
                     {item.label}
                   </a>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           </div>
         </nav>
 
         {/* ── Contact — original style ── */}
-        <div className="navbar-desktop bg-[#dcd1b1] h-[41px] relative rounded-[4px] shrink-0 pointer-events-auto">
+        <button
+          className="navbar-desktop bg-[#dcd1b1] h-[41px] relative rounded-[4px] shrink-0 pointer-events-auto cursor-pointer border-none hover:opacity-90 transition-opacity"
+          onClick={() => navigate("/contact")}
+        >
           <div className="flex flex-row items-center justify-center size-full">
             <div className="content-stretch flex items-center justify-center px-[28px] py-[24px] relative size-full">
               <p className="[word-break:break-word] font-['Inter:Medium',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#5f3223] text-[16px] tracking-[-0.48px] whitespace-nowrap">
@@ -275,7 +294,7 @@ function BlogNavbar() {
               </p>
             </div>
           </div>
-        </div>
+        </button>
       </div>
 
       {/* ── MOBILE: hamburger ── */}

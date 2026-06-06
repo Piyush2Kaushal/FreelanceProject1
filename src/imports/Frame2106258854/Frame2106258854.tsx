@@ -6,7 +6,7 @@ import imgFrame2106258506 from "../../assets/75226685f4f76f704b886f96c7d3f66fad2
 import imgComponent20 from "../../assets/ef5789f32fa9b15364e39033c5d7cb0a9747ec22.png";
 import imgVector51 from "../../assets/dfe77762c7f21e4ac4da56b57873c0aeb4b24ca3.png";
 import imgTexture from "../../assets/texture.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 /* ─── DESIGN TOKENS ────────────────────────────────────────────────────────── */
 const COLOR = {
@@ -595,7 +595,14 @@ function Frame32() {
   );
 }
 
-const contactNavItems = ["MENU", "Home", "Projects", "About", "Journal", "Moodboard"] as const;
+const contactNavItems = [
+  { label: "MENU",      to: null },
+  { label: "Home",      to: "/home" },
+  { label: "Projects",  to: "/projects/project-1" },
+  { label: "About",     to: "/about" },
+  { label: "Journal",   to: "/journal" },
+  { label: "Moodboard", to: "/" },
+] as const;
 
 // ─── Contact Page Mobile Drawer ───────────────────────────────────────────────
 // Rendered at root (Frame38) level — no transformed/relative parent — so
@@ -695,27 +702,37 @@ function ContactMobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: ()
             gap: 0,
           }}
         >
-          {contactNavItems.map((item, index) => (
+          {contactNavItems.map((item, index) => {
+            const route = item.to;
+            const isContactActive = item.label === "Contact";
+            return (
             <a
-              key={item}
-              href="#"
-              onClick={(e) => { e.preventDefault(); onClose(); if (index === 1) navigate("/"); }}
+              key={item.label}
+              href={route ?? "#"}
+              onClick={
+                route
+                  ? (e) => { e.preventDefault(); onClose(); navigate(route); }
+                  : onClose
+              }
               style={{
                 fontSize: index === 0 ? 11 : 22,
                 fontWeight: index === 0 ? 600 : 400,
                 lineHeight: 1.2,
                 letterSpacing: index === 0 ? "0.12em" : "-0.01em",
                 color: "#8e3219",
-                textDecoration: "none",
+                textDecoration: isContactActive ? "underline" : "none",
+                textDecorationColor: "#8e3219",
+                textUnderlineOffset: "3px",
                 padding: "12px 0",
                 borderBottom: index < contactNavItems.length - 1 ? "1px solid rgba(142,50,25,0.15)" : "none",
                 opacity: index === 0 ? 0.6 : 1,
                 transition: "opacity 0.18s",
               }}
             >
-              {item}
+              {item.label}
             </a>
-          ))}
+            );
+          })}
         </nav>
       </div>
     </>
@@ -723,25 +740,91 @@ function ContactMobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: ()
 }
 
 function Frame() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const desktopNavItems = [
+    { label: "MENU",      to: null },
+    { label: "Home",      to: "/home" },
+    { label: "Projects",  to: "/projects/project-1" },
+    { label: "About",     to: "/about" },
+    { label: "Journal",   to: "/journal" },
+    { label: "Moodboard", to: "/" },
+  ] as const;
+
+  function isContactDesktopActive(label: string): boolean {
+    if (label === "Home")      return pathname === "/home";
+    if (label === "Projects")  return pathname.startsWith("/projects");
+    if (label === "About")     return pathname === "/about";
+    if (label === "Journal")   return pathname.startsWith("/journal");
+    if (label === "Moodboard") return pathname === "/";
+    return false;
+  }
+
   return (
     <div className="absolute content-stretch flex gap-[16px] items-center left-[25px] top-[16px]">
-      <p className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap" style={{ fontWeight: 450 }}>MENU</p>
-      <div className="flex h-[32px] items-center justify-center relative shrink-0 w-0">
-        <div className="flex-none rotate-90">
-          <div className="h-0 relative w-[32px]">
-            <div className="absolute inset-[-1px_0_0_0]">
-              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 1">
-                <line stroke="var(--stroke-0, #8E3219)" x2="32" y1="0.5" y2="0.5" />
-              </svg>
+      {desktopNavItems.map((item, index) => {
+        const active = isContactDesktopActive(item.label);
+        if (index === 0) {
+          // MENU label — not a link
+          return (
+            <p
+              key={item.label}
+              className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap"
+              style={{ fontWeight: 450, opacity: 0.75 }}
+            >
+              {item.label}
+            </p>
+          );
+        }
+        if (index === 1) {
+          // Separator + first link
+          return (
+            <div key={item.label} className="flex items-center gap-[16px]">
+              <div className="flex h-[32px] items-center justify-center relative shrink-0 w-0">
+                <div className="flex-none rotate-90">
+                  <div className="h-0 relative w-[32px]">
+                    <div className="absolute inset-[-1px_0_0_0]">
+                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 1">
+                        <line stroke="var(--stroke-0, #8E3219)" x2="32" y1="0.5" y2="0.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a
+                href={item.to ?? "#"}
+                onClick={item.to ? (e) => { e.preventDefault(); navigate(item.to!); } : undefined}
+                className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap hover:opacity-80 transition-opacity"
+                style={{
+                  fontWeight: 450,
+                  textDecoration: active ? "underline" : "none",
+                  textDecorationColor: "#8e3219",
+                  textUnderlineOffset: "3px",
+                }}
+              >
+                {item.label}
+              </a>
             </div>
-          </div>
-        </div>
-      </div>
-      <p className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap" style={{ fontWeight: 450 }}>Home</p>
-      <p className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap" style={{ fontWeight: 450 }}>Projects</p>
-      <p className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap" style={{ fontWeight: 450 }}>About</p>
-      <p className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap" style={{ fontWeight: 450 }}>Journal</p>
-      <p className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap" style={{ fontWeight: 450 }}>Moodboard</p>
+          );
+        }
+        return (
+          <a
+            key={item.label}
+            href={item.to ?? "#"}
+            onClick={item.to ? (e) => { e.preventDefault(); navigate(item.to!); } : undefined}
+            className="[word-break:break-word] leading-[1.21] tracking-[0em] not-italic relative shrink-0 text-[#8e3219] text-[14px] whitespace-nowrap hover:opacity-80 transition-opacity"
+            style={{
+              fontWeight: 450,
+              textDecoration: active ? "underline" : "none",
+              textDecorationColor: "#8e3219",
+              textUnderlineOffset: "3px",
+            }}
+          >
+            {item.label}
+          </a>
+        );
+      })}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import imgLogo from "../../../assets/abca832675d93471023a757571b4ecb5a568e002.png";
 import imgTexture from "../../../assets/texture.png";
 
@@ -11,9 +11,9 @@ interface JournalHeaderProps {
 
 const navItems = [
   { label: "MENU", to: null },
-  { label: "Home", to: "/" },
+  { label: "Home", to: "/home" },
   { label: "About", to: "/about" },
-  { label: "Projects", to: "/" },
+  { label: "Projects", to: "/projects/project-1" },
   { label: "Moodboard", to: "/" },
   { label: "Journal", to: "/journal" },
 ] as const;
@@ -136,6 +136,8 @@ function JournalMobileDrawer({
                 letterSpacing: index === 0 ? "0.12em" : "-0.01em",
                 color: "#442b00",
                 textDecoration: item.label === activePage ? "underline" : "none",
+                textDecorationColor: "#442b00",
+                textUnderlineOffset: "3px",
                 padding: "12px 0",
                 borderBottom: index < navItems.length - 1 ? "1px solid rgba(68,43,0,0.15)" : "none",
                 opacity: index === 0 ? 0.6 : 1,
@@ -269,6 +271,8 @@ export default function JournalHeader({ activePage = "Journal" }: JournalHeaderP
                     letterSpacing: index === 0 ? "0.08em" : "0em",
                     color: "#442b00",
                     textDecoration: item.label === activePage ? "underline" : "none",
+                    textDecorationColor: "#442b00",
+                    textUnderlineOffset: "3px",
                     opacity: index === 0 ? 0.75 : 1,
                   }}
                 >

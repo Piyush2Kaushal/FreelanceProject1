@@ -1,8 +1,25 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import imgTexture from "../../../assets/texture.png";
 
 const navItems = ["MENU", "Home", "Projects", "About", "Journal"] as const;
+
+// Route map — single source of truth for this navbar
+const NAV_ROUTES: Record<string, string> = {
+  Home:     "/home",
+  Projects: "/projects/project-1",
+  About:    "/about",
+  Journal:  "/journal",
+};
+
+// Returns true when the current URL matches the nav item's destination
+function isActive(item: string, pathname: string): boolean {
+  if (item === "Home")     return pathname === "/home";
+  if (item === "Projects") return pathname.startsWith("/projects");
+  if (item === "About")    return pathname === "/about";
+  if (item === "Journal")  return pathname.startsWith("/journal");
+  return false;
+}
 
 // ─── Mobile Side Drawer ───────────────────────────────────────────────────────
 function MobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
@@ -105,37 +122,34 @@ function MobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             gap: 0,
           }}
         >
-          {navItems.map((item, index) => (
-            <a
-              key={item}
-              href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : item === "Projects" ? "/projects/project-1" : "#"}
-              onClick={
-                item === "Journal"
-                  ? (e) => { e.preventDefault(); onClose(); navigate("/journal"); }
-                  : item === "About"
-                  ? (e) => { e.preventDefault(); onClose(); navigate("/about"); }
-                  : item === "Home"
-                  ? (e) => { e.preventDefault(); onClose(); navigate("/home"); }
-                  : item === "Projects"
-                  ? (e) => { e.preventDefault(); onClose(); navigate("/projects/project-1"); }
-                  : onClose
-              }
-              style={{
-                fontSize: index === 0 ? 11 : 22,
-                fontWeight: index === 0 ? 600 : 400,
-                lineHeight: 1.2,
-                letterSpacing: index === 0 ? "0.12em" : "-0.01em",
-                color: "#442b00",
-                textDecoration: "none",
-                padding: "12px 0",
-                borderBottom: index < navItems.length - 1 ? "1px solid rgba(68,43,0,0.15)" : "none",
-                opacity: index === 0 ? 0.6 : 1,
-                transition: "opacity 0.18s",
-              }}
-            >
-              {item}
-            </a>
-          ))}
+          {navItems.map((item, index) => {
+            const route = NAV_ROUTES[item];
+            return (
+              <a
+                key={item}
+                href={route ?? "#"}
+                onClick={
+                  route
+                    ? (e) => { e.preventDefault(); onClose(); navigate(route); }
+                    : onClose
+                }
+                style={{
+                  fontSize: index === 0 ? 11 : 22,
+                  fontWeight: index === 0 ? 600 : 400,
+                  lineHeight: 1.2,
+                  letterSpacing: index === 0 ? "0.12em" : "-0.01em",
+                  color: "#442b00",
+                  textDecoration: "none",
+                  padding: "12px 0",
+                  borderBottom: index < navItems.length - 1 ? "1px solid rgba(68,43,0,0.15)" : "none",
+                  opacity: index === 0 ? 0.6 : 1,
+                  transition: "opacity 0.18s",
+                }}
+              >
+                {item}
+              </a>
+            );
+          })}
 
           {/* Contact CTA in drawer */}
           <button
@@ -173,6 +187,7 @@ function MobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -227,30 +242,38 @@ export default function Navbar() {
 
         <div className="relative flex h-full items-center justify-between pl-6 pr-5">
           <ul className="flex items-center gap-4 list-none m-0 p-0">
-            {navItems.map((item, index) => (
-              <li key={item} className="flex items-center gap-4">
-                {index === 1 && (
-                  <span className="h-8 w-px shrink-0 bg-[#442b00]" aria-hidden />
-                )}
-                <a
-                  href={item === "Journal" ? "/journal" : item === "About" ? "/about" : item === "Home" ? "/home" : item === "Projects" ? "/projects/project-1" : "#"}
-                  onClick={
-                    item === "Journal"
-                      ? (e) => { e.preventDefault(); navigate("/journal"); }
-                      : item === "About"
-                      ? (e) => { e.preventDefault(); navigate("/about"); }
-                      : item === "Home"
-                      ? (e) => { e.preventDefault(); navigate("/home"); }
-                      : item === "Projects"
-                      ? (e) => { e.preventDefault(); navigate("/projects/project-1"); }
-                      : undefined
-                  }
-                  className="text-[14px] leading-[1.21] tracking-[0em] text-[#442b00] transition-opacity hover:opacity-80 no-underline whitespace-nowrap" style={{ fontWeight: 450 }}
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
+            {navItems.map((item, index) => {
+              const route = NAV_ROUTES[item];
+              const active = isActive(item, pathname);
+              return (
+                <li key={item} className="flex items-center gap-4">
+                  {index === 1 && (
+                    <span className="h-8 w-px shrink-0 bg-[#442b00]" aria-hidden />
+                  )}
+                  <a
+                    href={route ?? "#"}
+                    onClick={
+                      route
+                        ? (e) => { e.preventDefault(); navigate(route); }
+                        : undefined
+                    }
+                    className="whitespace-nowrap transition-opacity hover:opacity-80"
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 450,
+                      lineHeight: 1.21,
+                      letterSpacing: "0em",
+                      color: "#442b00",
+                      textDecoration: active ? "underline" : "none",
+                      textDecorationColor: "#442b00",
+                      textUnderlineOffset: "3px",
+                    }}
+                  >
+                    {item}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
           <a
             href="/contact"
