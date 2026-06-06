@@ -94,125 +94,75 @@ const steps: ProcessStep[] = [
   },
 ];
 
-function ProcessCard({ step }: { step: ProcessStep }) {
+/* ── Desktop card (unchanged) ── */
+function ProcessCardDesktop({ step }: { step: ProcessStep }) {
   return (
     <div
       className="relative flex-shrink-0 overflow-hidden rounded-[24px]"
-      style={{
-        width: "514px",
-        height: "642px",
-        backgroundColor: step.bgColor,
-      }}
+      style={{ width: "514px", height: "642px", backgroundColor: step.bgColor }}
     >
       <img
         src={step.bgImage}
         alt=""
         aria-hidden
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{
-          opacity: 0.22,
-        }}
+        style={{ opacity: 0.22 }}
       />
-
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundColor: step.overlayColor,
-          mixBlendMode: "multiply",
-        }}
+        style={{ backgroundColor: step.overlayColor, mixBlendMode: "multiply" }}
       />
+      <div className="absolute h-px left-0 right-0" style={{ top: "26px", backgroundColor: "#DCD1B1", opacity: step.number === "01" ? 0.5 : 0.3 }} />
+      <div className="absolute h-px left-0 right-0" style={{ top: "618px", backgroundColor: "#DCD1B1", opacity: step.number === "01" ? 0.5 : 0.3 }} />
+      <div className="absolute w-px top-0 bottom-0" style={{ left: step.number === "01" ? "26px" : "21px", backgroundColor: "#DCD1B1", opacity: step.number === "01" ? 0.5 : 0.3 }} />
+      <div className="absolute w-px top-0 bottom-0" style={{ left: "490px", backgroundColor: "#DCD1B1", opacity: step.number === "01" ? 0.5 : 0.3 }} />
+      <p className="absolute" style={{ left: "35px", top: "38px", fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "76px", fontWeight: 400, color: step.numberColor, lineHeight: 1 }}>{step.number}</p>
+      <div className="absolute" style={{ left: "35px", top: "130px", fontFamily: "'Instrument Serif', serif", fontSize: "56px", fontWeight: 400, color: step.textColor, lineHeight: 1, width: "450px" }}>{step.title}</div>
+      <p className="absolute" style={{ left: "35px", bottom: "55px", fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "22px", fontWeight: 400, color: step.textColor, lineHeight: 1.29, width: "415px" }}>{step.description}</p>
+    </div>
+  );
+}
 
-      <div
-        className="absolute h-px left-0 right-0"
-        style={{
-          top: "26px",
-          backgroundColor: "#DCD1B1",
-          opacity: step.number === "01" ? 0.5 : 0.3,
-        }}
+/* ── Mobile/Tablet card ── */
+function ProcessCardMobile({ step }: { step: ProcessStep }) {
+  return (
+    <div
+      className="relative w-full overflow-hidden rounded-[16px] flex-shrink-0"
+      style={{ backgroundColor: step.bgColor, minHeight: "340px" }}
+    >
+      <img
+        src={step.bgImage}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ opacity: 0.22 }}
       />
-
       <div
-        className="absolute h-px left-0 right-0"
-        style={{
-          top: "618px",
-          backgroundColor: "#DCD1B1",
-          opacity: step.number === "01" ? 0.5 : 0.3,
-        }}
+        className="absolute inset-0 pointer-events-none"
+        style={{ backgroundColor: step.overlayColor, mixBlendMode: "multiply" }}
       />
+      {/* border lines */}
+      <div className="absolute h-px left-0 right-0" style={{ top: "16px", backgroundColor: "#DCD1B1", opacity: 0.3 }} />
+      <div className="absolute w-px top-0 bottom-0" style={{ left: "16px", backgroundColor: "#DCD1B1", opacity: 0.3 }} />
 
-      <div
-        className="absolute w-px top-0 bottom-0"
-        style={{
-          left: step.number === "01" ? "26px" : "21px",
-          backgroundColor: "#DCD1B1",
-          opacity: step.number === "01" ? 0.5 : 0.3,
-        }}
-      />
-
-      <div
-        className="absolute w-px top-0 bottom-0"
-        style={{
-          left: "490px",
-          backgroundColor: "#DCD1B1",
-          opacity: step.number === "01" ? 0.5 : 0.3,
-        }}
-      />
-
-      <p
-        className="absolute"
-        style={{
-          left: "35px",
-          top: "38px",
-          fontFamily: "'Hanken Grotesk', sans-serif",
-          fontSize: "76px",
-          fontWeight: 400,
-          color: step.numberColor,
-          lineHeight: 1,
-        }}
-      >
-        {step.number}
-      </p>
-
-      <div
-        className="absolute"
-        style={{
-          left: "35px",
-          top: "130px",
-          fontFamily: "'Instrument Serif', serif",
-          fontSize: "56px",
-          fontWeight: 400,
-          color: step.textColor,
-          lineHeight: 1,
-          width: "450px",
-        }}
-      >
-        {step.title}
+      <div className="relative p-6 pt-8 flex flex-col h-full">
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "48px", fontWeight: 400, color: step.numberColor, lineHeight: 1, marginBottom: "12px" }}>
+          {step.number}
+        </p>
+        <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "32px", fontWeight: 400, color: step.textColor, lineHeight: 1.1, marginBottom: "16px" }}>
+          {step.title}
+        </div>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "15px", fontWeight: 400, color: step.textColor, lineHeight: 1.55, paddingBottom: "24px" }}>
+          {step.description}
+        </p>
       </div>
-
-      <p
-        className="absolute"
-        style={{
-          left: "35px",
-          bottom: "55px",
-          fontFamily: "'Hanken Grotesk', sans-serif",
-          fontSize: "22px",
-          fontWeight: 400,
-          color: step.textColor,
-          lineHeight: 1.29,
-          width: "415px",
-        }}
-      >
-        {step.description}
-      </p>
     </div>
   );
 }
 
 export function ProcessSection() {
   return (
-    <div className="relative overflow-hidden w-full" style={{ height: "914px" }}>
-      <div className="absolute inset-0" style={{ backgroundColor: "#5d2834" }} />
-
+    <div className="relative overflow-hidden w-full" style={{ backgroundColor: "#5d2834" }}>
       <img
         src={imgTexture}
         alt=""
@@ -221,64 +171,70 @@ export function ProcessSection() {
         style={{ opacity: 0.1 }}
       />
 
-      <div
-        className="absolute flex items-center justify-between"
-        style={{
-          left: "33px",
-          top: "71px",
-          width: "calc(100% - 66px)",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: "64px",
-            fontWeight: 400,
-            color: "#dcd1b1",
-            lineHeight: 1.49,
-            whiteSpace: "nowrap",
-          }}
+      {/* ── DESKTOP LAYOUT (lg+) ── */}
+      <div className="hidden lg:block relative" style={{ height: "914px" }}>
+        {/* Header row */}
+        <div
+          className="absolute flex items-center justify-between"
+          style={{ left: "33px", top: "71px", width: "calc(100% - 66px)" }}
         >
-          Our Process
-        </p>
+          <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "64px", fontWeight: 400, color: "#dcd1b1", lineHeight: 1.49, whiteSpace: "nowrap" }}>
+            Our Process
+          </p>
+          <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "22px", fontWeight: 400, color: "#dcd1b1", lineHeight: 1.2, width: "519px", textAlign: "right" }}>
+            A structured approach that balances{" "}
+            <strong style={{ fontWeight: 700 }}>creativity, clarity, and execution.</strong>
+          </p>
+        </div>
 
-        <p
-          style={{
-            fontFamily: "'Hanken Grotesk', sans-serif",
-            fontSize: "22px",
-            fontWeight: 400,
-            color: "#dcd1b1",
-            lineHeight: 1.2,
-            width: "519px",
-            textAlign: "right",
-          }}
+        {/* Horizontal scroll cards */}
+        <div
+          className="absolute left-0 right-0 overflow-x-auto"
+          style={{ top: "272px", paddingLeft: "33px", paddingRight: "33px", scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          A structured approach that balances{" "}
-          <strong style={{ fontWeight: 700 }}>
-            creativity, clarity, and execution.
-          </strong>
-        </p>
+          <style>{`.process-scroll::-webkit-scrollbar { display: none; }`}</style>
+          <div className="process-scroll flex gap-7 items-center" style={{ width: "max-content" }}>
+            {steps.map((step) => (
+              <ProcessCardDesktop key={step.number} step={step} />
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div
-        className="absolute left-0 right-0 overflow-x-auto"
-        style={{
-          top: "272px",
-          paddingLeft: "33px",
-          paddingRight: "33px",
-          paddingBottom: "0",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-        }}
-      >
-        <style>{`.process-scroll::-webkit-scrollbar { display: none; }`}</style>
+      {/* ── TABLET + MOBILE LAYOUT (< lg) ── */}
+      <div className="block lg:hidden relative">
+        {/* Header */}
+        <div className="px-5 sm:px-8 pt-10 sm:pt-12 pb-8">
+          <p
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: "clamp(36px, 8vw, 52px)",
+              fontWeight: 400,
+              color: "#dcd1b1",
+              lineHeight: 1.2,
+              marginBottom: "12px",
+            }}
+          >
+            Our Process
+          </p>
+          <p
+            style={{
+              fontFamily: "'Hanken Grotesk', sans-serif",
+              fontSize: "clamp(14px, 3.5vw, 18px)",
+              fontWeight: 400,
+              color: "#dcd1b1",
+              lineHeight: 1.5,
+            }}
+          >
+            A structured approach that balances{" "}
+            <strong style={{ fontWeight: 700 }}>creativity, clarity, and execution.</strong>
+          </p>
+        </div>
 
-        <div
-          className="process-scroll flex gap-7 items-center"
-          style={{ width: "max-content" }}
-        >
+        {/* Cards — vertical stack on mobile, 2-col grid on tablet */}
+        <div className="px-5 sm:px-8 pb-12 grid grid-cols-1 sm:grid-cols-2 gap-5">
           {steps.map((step) => (
-            <ProcessCard key={step.number} step={step} />
+            <ProcessCardMobile key={step.number} step={step} />
           ))}
         </div>
       </div>
