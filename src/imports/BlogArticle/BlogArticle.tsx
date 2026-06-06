@@ -87,13 +87,13 @@ function BlogMobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   );
 }
 
-// ─── DESKTOP Navbar (absolute positioned inside 4120px canvas) ────────────────
+// ─── DESKTOP Navbar ────────────────────────────────────────────────────────────
 function BlogNavbarDesktop() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   return (
     <div
-      className="absolute content-stretch flex items-center justify-between left-[33px] right-[33px] top-[26px]"
+      className="hidden lg:flex items-center justify-between px-[33px] pt-[26px] pb-0"
       style={{ pointerEvents: "none" }}
     >
       <div className="h-[49.886px] relative shrink-0 w-[109px] pointer-events-auto">
@@ -145,21 +145,16 @@ function BlogNavbarDesktop() {
   );
 }
 
-// ─── MOBILE Navbar (sticky, flow layout) ────────────────────────────────────────
+// ─── MOBILE Navbar ────────────────────────────────────────────────────────────
 function BlogNavbarMobile() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   return (
     <>
       <div className="sticky top-0 left-0 right-0 z-[100] w-full flex items-center justify-between px-5 py-4" style={{ background: "rgba(95,50,35,0.92)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(220,209,177,0.12)" }}>
-        {/* Logo */}
-        <div
-          className="h-[40px] w-[88px] relative cursor-pointer"
-          onClick={() => navigate("/home")}
-        >
+        <div className="h-[40px] w-[88px] relative cursor-pointer" onClick={() => navigate("/home")}>
           <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
         </div>
-        {/* Hamburger */}
         <button
           onClick={() => setDrawerOpen(true)}
           aria-label="Open menu"
@@ -178,7 +173,7 @@ function BlogNavbarMobile() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Section utility components
+// Shared section utilities
 // ─────────────────────────────────────────────────────────────────────────────
 
 function DotLineTop() {
@@ -217,64 +212,69 @@ function SectionRule() {
   return <div className="w-full h-px bg-[#DCD1B1] opacity-25 my-8" />;
 }
 
+// Horizontal divider line — full-width with side padding, Figma style
+function DesktopDivider() {
+  return (
+    <div className="hidden lg:block h-0 mx-[24px] relative">
+      <div className="absolute inset-[-1px_0_0_0]">
+        <svg className="block w-full" height="1" fill="none" preserveAspectRatio="none" viewBox="0 0 1392 1">
+          <line stroke="#DCD1B1" x2="100%" y1="0.5" y2="0.5" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
-// HERO
+// HERO — flex row, justify-between, items-end
+// LEFT: heading + subheading  |  RIGHT: date
 // ─────────────────────────────────────────────────────────────────────────────
 function ArticleHero({ article }: { article: ArticleData }) {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden lg:flex [word-break:break-word] absolute content-stretch items-end justify-between left-[33px] right-[33px] not-italic text-[#dcd1b1] top-[162px]">
-        <div className="content-stretch flex flex-col gap-[16px] h-[262px] items-start relative shrink-0">
-          <p className="font-['Instrument_Serif',sans-serif] leading-[normal] relative shrink-0 text-[72px] whitespace-nowrap">
+      <div className="hidden lg:flex items-end justify-between px-[33px] pt-[84px] pb-[60px] text-[#dcd1b1]">
+        {/* Left — title + subheading */}
+        <div className="flex flex-col gap-[16px]" style={{ maxWidth: "min(574px, 45vw)" }}>
+          <p
+            className="font-['Instrument_Serif',sans-serif] leading-[normal] whitespace-nowrap"
+            style={{ fontSize: "clamp(52px, 5.5vw, 72px)" }}
+          >
             {article.pageHeading}
           </p>
-          <p className="font-['Inter',sans-serif] font-normal h-[116px] leading-[1.3] relative shrink-0 text-[24px] tracking-[-0.96px] w-[574px]">
+          <p
+            className="font-['Inter',sans-serif] font-normal leading-[1.3] tracking-[-0.96px]"
+            style={{ fontSize: "clamp(17px, 1.8vw, 24px)" }}
+          >
             {article.pageSubHeading}
           </p>
         </div>
-        <p className="font-['Instrument_Serif',sans-serif] leading-[normal] relative shrink-0 text-[84px] whitespace-nowrap">
+        {/* Right — date */}
+        <p
+          className="font-['Instrument_Serif',sans-serif] leading-[normal] whitespace-nowrap shrink-0 translate-y-[40px]"
+          style={{ fontSize: "clamp(56px, 6.5vw, 84px)" }}
+        >
           {article.pageDate}
         </p>
       </div>
 
       {/* MOBILE */}
       <div className="lg:hidden px-5 pt-8 pb-6 text-[#dcd1b1]">
-        {/* Back to Journal — above heading on mobile/tablet only */}
-        <a
-          href="/journal"
-          className="inline-flex items-center gap-2 no-underline mb-6"
-          style={{ color: "#DCD1B1", opacity: 0.75 }}
-        >
+        <a href="/journal" className="inline-flex items-center gap-2 no-underline mb-6" style={{ color: "#DCD1B1", opacity: 0.75 }}>
           <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
             <path d="M15 5H1M1 5L5 1M1 5L5 9" stroke="#DCD1B1" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span
-            className="font-['Hanken_Grotesk',sans-serif] leading-normal"
-            style={{ fontSize: "clamp(13px, 3.5vw, 15px)", letterSpacing: "-0.01em" }}
-          >
+          <span className="font-['Hanken_Grotesk',sans-serif] leading-normal" style={{ fontSize: "clamp(13px, 3.5vw, 15px)", letterSpacing: "-0.01em" }}>
             Back to Journal
           </span>
         </a>
-        {/* Date — subtle, placed above title */}
-        <p
-          className="font-['Instrument_Serif',sans-serif] leading-none mb-3"
-          style={{ fontSize: "clamp(26px, 7.5vw, 44px)", opacity: 0.65 }}
-        >
+        <p className="font-['Instrument_Serif',sans-serif] leading-none mb-3" style={{ fontSize: "clamp(26px, 7.5vw, 44px)", opacity: 0.65 }}>
           {article.pageDate}
         </p>
-        {/* Title */}
-        <p
-          className="font-['Instrument_Serif',sans-serif] leading-[1.05] mb-5"
-          style={{ fontSize: "clamp(34px, 9.5vw, 58px)" }}
-        >
+        <p className="font-['Instrument_Serif',sans-serif] leading-[1.05] mb-5" style={{ fontSize: "clamp(34px, 9.5vw, 58px)" }}>
           {article.pageHeading}
         </p>
-        {/* Subheading */}
-        <p
-          className="font-['Inter',sans-serif] font-normal leading-[1.5]"
-          style={{ fontSize: "clamp(15px, 4.2vw, 19px)", letterSpacing: "-0.03em", opacity: 0.88 }}
-        >
+        <p className="font-['Inter',sans-serif] font-normal leading-[1.5]" style={{ fontSize: "clamp(15px, 4.2vw, 19px)", letterSpacing: "-0.03em", opacity: 0.88 }}>
           {article.pageSubHeading}
         </p>
         <SectionRule />
@@ -291,31 +291,31 @@ function ArticleSection1Block({ article }: { article: ArticleData }) {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden lg:flex absolute content-stretch gap-[82px] items-end left-[33px] top-[509px] w-[calc(100%-56px)]">
-        <div className="h-[451px] relative shrink-0 w-[699px]">
-          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={section1.image} />
+      <div className="hidden lg:flex items-end gap-[82px] px-[33px] pt-15 pb-[80px]">
+        {/* Image — fixed ratio, flex-shrink allowed, max at Figma 699px */}
+        <div
+          className="shrink-0"
+          style={{ width: "min(699px, 48vw)", aspectRatio: "699/451", position: "relative" }}
+        >
+          <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section1.image} />
         </div>
         <DotLineTop />
-        <div className="[word-break:break-word] content-stretch flex flex-col font-['Hanken_Grotesk',sans-serif] gap-[24px] items-start leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-[565px]">
+        {/* Text — fills remaining space */}
+        <div className="flex-1 min-w-0 flex flex-col gap-[24px] font-['Hanken_Grotesk',sans-serif] text-[#dcd1b1] leading-[1.4]" style={{ fontSize: "clamp(15px, 1.5vw, 20px)" }}>
           {section1.content.type === "paragraphs" &&
             section1.content.texts.map((text, i) => (
-              <p key={i} className={`relative shrink-0 w-full ${i === 0 ? "h-[214px]" : "h-[213px]"}`}>{text}</p>
+              <p key={i}>{text}</p>
             ))}
         </div>
       </div>
 
       {/* MOBILE */}
       <div className="lg:hidden px-5 pb-10">
-        {/* Full-width image */}
         <div className="w-full rounded-[2px] overflow-hidden mb-6" style={{ aspectRatio: "699/451" }}>
           <img alt="" className="w-full h-full object-cover" src={section1.image} />
         </div>
         <MobileDivider />
-        {/* Text */}
-        <div
-          className="mt-6 font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1]"
-          style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}
-        >
+        <div className="mt-6 font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1]" style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}>
           {section1.content.type === "paragraphs" &&
             section1.content.texts.map((text, i) => (
               <p key={i} className={i > 0 ? "mt-5" : ""}>{text}</p>
@@ -334,25 +334,27 @@ function ArticleSection2Block({ article }: { article: ArticleData }) {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden lg:flex absolute content-stretch gap-[82px] items-end left-[33px] top-[1104px] w-[calc(100%-48px)]">
-        <div className="content-stretch flex flex-col gap-[22px] items-start relative shrink-0 w-[602px]">
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-            <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">{section2.heading}</p>
-          </div>
-          <div className="[word-break:break-word] content-stretch flex flex-col font-['Hanken_Grotesk',sans-serif] gap-[24px] h-[572px] items-start leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full">
+      <div className="hidden lg:flex items-end gap-[82px] px-[33px] py-[80px]">
+        {/* Text column — fixed at Figma width, shrinks on smaller viewports */}
+        <div className="flex flex-col gap-[22px]" style={{ width: "min(602px, 40vw)", flexShrink: 0 }}>
+          <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] w-full" style={{ fontSize: "clamp(40px, 4.8vw, 64px)" }}>
+            {section2.heading}
+          </p>
+          <div className="flex flex-col gap-[24px] font-['Hanken_Grotesk',sans-serif] text-[#dcd1b1] leading-[1.4]" style={{ fontSize: "clamp(15px, 1.5vw, 20px)" }}>
             {section2.content.type === "paragraphs" &&
               section2.content.texts.map((text, i) => (
-                <p key={i} className={`relative shrink-0 w-full ${i === 0 ? "h-[154px]" : "h-[185px]"}`}>{text}</p>
+                <p key={i}>{text}</p>
               ))}
           </div>
         </div>
         <DotLineTop />
-        <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-[668px]">
-          <div className="flex-[1_0_0] h-[558px] min-w-px relative">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={section2.imageLeft} />
+        {/* Dual images — flex-1 fills remaining space */}
+        <div className="flex-1 min-w-0 flex gap-[24px] items-start">
+          <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/558" }}>
+            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section2.imageLeft} />
           </div>
-          <div className="flex-[1_0_0] h-[566px] min-w-px relative">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={section2.imageRight} />
+          <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/566" }}>
+            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section2.imageRight} />
           </div>
         </div>
       </div>
@@ -360,25 +362,16 @@ function ArticleSection2Block({ article }: { article: ArticleData }) {
       {/* MOBILE */}
       <div className="lg:hidden px-5 pb-10">
         <SectionRule />
-        {/* Heading */}
-        <p
-          className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mb-5"
-          style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}
-        >
+        <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mb-5" style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}>
           {section2.heading}
         </p>
-        {/* Body text */}
-        <div
-          className="font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1] mb-8"
-          style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}
-        >
+        <div className="font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1] mb-8" style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}>
           {section2.content.type === "paragraphs" &&
             section2.content.texts.map((text, i) => (
               <p key={i} className={i > 0 ? "mt-5" : ""}>{text}</p>
             ))}
         </div>
         <MobileDivider />
-        {/* Dual images: stacked mobile, side-by-side tablet */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="rounded-[2px] overflow-hidden" style={{ aspectRatio: "322/558" }}>
             <img alt="" className="w-full h-full object-cover" src={section2.imageLeft} />
@@ -400,45 +393,36 @@ function ArticleSectionCostFactorsBlock({ article }: { article: ArticleData }) {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden lg:flex absolute content-stretch gap-[82px] items-end left-[33px] top-[2000px] w-[calc(100%-56px)]">
-        <div className="h-[510px] relative shrink-0 w-[662px]">
-          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={sectionCostFactors.image} />
+      <div className="hidden lg:flex items-end gap-[82px] px-[33px] py-[80px]">
+        {/* Image */}
+        <div className="shrink-0" style={{ width: "min(662px, 45vw)", aspectRatio: "662/510", position: "relative" }}>
+          <img alt="" className="absolute inset-0 w-full h-full object-cover" src={sectionCostFactors.image} />
         </div>
         <DotLineBottom />
-        <div className="content-stretch flex flex-col gap-[55px] items-start justify-end relative shrink-0">
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-[602px]">
-            <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">{sectionCostFactors.heading}</p>
-          </div>
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-[565px]">
-            <ul className="[word-break:break-word] block font-['Hanken_Grotesk',sans-serif] leading-[0] list-disc not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full">
-              {sectionCostFactors.bullets.map((bullet, i) => (
-                <li key={i} className="ms-[33px]"><span className="leading-[1.4]">{bullet.text}</span></li>
-              ))}
-            </ul>
-          </div>
+        {/* Heading + bullets */}
+        <div className="flex-1 min-w-0 flex flex-col gap-[55px] items-start justify-end">
+          <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] w-full" style={{ fontSize: "clamp(40px, 4.8vw, 64px)" }}>
+            {sectionCostFactors.heading}
+          </p>
+          <ul className="font-['Hanken_Grotesk',sans-serif] leading-[1.4] list-disc text-[#dcd1b1] w-full" style={{ fontSize: "clamp(15px, 1.5vw, 20px)", paddingLeft: "33px" }}>
+            {sectionCostFactors.bullets.map((bullet, i) => (
+              <li key={i}><span>{bullet.text}</span></li>
+            ))}
+          </ul>
         </div>
       </div>
 
       {/* MOBILE */}
       <div className="lg:hidden px-5 pb-10">
         <SectionRule />
-        {/* Image */}
         <div className="w-full rounded-[2px] overflow-hidden mb-8" style={{ aspectRatio: "662/510" }}>
           <img alt="" className="w-full h-full object-cover" src={sectionCostFactors.image} />
         </div>
         <MobileDivider />
-        {/* Heading */}
-        <p
-          className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mt-6 mb-6"
-          style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}
-        >
+        <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mt-6 mb-6" style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}>
           {sectionCostFactors.heading}
         </p>
-        {/* Bullets */}
-        <ul
-          className="list-disc font-['Hanken_Grotesk',sans-serif] text-[#dcd1b1] leading-[1.65] ml-5"
-          style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}
-        >
+        <ul className="list-disc font-['Hanken_Grotesk',sans-serif] text-[#dcd1b1] leading-[1.65] ml-5" style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}>
           {sectionCostFactors.bullets.map((bullet, i) => (
             <li key={i} className={i > 0 ? "mt-3" : ""}>{bullet.text}</li>
           ))}
@@ -456,25 +440,27 @@ function ArticleSection3Block({ article }: { article: ArticleData }) {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden lg:flex absolute content-stretch gap-[54px] items-end left-[33px] top-[2765px] w-[calc(100%-48px)]">
-        <div className="content-stretch flex flex-col gap-[22px] items-start relative shrink-0 w-[602px]">
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-            <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">{section3.heading}</p>
-          </div>
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-[565px]">
+      <div className="hidden lg:flex items-end gap-[54px] px-[33px] py-[80px]">
+        {/* Text column */}
+        <div className="flex flex-col gap-[22px]" style={{ width: "min(602px, 40vw)", flexShrink: 0 }}>
+          <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] w-full" style={{ fontSize: "clamp(40px, 4.8vw, 64px)" }}>
+            {section3.heading}
+          </p>
+          <div className="flex flex-col font-['Hanken_Grotesk',sans-serif] text-[#dcd1b1] leading-[1.4]" style={{ fontSize: "clamp(15px, 1.5vw, 20px)" }}>
             {section3.content.type === "paragraphs" &&
               section3.content.texts.map((text, i) => (
-                <p key={i} className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] h-[340px] leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-full whitespace-pre-wrap">{text}</p>
+                <p key={i} className={i > 0 ? "mt-5" : ""} style={{ whiteSpace: "pre-wrap" }}>{text}</p>
               ))}
           </div>
         </div>
         <DotLineBottom />
-        <div className="content-stretch flex flex-[1_0_0] right-[23px] gap-[20px] items-start relative">
-          <div className="flex-[1_0_0] h-[558px] min-w-px relative">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={section3.imageLeft} />
+        {/* Dual images */}
+        <div className="flex-1 min-w-0 flex gap-[20px] items-start">
+          <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/558" }}>
+            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section3.imageLeft} />
           </div>
-          <div className="flex-[1_0_0] h-[566px] min-w-px relative">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={section3.imageRight} />
+          <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/566" }}>
+            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section3.imageRight} />
           </div>
         </div>
       </div>
@@ -482,16 +468,10 @@ function ArticleSection3Block({ article }: { article: ArticleData }) {
       {/* MOBILE */}
       <div className="lg:hidden px-5 pb-10">
         <SectionRule />
-        <p
-          className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mb-5"
-          style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}
-        >
+        <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mb-5" style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}>
           {section3.heading}
         </p>
-        <div
-          className="font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1] mb-8"
-          style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}
-        >
+        <div className="font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1] mb-8" style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}>
           {section3.content.type === "paragraphs" &&
             section3.content.texts.map((text, i) => (
               <p key={i} className={i > 0 ? "mt-5" : ""}>{text}</p>
@@ -519,45 +499,35 @@ function ArticleSection4Block({ article }: { article: ArticleData }) {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden lg:flex absolute content-stretch gap-[82px] items-end left-[33px] top-[3562px] w-[calc(100%-48px)]">
-        <div className="content-stretch flex h-[527px] items-start relative shrink-0 w-[754px]">
-          <div className="h-full relative shrink-0 w-[754px]">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[117.09%] left-0 max-w-none top-[-17.17%] w-full" src={section4.image} />
-            </div>
-          </div>
+      <div className="hidden lg:flex items-end gap-[82px] px-[33px] py-[80px]">
+        {/* Image */}
+        <div className="shrink-0 overflow-hidden" style={{ width: "min(754px, 50vw)", aspectRatio: "754/527", position: "relative" }}>
+          <img alt="" className="absolute w-full object-cover" style={{ height: "117.09%", top: "-17.17%" }} src={section4.image} />
         </div>
-        <div className="content-stretch flex flex-[1_0_0] flex-col gap-[22px] items-start min-w-px relative">
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-            <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.1] not-italic relative shrink-0 text-[#dcd1b1] text-[64px] w-full">{section4.heading}</p>
-          </div>
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-            <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] h-[216px] leading-[1.4] not-italic relative shrink-0 text-[#dcd1b1] text-[20px] w-[608px]">{section4.bodyText}</p>
-          </div>
+        {/* Text column — fills remaining space */}
+        <div className="flex-1 min-w-0 flex flex-col gap-[22px]">
+          <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] w-full" style={{ fontSize: "clamp(40px, 4.8vw, 64px)" }}>
+            {section4.heading}
+          </p>
+          <p className="font-['Hanken_Grotesk',sans-serif] leading-[1.4] text-[#dcd1b1]" style={{ fontSize: "clamp(15px, 1.5vw, 20px)" }}>
+            {section4.bodyText}
+          </p>
         </div>
       </div>
 
       {/* MOBILE */}
       <div className="lg:hidden px-5 pb-12">
         <SectionRule />
-        {/* Image with parallax-like overflow crop */}
         <div className="w-full rounded-[2px] overflow-hidden mb-8" style={{ aspectRatio: "754/527" }}>
           <img alt="" className="w-full h-[117%] object-cover -mt-[8.5%]" src={section4.image} />
         </div>
         <MobileDivider />
-        <p
-          className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mt-6 mb-5"
-          style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}
-        >
+        <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mt-6 mb-5" style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}>
           {section4.heading}
         </p>
-        <p
-          className="font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1]"
-          style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}
-        >
+        <p className="font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1]" style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}>
           {section4.bodyText}
         </p>
-        {/* Article end rule */}
         <SectionRule />
       </div>
     </>
@@ -569,69 +539,39 @@ export default function BlogArticle({ article }: { article: ArticleData }) {
   return (
     <>
       {/* ════════════════════ DESKTOP (≥1024px) ════════════════════ */}
-      {/* Absolute positioned canvas — original Figma layout preserved 100% */}
-      <div className="hidden lg:block bg-[#5f3223] relative size-full" data-name="BLOG ARTICLE">
-        <div className="absolute h-[4120px] left-0 top-0 w-full">
-          <div aria-hidden className="absolute inset-0 pointer-events-none">
-            <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
-            <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle29} />
-          </div>
+      <div className="hidden lg:block bg-[#5f3223] w-full relative" data-name="BLOG ARTICLE">
+        {/* Background texture */}
+        <div aria-hidden className="absolute inset-0 pointer-events-none">
+          <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
+          <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle29} />
         </div>
 
-        <BlogNavbarDesktop />
-        <ArticleHero article={article} />
-        <ArticleSection1Block article={article} />
-        <ArticleSection2Block article={article} />
-        <ArticleSectionCostFactorsBlock article={article} />
-        <ArticleSection3Block article={article} />
-        <ArticleSection4Block article={article} />
-
-        {/* Divider lines — pixel-perfect positions preserved */}
-        <div className="absolute h-0 left-[24px] top-[1019px] w-[calc(100%-48px)]">
-          <div className="absolute inset-[-1px_0_0_0]">
-            <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1392 1">
-              <line stroke="#DCD1B1" x2="1392" y1="0.5" y2="0.5" />
-            </svg>
-          </div>
-        </div>
-        <div className="absolute h-0 left-[24px] top-[2680px] w-[calc(100%-48px)]">
-          <div className="absolute inset-[-1px_0_0_0]">
-            <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1392 1">
-              <line stroke="#DCD1B1" x2="1392" y1="0.5" y2="0.5" />
-            </svg>
-          </div>
-        </div>
-        <div className="absolute h-0 left-[24px] top-[1926px] w-[calc(100%-48px)]">
-          <div className="absolute inset-[-1px_0_0_0]">
-            <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1392 1">
-              <line stroke="#DCD1B1" x2="1392" y1="0.5" y2="0.5" />
-            </svg>
-          </div>
-        </div>
-        <div className="absolute h-0 left-[28px] top-[3486px] w-[calc(100%-56px)]">
-          <div className="absolute inset-[-1px_0_0_0]">
-            <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1392 1">
-              <line stroke="#DCD1B1" x2="1392" y1="0.5" y2="0.5" />
-            </svg>
-          </div>
+        {/* All content in normal flow — no absolute positioning on sections */}
+        <div className="relative">
+          <BlogNavbarDesktop />
+          <ArticleHero article={article} />
+          <ArticleSection1Block article={article} />
+          <DesktopDivider />
+          <ArticleSection2Block article={article} />
+          <DesktopDivider />
+          <ArticleSectionCostFactorsBlock article={article} />
+          <DesktopDivider />
+          <ArticleSection3Block article={article} />
+          <DesktopDivider />
+          <ArticleSection4Block article={article} />
         </div>
       </div>
 
       {/* ════════════════════ MOBILE / TABLET (<1024px) ════════════════════ */}
-      {/* Normal flow layout — premium reading experience */}
       <div className="lg:hidden bg-[#5f3223] w-full relative overflow-x-hidden" data-name="BLOG ARTICLE MOBILE">
-        {/* Background texture (fixed so it covers whole scroll) */}
+        {/* Background texture */}
         <div aria-hidden className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
           <div className="absolute bg-[rgba(95,50,35,0.08)] inset-0" />
           <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle29} />
         </div>
 
-        {/* Scrollable content */}
         <div className="relative" style={{ zIndex: 1 }}>
-          {/* Sticky mobile navbar */}
           <BlogNavbarMobile />
-
-          {/* Article sections */}
           <ArticleHero article={article} />
           <ArticleSection1Block article={article} />
           <ArticleSection2Block article={article} />

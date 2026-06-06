@@ -16,14 +16,14 @@ export default function Wireframe() {
   return (
     <>
       {/* ── DESKTOP: original absolute layout ── */}
-      <div className="hidden lg:block bg-[#5f3223] relative size-full" data-name="Wireframe - 4">
+      <div className="hidden lg:block bg-[#5f3223] relative w-full" style={{ height: 578 }} data-name="Wireframe - 4">
         <div className="absolute h-[578px] left-0 top-0 w-full">
           <div aria-hidden className="absolute inset-0 pointer-events-none">
             <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
             <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
           </div>
         </div>
-        <p className="-translate-x-1/2 [word-break:break-word] absolute font-['font-['Hanken_Grotesk',sans-serif] leading-[1.4] left-1/2 not-italic text-[#dcd1b1] text-[38px] text-center top-[170px] tracking-[0.84px] w-[1104px]">Planning a home design or renovation project in San Jose or the Bay Area? Studio Inside Eye can help you create a home that feels personal, polished, and deeply livable.</p>
+        <p className="-translate-x-1/2 [word-break:break-word] absolute font-['font-['Hanken_Grotesk',sans-serif] leading-[1.4] left-1/2 not-italic text-[#dcd1b1] text-[38px] text-center top-[170px] tracking-[0.84px]" style={{ width: "min(1104px, calc(100% - 66px))" }}>Planning a home design or renovation project in San Jose or the Bay Area? Studio Inside Eye can help you create a home that feels personal, polished, and deeply livable.</p>
         <div className="absolute h-0 left-[24px] top-[21px] w-[calc(100%-48px)]">
           <div className="absolute inset-[-1px_0_0_0]">
             <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1392 1">

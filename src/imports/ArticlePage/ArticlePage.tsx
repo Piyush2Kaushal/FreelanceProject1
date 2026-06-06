@@ -28,31 +28,9 @@ export default function ArticlePage() {
 
   return (
     <div className="w-full overflow-x-hidden bg-[#5f3223]">
-      {/* ── BlogArticle ── */}
-      {/* Desktop: fixed 4120px height wrapper (original Figma canvas) */}
-      <div className="hidden lg:block relative w-full" style={{ height: 4120 }}>
-        <BlogArticle article={article} />
-      </div>
-      {/* Mobile/Tablet: auto-height flow layout */}
-      <div className="lg:hidden relative w-full">
-        <BlogArticle article={article} />
-      </div>
-
-      {/* ── Wireframe4 CTA section ── */}
-      <div className="hidden lg:block relative w-full" style={{ height: 578 }}>
-        <Wireframe4 />
-      </div>
-      <div className="lg:hidden relative w-full">
-        <Wireframe4 />
-      </div>
-
-      {/* ── FeatureWhySie footer section ── */}
-      <div className="hidden lg:block relative w-full" style={{ height: 660 }}>
-        <FeatureWhySie />
-      </div>
-      <div className="lg:hidden relative w-full">
-        <FeatureWhySie />
-      </div>
+      <BlogArticle article={article} />
+      <Wireframe4 />
+      <FeatureWhySie />
     </div>
   );
 }

@@ -165,9 +165,9 @@ export default function FeatureWhySie() {
   return (
     <>
       {/* ── DESKTOP: original absolute layout ── */}
-      <div className="hidden lg:block bg-[#5f3223] relative size-full" data-name="Feature why SIE">
+      <div className="hidden lg:block bg-[#5f3223] relative w-full" style={{ height: 700 }} data-name="Feature why SIE">
         {/* Copyright + social row */}
-        <div className="absolute content-stretch flex items-center justify-between left-[33px] right-[33px] top-[527px]">
+        <div className="absolute content-stretch flex items-center justify-between left-[33px] right-[33px] top-[590px]">
           <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic relative shrink-0 text-[#fef4db] text-[19px] tracking-[-0.2px] w-[457px]">©️ 2025 Studio Inside Eye. All rights reserved</p>
           <SocialIcons />
         </div>
@@ -204,7 +204,7 @@ export default function FeatureWhySie() {
           </div>
         </div>
         {/* Horizontal divider */}
-        <div className="absolute h-0 left-[20px] top-[461px] w-[calc(100%-40px)]">
+        <div className="absolute h-0 left-[20px] top-[520px] w-[calc(100%-40px)]">
           <div className="absolute inset-[-1.4px_0_0_0]">
             <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1396 1.4">
               <line stroke="var(--stroke-0, #DAD0AD)" strokeOpacity="0.6" strokeWidth="1.4" x2="1396" y1="0.7" y2="0.7" />
@@ -238,10 +238,13 @@ export default function FeatureWhySie() {
           <br aria-hidden />
           San Jose, California
         </p>
-        {/* CTA column */}
-        <div className="absolute content-stretch flex flex-col gap-[32px] items-start left-[calc(66.67%+8px)] top-[225px] w-[443px]">
+        {/* CTA column — fixed right with proper max-width and flex-wrap on buttons */}
+        <div
+          className="absolute content-stretch flex flex-col gap-[32px] items-start right-[33px] top-[225px]"
+          style={{ maxWidth: "min(443px, 30vw)", width: "auto" }}
+        >
           <p className="[word-break:break-word] font-['Inter',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#dacdac] text-[28px] tracking-[-0.4px] w-full">Lets shape your space.</p>
-          <div className="content-stretch flex gap-[22px] items-center relative shrink-0 w-full">
+          <div className="content-stretch flex gap-[16px] items-center relative shrink-0 w-full flex-wrap">
             <div className="bg-[#dad0ad] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
               <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#504d39] text-[18px] tracking-[-0.54px] whitespace-nowrap">{` Start your project`}</p>
             </div>
@@ -252,7 +255,7 @@ export default function FeatureWhySie() {
           </div>
         </div>
         {/* Background texture */}
-        <div className="absolute h-[660px] left-0 top-0 w-full">
+        <div className="absolute h-[700px] left-0 top-0 w-full">
           <div aria-hidden className="absolute inset-0 pointer-events-none">
             <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
             <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
