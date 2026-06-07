@@ -48,12 +48,13 @@ function CustomDropdown({ label, required, options, value, onChange, error, line
   }, []);
 
   const lw = lineWidth || 284;
+  const lwStyle = `min(${lw}px, 100%)`;
 
   return (
     <div
       ref={ref}
       className="content-stretch flex flex-col items-start relative shrink-0"
-      style={{ width: lw, gap: 8 }}
+      style={{ width: lwStyle, gap: 8 }}
     >
       <p
         className="font-['Hanken_Grotesk',sans-serif] not-italic tracking-[0.2px]"
@@ -161,11 +162,12 @@ function CustomDropdown({ label, required, options, value, onChange, error, line
 function TextInput({ label, required, value, onChange, error, placeholder, fullWidth, width }) {
   const [focused, setFocused] = useState(false);
   const w = fullWidth ? "100%" : (width || 284);
+  const wStyle = fullWidth ? "100%" : `min(${w}px, 100%)`;
 
   return (
     <div
       className="content-stretch flex flex-col items-start relative shrink-0"
-      style={{ width: w, gap: 8 }}
+      style={{ width: wStyle, gap: 8 }}
     >
       <p
         className="font-['Hanken_Grotesk',sans-serif] not-italic tracking-[0.2px]"
@@ -441,7 +443,7 @@ function ContactForm() {
 
   return (
     <div
-      className="bg-[#dacdac] content-stretch flex flex-col items-center justify-center p-[28px] relative rounded-[12px] shrink-0 w-[708px]"
+      className="bg-[#dacdac] content-stretch flex flex-col items-center justify-center p-[28px] relative rounded-[12px] shrink-0 w-full max-w-[708px]"
       style={{ gap: 28 }}
       data-name="Card"
     >
@@ -462,13 +464,13 @@ function ContactForm() {
         </div>
       ) : (
         <>
-          <div className="content-stretch flex gap-[52px] items-start relative shrink-0 w-[652px]">
+          <div className="content-stretch flex flex-wrap gap-x-[52px] gap-y-[20px] items-start relative shrink-0 w-full">
             <TextInput label="First Name" required value={fields.firstName} onChange={set("firstName")} error={errors.firstName} width={284} />
             <TextInput label="Last Name" required value={fields.lastName} onChange={set("lastName")} error={errors.lastName} width={302} />
           </div>
           <TextInput label="Email" required value={fields.email} onChange={set("email")} error={errors.email} fullWidth />
           <TextInput label="Project Address" required value={fields.address} onChange={set("address")} error={errors.address} fullWidth />
-          <div className="content-stretch flex gap-[52px] items-start relative shrink-0 w-full">
+          <div className="content-stretch flex flex-wrap gap-x-[52px] gap-y-[20px] items-start relative shrink-0 w-full">
             <CustomDropdown label="Type of project" required options={PROJECT_TYPES} value={fields.projectType} onChange={set("projectType")} error={errors.projectType} lineWidth={284} />
             <CustomDropdown label="Project Budget" required options={BUDGET_OPTIONS} value={fields.budget} onChange={set("budget")} error={errors.budget} lineWidth={302} />
           </div>
@@ -498,7 +500,7 @@ function ContactForm() {
 function Group() {
   return (
     <div className="grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0">
-      <p className="[word-break:break-word] col-1 [font-family:var(--font-instrument-serif)] not-italic leading-[0.9] ml-0 mt-0 relative row-1 text-[#dacdac] text-[136px] whitespace-nowrap">
+      <p className="[word-break:break-word] col-1 [font-family:var(--font-instrument-serif)] not-italic leading-[0.9] ml-0 mt-0 relative row-1 text-[#dacdac] whitespace-nowrap" style={{ fontSize: "clamp(72px, 9.44vw, 136px)" }}>
         Let's<br aria-hidden />build your<br aria-hidden />dream<br aria-hidden />home
       </p>
     </div>
@@ -515,7 +517,7 @@ function Frame25() {
           </svg>
         </div>
       </div>
-      <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic relative shrink-0 text-[#fffcdf] text-[15px] tracking-[-0.48px] w-[356px] whitespace-pre-wrap">{`R O O T E D  .  A U T H E N T I C  .  Y O U R S`}</p>
+      <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic relative shrink-0 text-[#fffcdf] text-[15px] tracking-[-0.48px] whitespace-pre-wrap" style={{ minWidth: 0 }}>{`R O O T E D  .  A U T H E N T I C  .  Y O U R S`}</p>
     </div>
   );
 }
@@ -549,7 +551,7 @@ function Frame27() {
 
 function Frame28() {
   return (
-    <div className="content-stretch flex items-center justify-between relative shrink-0 w-[473px]">
+    <div className="content-stretch flex items-center justify-between relative shrink-0" style={{ width: "min(473px, 100%)" }}>
       <Frame26 />
       <div className="flex h-[59px] items-center justify-center relative shrink-0 w-0">
         <div className="flex-none rotate-90">
@@ -569,7 +571,7 @@ function Frame28() {
 
 function Frame31() {
   return (
-    <div className="content-stretch flex flex-col gap-[65px] items-start relative shrink-0 w-[576px]">
+    <div className="content-stretch flex flex-col gap-[65px] items-start relative shrink-0" style={{ width: "clamp(340px, 40vw, 576px)", minWidth: 0 }}>
       <Group />
       <Frame25 />
       <Frame28 />
@@ -579,7 +581,7 @@ function Frame31() {
 
 function Card() {
   return (
-    <div className="content-stretch flex flex-col h-auto items-center justify-start p-[28px] relative rounded-[12px] shrink-0 w-[750px]" data-name="Card">
+    <div className="content-stretch flex flex-col h-auto items-center justify-start p-[28px] relative rounded-[12px] shrink-0" style={{ width: "clamp(300px, 52.1vw, 750px)", minWidth: 0 }} data-name="Card">
       <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full" src={imgCard} style={{ height: "100%", objectFit: "cover" }} />
       <ContactForm />
     </div>
@@ -588,7 +590,17 @@ function Card() {
 
 function Frame32() {
   return (
-    <div className="relative content-stretch flex items-start justify-between px-[34px]" style={{ paddingTop: 168, paddingBottom: 80 }}>
+    <div
+      className="relative content-stretch flex items-start"
+      style={{
+        paddingTop: 168,
+        paddingBottom: 80,
+        paddingLeft: "clamp(20px, 2.36vw, 34px)",
+        paddingRight: "clamp(20px, 2.36vw, 34px)",
+        gap: "clamp(16px, 2vw, 34px)",
+        justifyContent: "space-between",
+      }}
+    >
       <Frame31 />
       <Card />
     </div>
@@ -1074,6 +1086,12 @@ const responsiveStyles = `
   .footer-desktop-layout { display: block; position: relative; }
   .footer-mobile-layout  { display: none; }
 
+  /* ── Contact hero: ensure no overflow at any width ── */
+  [data-name="Contact Page"]:first-of-type {
+    overflow: hidden;
+    width: 100%;
+  }
+
   /* ── Navbar: 1100px–751px — full pill visible, gap narrows responsively ── */
   @media (max-width: 1100px) and (min-width: 751px) {
     .contact-navbar-full {
@@ -1108,15 +1126,10 @@ const responsiveStyles = `
       gap: 40px !important; padding: 80px 20px 48px !important; width: 100% !important;
     }
     [data-name="Contact Page"]:first-of-type > div:not([aria-hidden]):not(.contact-navbar-full):not(.contact-navbar-mobile) > div:first-child { width: 100% !important; }
-    [data-name="Contact Page"]:first-of-type [class*="text-\\[136px\\]"] { font-size: clamp(48px, 10vw, 136px) !important; }
-    [data-name="Contact Page"]:first-of-type [class*="w-\\[473px\\]"] { width: 100% !important; flex-wrap: wrap; gap: 16px; }
     [data-name="Contact Page"]:first-of-type [class*="w-\\[193px\\]"] { width: 80px !important; min-width: 0 !important; }
-    [data-name="Contact Page"]:first-of-type [class*="w-\\[356px\\]"] { width: auto !important; white-space: normal !important; }
     [data-name="Card"]:last-of-type { width: 100% !important; height: auto !important; }
     [data-name="Card"]:last-of-type [data-name="Card"] { width: 100% !important; }
-    [data-name="Card"] [class*="w-\\[652px\\]"] { width: 100% !important; flex-wrap: wrap !important; gap: 28px !important; }
-    [data-name="Card"] [class*="w-\\[284px\\]"], [data-name="Card"] [class*="w-\\[302px\\]"] { width: 100% !important; }
-    [data-name="Card"] [class*="gap-\\[52px\\]"]:not([class*="w-\\[652px\\]"]) { flex-wrap: wrap !important; gap: 28px !important; }
+    [data-name="Card"] [class*="gap-\\[52px\\]"] { flex-wrap: wrap !important; gap: 28px !important; }
 
     /* ── Footer: swap to mobile layout ── */
     .footer-section { height: auto !important; }
@@ -1152,7 +1165,6 @@ const responsiveStyles = `
   }
 
   @media (max-width: 600px) {
-    [data-name="Contact Page"]:first-of-type [class*="text-\\[136px\\]"] { font-size: clamp(38px, 12vw, 80px) !important; }
     [data-name="Contact Page"]:first-of-type [class*="w-\\[193px\\]"] { display: none !important; }
     [data-name="Card"] [data-name="Card"] { padding: 16px !important; }
 
