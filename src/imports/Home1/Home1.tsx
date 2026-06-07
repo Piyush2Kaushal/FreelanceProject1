@@ -1164,11 +1164,52 @@ function MobileFooter({ project }: { project: HomeProject }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// DESKTOP "SCALE-TO-FIT" CANVAS
+// The desktop layout is a pixel-perfect 1440px Figma canvas built with absolute
+// positioning. Below 1440px the absolutely-positioned, right-anchored content
+// used to overflow / get cut off on the right. To keep the design *identical*
+// to Figma while making 1024–1440px safe, we proportionally scale the whole
+// 1440px canvas down to fit the viewport. At ≥1440px nothing is transformed, so
+// the desktop stays exactly Figma-perfect. Below 1024px the mobile layout shows.
+// ─────────────────────────────────────────────────────────────────────────────
+const DESKTOP_MIN_WIDTH = 1024; // Tailwind `lg`
+const CANVAS_WIDTH = 1440;      // Figma desktop canvas width
+const CANVAS_HEIGHT = 5097;     // Figma desktop canvas height
+
+function computeDesktopScale(viewportWidth: number): number {
+  if (viewportWidth >= CANVAS_WIDTH) return 1;                 // ≥1440 → untouched
+  if (viewportWidth >= DESKTOP_MIN_WIDTH) return viewportWidth / CANVAS_WIDTH; // 1024–1440 → fit
+  return 1;                                                    // <1024 → mobile layout
+}
+
+function useDesktopScale(): number {
+  const [scale, setScale] = useState<number>(() =>
+    typeof window === "undefined" ? 1 : computeDesktopScale(window.innerWidth),
+  );
+  useEffect(() => {
+    let frame = 0;
+    const onResize = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setScale(computeDesktopScale(window.innerWidth)));
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+  return scale;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // ROOT HOME COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Home() {
   const [activeIdx, setActiveIdx] = useState(0);
+  const desktopScale = useDesktopScale();
+  const isScaled = desktopScale < 1;
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -1182,19 +1223,38 @@ export default function Home() {
   return (
     <>
       {/* ═══════════════════════════════════════════════════════════════════
-          DESKTOP / LAPTOP  (lg and above) — zero changes
+          DESKTOP / LAPTOP  (lg and above)
+          ≥1440px → rendered untouched (Figma-perfect).
+          1024–1440px → the SAME 1440px canvas, proportionally scaled to fit
+          the viewport so the right-side content is never cut off. Section
+          internals are unchanged; only this wrapper scales.
       ═══════════════════════════════════════════════════════════════════ */}
       <div
-        className="hidden lg:block relative w-full"
-        style={{ height: 5097 }}
+        className="hidden lg:block w-full"
         data-name="HOME 1"
+        style={isScaled ? { height: CANVAS_HEIGHT * desktopScale, overflow: "hidden" } : undefined}
       >
-        <EntireWebsite />
-        <FeatureWhySie />
-        <Component2 project={project} />
-        <ServicesSection />
-        <FeatureWhySie1 project={project} />
-        <Component3 project={project} />
+        <div
+          className="relative"
+          data-name="HOME 1 CANVAS"
+          style={
+            isScaled
+              ? {
+                  width: CANVAS_WIDTH,
+                  height: CANVAS_HEIGHT,
+                  transform: `scale(${desktopScale})`,
+                  transformOrigin: "top left",
+                }
+              : { width: "100%", height: CANVAS_HEIGHT }
+          }
+        >
+          <EntireWebsite />
+          <FeatureWhySie />
+          <Component2 project={project} />
+          <ServicesSection />
+          <FeatureWhySie1 project={project} />
+          <Component3 project={project} />
+        </div>
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════
