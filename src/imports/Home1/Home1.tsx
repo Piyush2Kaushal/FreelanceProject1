@@ -1,24 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Home1.tsx  —  Studio Inside Eye · Home Page
-//
-// AUTO-CYCLING HERO:
-//   Every CYCLE_MS milliseconds the hero section smoothly transitions to the
-//   next project in HOME_PROJECTS (data/index.ts).
-//
-//   Things that change per project:
-//     • Hero section background color  (intro.heroPanelBg)
-//     • Pattern / texture overlay      (intro.patternImg  |  intro.decorativeTopRightImg)
-//     • Portrait image in the frame    (intro.heroPortraitImg)
-//     • Project name heading           (intro.projectName)
-//     • Description paragraph          (intro.description)
-//     • Contact / footer section bg    (intro.heroPanelBg)
-//     • Big hero image in the light section (intro.heroPortraitImg)
-//
-//   Everything else (navbar, services text, footer links, etc.) is STATIC.
-//
-// TO ADD A NEW PROJECT:
-//   Just add it to data/index.ts → HOME_PROJECTS array.
-//   Home page will automatically include it in the cycle. Done.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState, useEffect, useRef } from "react";
@@ -45,10 +26,6 @@ import imgPrimaryLogos2    from "../../assets/4e454c35d52b905142f0f45a93315e3a6c
 // ── Project data ──────────────────────────────────────────────────────────────
 import { HOME_PROJECTS, CYCLE_MS, FADE_MS } from "../../data/homeProjects";
 import type { HomeProject } from "../../data/homeProjects";
-
-// ── Auto-cycle interval ───────────────────────────────────────────────────────
-
-
 
 // ─────────────────────────────────────────────────────────────────────────────
 // STATIC SECTIONS  (unchanged from original)
@@ -229,10 +206,9 @@ function Frame2({ heroPortraitImg }: { heroPortraitImg: string }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DYNAMIC HERO SECTION  (changes every CYCLE_MS)
+// DYNAMIC HERO SECTION
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** The framed portrait inside the hero panel */
 function Frame1({ heroPortraitImg }: { heroPortraitImg: string }) {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%-0.5px)] top-[238px] w-[255px]">
@@ -251,11 +227,9 @@ interface HeroPanelProps {
   heroPortraitImg: string;
   projectName: string;
   description: string;
-  /** 0–1, controls fade transition */
   opacity: number;
 }
 
-/** The full-bleed colored hero panel — everything inside it changes per project */
 function HeroPanel({
   bgColor,
   patternImg,
@@ -270,62 +244,36 @@ function HeroPanel({
       className="absolute h-[780px] left-0 overflow-clip top-0 w-full"
       style={{
         opacity,
-        clipPath: opacity < 1
-          ? 'inset(0 100% 0 0)'
-          : 'inset(0 0% 0 0)',
-        transition: `
-          opacity 200ms ease,
-          clip-path 900ms cubic-bezier(0.76,0,0.24,1)
-        `,
+        clipPath: opacity < 1 ? 'inset(0 100% 0 0)' : 'inset(0 0% 0 0)',
+        transition: `opacity 200ms ease, clip-path 900ms cubic-bezier(0.76,0,0.24,1)`,
         willChange: 'opacity, clip-path',
       }}
       data-name="hero-panel"
     >
-      {/* Solid colour fill */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ backgroundColor: bgColor }} />
-        <img
-          alt=""
-          className="absolute max-w-none object-cover opacity-3 size-full"
-          src={texturImg}
-        />
+        <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={texturImg} />
       </div>
-
-      {/* Pattern / gradient overlay */}
       {patternImg ? (
         <div
           className="absolute bg-size-[auto_auto,1490px_1053.4765625px] bg-top-left h-[1024px] top-[-634px] w-full"
-          style={{
-            backgroundImage: `linear-gradient(90deg, ${bgColor}66 0%, ${bgColor}66 100%), url("${patternImg}")`,
-          }}
+          style={{ backgroundImage: `linear-gradient(90deg, ${bgColor}66 0%, ${bgColor}66 100%), url("${patternImg}")` }}
           data-name="pattern-overlay"
         />
       ) : null}
-
-      {/* Framed portrait */}
       <Frame1 heroPortraitImg={heroPortraitImg} />
-
-      {/* Project name */}
       <p className="[word-break:break-word] absolute bottom-[144px] font-['Cormorant_Garamond',serif] font-light leading-[normal] left-[33px] not-italic text-[#b3ae85] text-[100px] translate-y-full uppercase whitespace-nowrap">
         {projectName}
       </p>
-
-      {/* Description */}
       <p className="[word-break:break-word] absolute bottom-[108px] font-['Inter',sans-serif] font-normal leading-[normal] left-[calc(74%+26px)] not-italic text-[#fffcdf] text-[14px] translate-y-full w-[335px]">
         {description}
-      </p> 
-
-      {/* Logo */}
+      </p>
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
     </div>
   );
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Component (was Group2 wrapper — now holds the cycling hero)
-// ─────────────────────────────────────────────────────────────────────────────
 
 function CyclingHero() {
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -334,34 +282,21 @@ function CyclingHero() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    // Start the auto-cycle
     timerRef.current = setTimeout(function cycle() {
       const next = (currentIdx + 1) % HOME_PROJECTS.length;
-
-      // 1. Mount next panel at opacity 0
       setNextIdx(next);
       setNextOpacity(0);
-
-      // 2. Next frame: fade next panel in
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setNextOpacity(1);
-        });
+        requestAnimationFrame(() => { setNextOpacity(1); });
       });
-
-      // 3. After fade completes, promote next → current and clean up
       setTimeout(() => {
         setCurrentIdx(next);
         setNextIdx(null);
         setNextOpacity(0);
-        // Schedule the next cycle
         timerRef.current = setTimeout(cycle, CYCLE_MS);
       }, FADE_MS + 50);
     }, CYCLE_MS);
-
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [currentIdx]);
 
   const current = HOME_PROJECTS[currentIdx];
@@ -369,44 +304,21 @@ function CyclingHero() {
 
   return (
     <div className="absolute h-[780px] left-0 top-0 w-full" style={{ zIndex: 0 }}>
-      {/* Current project — always fully visible underneath */}
-      <HeroPanel
-        bgColor={current.bgColor}
-        patternImg={current.patternImg}
-        texturImg={current.textureImg}
-        heroPortraitImg={current.heroImg}
-        projectName={current.projectName}
-        description={current.description}
-        opacity={1}
-      />
-
-      {/* Next project — fades in on top */}
+      <HeroPanel bgColor={current.bgColor} patternImg={current.patternImg} texturImg={current.textureImg} heroPortraitImg={current.heroImg} projectName={current.projectName} description={current.description} opacity={1} />
       {next && (
-        <HeroPanel
-          bgColor={next.bgColor}
-          patternImg={next.patternImg}
-          texturImg={next.textureImg}
-          heroPortraitImg={next.heroImg}
-          projectName={next.projectName}
-          description={next.description}
-          opacity={nextOpacity}
-        />
+        <HeroPanel bgColor={next.bgColor} patternImg={next.patternImg} texturImg={next.textureImg} heroPortraitImg={next.heroImg} projectName={next.projectName} description={next.description} opacity={nextOpacity} />
       )}
     </div>
   );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MIDDLE SECTION  (Component2 — project image + Component1 overlay)
+// MIDDLE SECTION
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Component1({ project }: { project: HomeProject }) {
   return (
-    <div
-      className="absolute h-[780px] left-0 overflow-clip top-0 w-full"
-      data-name="28"
-      style={{ backgroundColor: project.bgColor }}
-    >
+    <div className="absolute h-[780px] left-0 overflow-clip top-0 w-full" data-name="28" style={{ backgroundColor: project.bgColor }}>
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ backgroundColor: project.bgColor }} />
         <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={project.textureImg} />
@@ -438,7 +350,6 @@ function Component1({ project }: { project: HomeProject }) {
           <img alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
         </div>
       </div>
-      {/* Cycling hero overlaid inside this panel */}
       <CyclingHero />
     </div>
   );
@@ -456,11 +367,7 @@ function Group1({ project }: { project: HomeProject }) {
 
 function Component2({ project }: { project: HomeProject }) {
   return (
-    <div
-      className="absolute h-[780px] left-0 overflow-clip top-[2037px] w-full"
-      data-name="1171"
-      style={{ backgroundColor: project.bgColor }}
-    >
+    <div className="absolute h-[780px] left-0 overflow-clip top-[2037px] w-full" data-name="1171" style={{ backgroundColor: project.bgColor }}>
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
@@ -470,7 +377,7 @@ function Component2({ project }: { project: HomeProject }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SERVICES SECTION  (static except the big photo)
+// SERVICES SECTION
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Frame16() {
@@ -703,7 +610,7 @@ function ServicesSection() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// FOOTER / CONTACT  (bg color cycles with project)
+// FOOTER / CONTACT
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Frame20() {
@@ -791,11 +698,9 @@ function ContactPage({ bgColor }: { bgColor: string }) {
   return (
     <div className="absolute h-[774px] left-0 top-[-57px] w-full" data-name="Contact Page">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        {/* Dynamic bg color matching active project */}
         <div className="absolute inset-0" style={{ backgroundColor: bgColor, transition: `background-color ${FADE_MS}ms ease-in-out` }} />
         <img alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
-      {/* Footer nav columns */}
       <div className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
         <Frame20 /><Frame21 /><Frame24 /><Frame26 />
       </div>
@@ -861,7 +766,7 @@ function FeatureWhySie1({ project }: { project: HomeProject }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HERO IMAGE SECTION  (Component3 — shows the big landscape photo)
+// HERO IMAGE SECTION
 // ─────────────────────────────────────────────────────────────────────────────
 
 function ServicesSection1({ heroPortraitImg }: { heroPortraitImg: string }) {
@@ -893,19 +798,378 @@ function Component3({ project }: { project: HomeProject }) {
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// MOBILE / TABLET COMPONENTS
+// ─────────────────────────────────────────────────────────────────────────────
 
+/** Mobile Header strip — cream bg, logo + hamburger */
+function MobileHeaderStrip() {
+  return (
+    // FIX: cream background so no white flash at top
+    <div
+      className="relative w-full"
+      style={{ height: 72, zIndex: 10, backgroundColor: 'rgba(254,244,219,0.97)' }}
+    >
+      <JournalHeader activePage="Home" />
+    </div>
+  );
+}
+
+/** Mobile — image collage / moodboard hero strip */
+function MobileImageCollage() {
+  return (
+    <div
+      className="relative w-full overflow-hidden"
+      style={{ background: 'rgba(254,244,219,0.97)', minHeight: 220 }}
+    >
+      <div aria-hidden className="absolute inset-0 pointer-events-none">
+        <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.06]" src={imgEntireWebsite} />
+      </div>
+
+      {/* Photo strip — tablet: fills width nicely; mobile: scrollable */}
+      <div className="relative px-4 pb-5 pt-3">
+        <div className="flex gap-3 items-end overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+          {/* Photo 1 — FIX: tablet-aware clamp sizes */}
+          <div className="shrink-0 overflow-hidden rounded-[2px]" style={{ width: 'clamp(110px,28vw,220px)', height: 'clamp(155px,38vw,300px)' }}>
+            <img alt="" className="w-full h-full object-cover" src={imgFrame2106258500} />
+          </div>
+          {/* Photo 2 */}
+          <div className="shrink-0 overflow-hidden rounded-[2px]" style={{ width: 'clamp(120px,30vw,240px)', height: 'clamp(190px,46vw,360px)' }}>
+            <img alt="" className="w-full h-full object-cover" src={imgFrame2106258502} />
+          </div>
+          {/* Photo 3 */}
+          <div className="shrink-0 overflow-hidden rounded-[2px]" style={{ width: 'clamp(115px,29vw,230px)', height: 'clamp(168px,42vw,330px)' }}>
+            <img alt="" className="w-full h-full object-cover" src={imgFrame2106258503} />
+          </div>
+        </div>
+      </div>
+
+      {/* Studio tagline text */}
+      <div className="relative px-5 pb-6 text-center">
+        <p
+          className="font-['Instrument_Serif'] italic text-[#703000] leading-[1.1] mb-1"
+          style={{ fontSize: 'clamp(28px, 8.5vw, 48px)', letterSpacing: '-0.02em' }}
+        >
+          Studio Inside Eye
+        </p>
+        <p
+          className="font-['IBM_Plex_Serif',serif] font-semibold capitalize text-[#553319] leading-[1.3]"
+          style={{ fontSize: 'clamp(12px, 3.2vw, 16px)' }}
+        >
+          A Boutique interior design studio creating spaces that are rooted, intentional, and designed for you.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/** Mobile — "Why SIE" / about section */
+function MobileWhySIE() {
+  return (
+    <div className="bg-[#faf0d7] w-full overflow-hidden px-5 py-12">
+      <div className="flex justify-center mb-6">
+        <div className="h-16 w-px bg-[#C98F00] opacity-60" />
+      </div>
+      <div className="flex justify-center mb-8">
+        <div className="relative h-[44px] w-[88px]">
+          <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgComponent21} />
+        </div>
+      </div>
+      <p
+        className="font-['Instrument_Serif',sans-serif] not-italic text-[#5d5e36] text-center leading-[1.2] mb-6 mx-auto"
+        style={{ fontSize: 'clamp(22px, 6vw, 32px)', maxWidth: 480, letterSpacing: '-0.03em' }}
+      >
+        Designing timeless residential interiors for modern California, across San Jose and the Bay Area.
+      </p>
+      <div className="flex justify-center mb-6">
+        <div className="h-10 w-px bg-[#C98F00] opacity-60" />
+      </div>
+      <p
+        className="font-['Instrument_Serif',sans-serif] not-italic text-[#5d5e36] text-center leading-[1.25] mx-auto"
+        style={{ fontSize: 'clamp(20px, 5.5vw, 28px)', maxWidth: 440, letterSpacing: '-0.02em' }}
+      >
+        At Studio Inside Eye, every space starts with you. We design around how you live, what you need, what you value.
+      </p>
+      <div className="flex justify-center mt-8">
+        <div className="h-16 w-px bg-[#C98F00] opacity-60" />
+      </div>
+    </div>
+  );
+}
+
+/** Mobile/Tablet — Project hero panel (static, shows current cycling project) */
+function MobileProjectHero({ project }: { project: HomeProject }) {
+  return (
+    <div
+      className="relative w-full overflow-hidden"
+      style={{ backgroundColor: project.bgColor, minHeight: 380 }}
+    >
+      <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.03] pointer-events-none" src={project.textureImg} />
+      {project.patternImg && (
+        <div
+          className="absolute inset-0 opacity-15"
+          style={{ backgroundImage: `url("${project.patternImg}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        />
+      )}
+
+      {/* Portrait image — FIX: tablet-aware size */}
+      <div className="relative z-10 flex justify-center pt-10 pb-6">
+        <div className="relative" style={{ width: 'clamp(170px, 28vw, 260px)', height: 'clamp(210px, 35vw, 320px)' }}>
+          <img alt="" className="absolute inset-0 w-full h-full object-cover" src={project.heroImg} />
+          <div aria-hidden className="absolute border-[4px] border-solid" style={{ borderColor: '#fff6d9', inset: '-4px' }} />
+        </div>
+      </div>
+
+      <p
+        className="relative z-10 px-5 font-['Cormorant_Garamond',serif] font-light uppercase text-[rgba(253,235,206,0.55)] leading-none mb-3"
+        style={{ fontSize: 'clamp(52px, 16vw, 84px)', letterSpacing: '-0.02em' }}
+      >
+        {project.projectName}
+      </p>
+      <p
+        className="relative z-10 px-5 pb-8 font-['Hanken_Grotesk',sans-serif] leading-[1.5] text-[#fbe1d7]"
+        style={{ fontSize: 'clamp(12px, 3.2vw, 14px)' }}
+      >
+        {project.description}
+      </p>
+    </div>
+  );
+}
+
+/** Mobile/Tablet — Services section */
+function MobileServicesSection() {
+  return (
+    <div className="relative w-full overflow-hidden">
+      <div aria-hidden className="absolute inset-0 pointer-events-none">
+        <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgServicesSection} />
+        <div className="absolute inset-0 bg-[rgba(218,208,173,0.95)]" />
+      </div>
+
+      <div className="relative px-5 pt-10 pb-10">
+        {/* Section label */}
+        <div className="flex items-center gap-3 mb-6">
+          <svg className="shrink-0" width="10" height="10" viewBox="0 0 16 16" fill="none">
+            <path d={svgPaths.p24533600} fill="#703000" />
+          </svg>
+          <p className="font-['Hanken_Grotesk',sans-serif] text-[#5d5e36] text-[11px] tracking-[2.5px] uppercase leading-none">Our Services</p>
+        </div>
+
+        <p
+          className="font-['Instrument_Serif',sans-serif] text-[#5d5e36] capitalize leading-[1.1] mb-3"
+          style={{ fontSize: 'clamp(34px, 9vw, 56px)', letterSpacing: '-0.02em' }}
+        >
+          Full-Service Residential interior design
+        </p>
+        <p
+          className="font-['Hanken_Grotesk',sans-serif] text-[#5c5d36] leading-[1.4] mb-10"
+          style={{ fontSize: 'clamp(14px, 4vw, 18px)', letterSpacing: '0.02em' }}
+        >
+          Thoughtfully designed residential spaces from initial concept to final installation
+        </p>
+
+        <div className="w-full h-px mb-8" style={{ background: 'rgba(0,0,0,0.12)' }} />
+
+        {/* Service 01 — FIX: tablet side-by-side */}
+        <div className="mb-8 md:flex md:gap-12 md:items-start">
+          <div className="flex items-start gap-4 mb-3 md:flex-1">
+            <p
+              className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-none shrink-0"
+              style={{ fontSize: 'clamp(52px, 14vw, 76px)' }}
+            >01</p>
+            <div className="pt-3">
+              <p
+                className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-[1.15] mb-2"
+                style={{ fontSize: 'clamp(20px, 5.5vw, 28px)' }}
+              >
+                Renovation, remodel{'\n'}& New construction
+              </p>
+              <p
+                className="font-['Hanken_Grotesk',sans-serif] text-[#5c5d36] leading-[1.4]"
+                style={{ fontSize: 'clamp(13px, 3.5vw, 16px)' }}
+              >
+                Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full h-px mb-8" style={{ background: 'rgba(0,0,0,0.12)' }} />
+
+        {/* Service 02 — FIX: tablet side-by-side */}
+        <div className="mb-10 md:flex md:gap-12 md:items-start">
+          <div className="flex items-start gap-4 mb-3 md:flex-1">
+            <p
+              className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-none shrink-0"
+              style={{ fontSize: 'clamp(52px, 14vw, 76px)' }}
+            >02</p>
+            <div className="pt-3">
+              <p
+                className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-[1.15] mb-2"
+                style={{ fontSize: 'clamp(20px, 5.5vw, 28px)' }}
+              >
+                Furnishing & Styling
+              </p>
+              <p
+                className="font-['Hanken_Grotesk',sans-serif] text-[#5c5d36] leading-[1.4]"
+                style={{ fontSize: 'clamp(13px, 3.5vw, 16px)' }}
+              >
+                Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex">
+          <button
+            className="relative flex items-center justify-center rounded-[4px] font-['Inter',sans-serif] font-medium text-white tracking-[-0.02em] cursor-pointer hover:opacity-90 transition-opacity"
+            style={{ background: '#703000', padding: '14px 28px', fontSize: 'clamp(14px, 3.5vw, 17px)' }}
+          >
+            VIEW ALL PROJECTS
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Mobile/Tablet — Landscape hero image */
+function MobileLandscapePhoto({ project }: { project: HomeProject }) {
+  return (
+    <div className="relative w-full overflow-hidden bg-[#dad0ad]" style={{ minHeight: 260 }}>
+      <div aria-hidden className="absolute inset-0 pointer-events-none">
+        <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgServicesSection} />
+        <div className="absolute inset-0 bg-[rgba(218,208,173,0.92)]" />
+      </div>
+      <div className="relative px-4 py-4">
+        <div className="w-full overflow-hidden rounded-[2px]" style={{ height: 'clamp(220px, 55vw, 380px)' }}>
+          <img
+            alt=""
+            className="w-full h-full object-cover"
+            src={project.heroImgLandscape ?? project.heroImg}
+            style={{ transition: `opacity ${FADE_MS}ms ease-in-out` }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Mobile/Tablet — Footer / Contact section */
+function MobileFooter({ project }: { project: HomeProject }) {
+  return (
+    // FIX: outer bg = project.bgColor (no separate card, full bleed color)
+    <div
+      className="relative w-full overflow-hidden"
+      style={{ backgroundColor: project.bgColor, transition: `background-color ${FADE_MS}ms ease-in-out` }}
+    >
+      {/* Background texture */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        <div className="absolute inset-0 bg-[rgba(124,80,76,0.08)]" />
+        <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.05]" src={imgRectangle30} />
+      </div>
+
+      {/* Star separator */}
+      <div className="relative flex justify-center pt-6" style={{ zIndex: 1 }}>
+        <div className="w-full h-px" style={{ background: 'rgba(218,205,172,0.3)' }} />
+      </div>
+      <div className="relative flex justify-center -mt-3" style={{ zIndex: 2 }}>
+        <svg width="23" height="23" viewBox="0 0 23 23" fill="none">
+          <path d={svgPaths.p25b23d00} fill="#DAD0AD" />
+        </svg>
+      </div>
+
+      <div className="relative px-5 pt-8 pb-8" style={{ zIndex: 1 }}>
+
+        {/* FIX: CTA — no rounded card box, content sits directly on footer bg */}
+        <div className="flex flex-col items-center gap-5 mb-10 pt-2">
+          <div className="relative flex justify-center">
+            <div className="relative" style={{ height: 70, width: 140 }}>
+              <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgPrimaryLogos2} />
+            </div>
+          </div>
+          <p
+            className="font-['P22GrosvenorW00-Regular',serif] leading-[1.1] not-italic text-[#d5c9a8] text-center"
+            style={{ fontSize: 'clamp(24px, 7vw, 40px)' }}
+          >
+            Build your dream home
+          </p>
+          <button
+            className="flex items-center justify-center rounded-[4px] font-['Inter',sans-serif] font-medium tracking-[-0.02em] cursor-pointer hover:opacity-90 transition-opacity"
+            style={{
+              background: '#d5c9a8',
+              color: project.bgColor,
+              padding: '14px 28px',
+              fontSize: 'clamp(14px, 3.8vw, 18px)',
+              transition: `color ${FADE_MS}ms ease-in-out`,
+            }}
+          >
+            Start your project
+          </button>
+        </div>
+
+        {/* FIX: Footer nav — 2 cols on mobile, 4 cols on tablet, centered */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-10 gap-y-8 mb-8 font-['Hanken_Grotesk',sans-serif] text-[#d5c9a8] mx-auto w-fit">
+          {/* Contact */}
+          <div className="flex flex-col gap-2">
+            <p className="leading-none text-[22px] mb-1">Contact</p>
+            <p className="leading-[1.5] text-[13px] opacity-80">(831) 234-2532<br />3265 Whipple Rd<br />Union City, CA 94587</p>
+          </div>
+          {/* Menu */}
+          <div className="flex flex-col gap-1">
+            <p className="leading-none text-[22px] mb-1">Menu</p>
+            {["Home","Moodboard","Philosophy","Services","Projects"].map(t => (
+              <p key={t} className="text-[13px] leading-[1.7] opacity-80">{t}</p>
+            ))}
+          </div>
+          {/* Projects */}
+          <div className="flex flex-col gap-1">
+            <p className="leading-none text-[22px] mb-1">Projects</p>
+            {["SIENNA","Villa","Luxhill","Remeos"].map(t => (
+              <p key={t} className="text-[13px] leading-[1.7] opacity-80">{t}</p>
+            ))}
+          </div>
+          {/* Socials */}
+          <div className="flex flex-col gap-1">
+            <p className="leading-none text-[22px] mb-1">Socials</p>
+            {["Linkedin","Instagram","Yelp"].map(t => (
+              <p key={t} className="text-[13px] leading-[1.7] opacity-80">{t}</p>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="w-full h-px mb-5" style={{ background: 'rgba(218,205,172,0.25)' }} />
+
+        {/* Copyright bar */}
+        <div className="flex flex-col gap-3">
+          <p
+            className="font-['Hanken_Grotesk',sans-serif] text-[rgba(238,221,160,0.65)] tracking-[0.02em]"
+            style={{ fontSize: 'clamp(10px, 2.5vw, 12px)' }}
+          >
+            ©️2025 Studio Inside Eye. All rights reserved
+          </p>
+          <div className="flex gap-4 flex-wrap">
+            {["Privacy policy","Terms of service","Cookies Settings"].map(t => (
+              <p
+                key={t}
+                className="font-['Hanken_Grotesk',sans-serif] text-[rgba(238,221,160,0.65)] tracking-[0.02em]"
+                style={{ fontSize: 'clamp(10px, 2.5vw, 12px)' }}
+              >{t}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ROOT HOME COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  // Single source of truth for the active project index
   const [activeIdx, setActiveIdx] = useState(0);
 
-  // Keep in sync with CyclingHero — listen to same CYCLE_MS
-  // (CyclingHero manages its own internal state; this drives the
-  //  outer sections that CyclingHero doesn't control)
   useEffect(() => {
     const id = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % HOME_PROJECTS.length);
@@ -916,13 +1180,51 @@ export default function Home() {
   const project = HOME_PROJECTS[activeIdx];
 
   return (
-    <div className="relative size-full" data-name="HOME 1">
-      <EntireWebsite />
-      <FeatureWhySie />
-      <Component2 project={project} />
-      <ServicesSection />
-      <FeatureWhySie1 project={project} />
-      <Component3 project={project} />
-    </div>
+    <>
+      {/* ═══════════════════════════════════════════════════════════════════
+          DESKTOP / LAPTOP  (lg and above) — zero changes
+      ═══════════════════════════════════════════════════════════════════ */}
+      <div
+        className="hidden lg:block relative w-full"
+        style={{ height: 5097 }}
+        data-name="HOME 1"
+      >
+        <EntireWebsite />
+        <FeatureWhySie />
+        <Component2 project={project} />
+        <ServicesSection />
+        <FeatureWhySie1 project={project} />
+        <Component3 project={project} />
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          MOBILE / TABLET  (below lg)
+      ═══════════════════════════════════════════════════════════════════ */}
+      <div
+        className="lg:hidden flex flex-col w-full min-h-screen overflow-x-hidden"
+        data-name="HOME 1 MOBILE"
+      >
+        {/* 1. Header — cream bg */}
+        <MobileHeaderStrip />
+
+        {/* 2. Image collage strip */}
+        <MobileImageCollage />
+
+        {/* 3. Why SIE / philosophy */}
+        <MobileWhySIE />
+
+        {/* 4. Project hero panel */}
+        <MobileProjectHero project={project} />
+
+        {/* 5. Services */}
+        <MobileServicesSection />
+
+        {/* 6. Landscape photo */}
+        <MobileLandscapePhoto project={project} />
+
+        {/* 7. Footer */}
+        <MobileFooter project={project} />
+      </div>
+    </>
   );
 }

@@ -79,6 +79,14 @@
     /* Keep original — it fits at 768px+ */
     display: block;
   }
+
+  /* Home page mobile layout — show hamburger on tablet too */
+  [data-name="HOME 1 MOBILE"] .navbar-desktop {
+    display: none !important;
+  }
+  [data-name="HOME 1 MOBILE"] .navbar-mobile-btn {
+    display: flex !important;
+  }
 }
 
 /* Touch devices: hide custom cursor */
@@ -157,6 +165,42 @@ html, body {
   box-sizing: border-box;
 }
 
+/* ─── Home Page Mobile Layout ───────────────────────────────────────────── */
+/* Ensure mobile home layout does not overflow horizontally */
+[data-name="HOME 1 MOBILE"] {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Mobile: hide desktop nav + contact button inside the mobile header strip */
+@media (max-width: 1023px) {
+  [data-name="HOME 1 MOBILE"] .navbar-desktop {
+    display: none !important;
+  }
+  [data-name="HOME 1 MOBILE"] .navbar-mobile-btn {
+    display: flex !important;
+  }
+}
+
+/* Desktop: the lg:hidden mobile container must be truly hidden — belt-and-suspenders */
+@media (min-width: 1024px) {
+  [data-name="HOME 1 MOBILE"] {
+    display: none !important;
+  }
+  [data-name="HOME 1"] {
+    display: block !important;
+  }
+}
+
+/* Scrollbar hide utility for the image strip */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ─── Journal Page Responsive Fixes ─────────────────────────────────────── */
 /* Logo on mobile: scale down slightly on small screens */
 @media (max-width: 767px) {
@@ -164,7 +208,7 @@ html, body {
     width: 86px !important;
     height: 42px !important;
     left: 16px !important;
-    top: 22px !important;
+    top: 14px !important;
   }
 }
 
