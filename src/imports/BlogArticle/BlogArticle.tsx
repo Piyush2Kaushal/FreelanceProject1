@@ -97,7 +97,7 @@ function BlogNavbarDesktop() {
       style={{ pointerEvents: "none" }}
     >
       <div className="h-[49.886px] relative shrink-0 w-[109px] pointer-events-auto">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
       </div>
       <nav className="relative h-[63px] z-10" style={{ width: "450px", pointerEvents: "auto" }} aria-label="Main navigation">
         <svg aria-hidden focusable="false" className="pointer-events-none absolute select-none left-0 top-0" width="450" height="63" viewBox="0 0 470 63" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -153,7 +153,7 @@ function BlogNavbarMobile() {
     <>
       <div className="sticky top-0 left-0 right-0 z-[100] w-full flex items-center justify-between px-5 py-4" style={{ background: "rgba(95,50,35,0.92)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(220,209,177,0.12)" }}>
         <div className="h-[40px] w-[88px] relative cursor-pointer" onClick={() => navigate("/home")}>
-          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
+          <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
         </div>
         <button
           onClick={() => setDrawerOpen(true)}
@@ -297,7 +297,7 @@ function ArticleSection1Block({ article }: { article: ArticleData }) {
           className="shrink-0"
           style={{ width: "min(699px, 48vw)", aspectRatio: "699/451", position: "relative" }}
         >
-          <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section1.image} />
+          <img decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={section1.image} />
         </div>
         <DotLineTop />
         {/* Text — fills remaining space */}
@@ -312,7 +312,7 @@ function ArticleSection1Block({ article }: { article: ArticleData }) {
       {/* MOBILE */}
       <div className="lg:hidden px-5 pb-10">
         <div className="w-full rounded-[2px] overflow-hidden mb-6" style={{ aspectRatio: "699/451" }}>
-          <img alt="" className="w-full h-full object-cover" src={section1.image} />
+          <img decoding="async" alt="" className="w-full h-full object-cover" src={section1.image} />
         </div>
         <MobileDivider />
         <div className="mt-6 font-['Hanken_Grotesk',sans-serif] leading-[1.65] text-[#dcd1b1]" style={{ fontSize: "clamp(15px, 4.2vw, 17px)" }}>
@@ -351,10 +351,10 @@ function ArticleSection2Block({ article }: { article: ArticleData }) {
         {/* Dual images — flex-1 fills remaining space */}
         <div className="flex-1 min-w-0 flex gap-[24px] items-start">
           <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/558" }}>
-            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section2.imageLeft} />
+            <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={section2.imageLeft} />
           </div>
           <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/566" }}>
-            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section2.imageRight} />
+            <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={section2.imageRight} />
           </div>
         </div>
       </div>
@@ -374,10 +374,10 @@ function ArticleSection2Block({ article }: { article: ArticleData }) {
         <MobileDivider />
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="rounded-[2px] overflow-hidden" style={{ aspectRatio: "322/558" }}>
-            <img alt="" className="w-full h-full object-cover" src={section2.imageLeft} />
+            <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={section2.imageLeft} />
           </div>
           <div className="rounded-[2px] overflow-hidden" style={{ aspectRatio: "322/566" }}>
-            <img alt="" className="w-full h-full object-cover" src={section2.imageRight} />
+            <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={section2.imageRight} />
           </div>
         </div>
       </div>
@@ -396,7 +396,7 @@ function ArticleSectionCostFactorsBlock({ article }: { article: ArticleData }) {
       <div className="hidden lg:flex items-end gap-[82px] px-[33px] py-[80px]">
         {/* Image */}
         <div className="shrink-0" style={{ width: "min(662px, 45vw)", aspectRatio: "662/510", position: "relative" }}>
-          <img alt="" className="absolute inset-0 w-full h-full object-cover" src={sectionCostFactors.image} />
+          <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={sectionCostFactors.image} />
         </div>
         <DotLineBottom />
         {/* Heading + bullets */}
@@ -416,7 +416,7 @@ function ArticleSectionCostFactorsBlock({ article }: { article: ArticleData }) {
       <div className="lg:hidden px-5 pb-10">
         <SectionRule />
         <div className="w-full rounded-[2px] overflow-hidden mb-8" style={{ aspectRatio: "662/510" }}>
-          <img alt="" className="w-full h-full object-cover" src={sectionCostFactors.image} />
+          <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={sectionCostFactors.image} />
         </div>
         <MobileDivider />
         <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mt-6 mb-6" style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}>
@@ -457,10 +457,10 @@ function ArticleSection3Block({ article }: { article: ArticleData }) {
         {/* Dual images */}
         <div className="flex-1 min-w-0 flex gap-[20px] items-start">
           <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/558" }}>
-            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section3.imageLeft} />
+            <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={section3.imageLeft} />
           </div>
           <div className="flex-1 min-w-0 relative" style={{ aspectRatio: "322/566" }}>
-            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={section3.imageRight} />
+            <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={section3.imageRight} />
           </div>
         </div>
       </div>
@@ -480,10 +480,10 @@ function ArticleSection3Block({ article }: { article: ArticleData }) {
         <MobileDivider />
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="rounded-[2px] overflow-hidden" style={{ aspectRatio: "1/1.15" }}>
-            <img alt="" className="w-full h-full object-cover" src={section3.imageLeft} />
+            <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={section3.imageLeft} />
           </div>
           <div className="rounded-[2px] overflow-hidden" style={{ aspectRatio: "1/1.15" }}>
-            <img alt="" className="w-full h-full object-cover" src={section3.imageRight} />
+            <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={section3.imageRight} />
           </div>
         </div>
       </div>
@@ -502,7 +502,7 @@ function ArticleSection4Block({ article }: { article: ArticleData }) {
       <div className="hidden lg:flex items-end gap-[82px] px-[33px] py-[80px]">
         {/* Image */}
         <div className="shrink-0 overflow-hidden" style={{ width: "min(754px, 50vw)", aspectRatio: "754/527", position: "relative" }}>
-          <img alt="" className="absolute w-full object-cover" style={{ height: "117.09%", top: "-17.17%" }} src={section4.image} />
+          <img loading="lazy" decoding="async" alt="" className="absolute w-full object-cover" style={{ height: "117.09%", top: "-17.17%" }} src={section4.image} />
         </div>
         {/* Text column — fills remaining space */}
         <div className="flex-1 min-w-0 flex flex-col gap-[22px]">
@@ -519,7 +519,7 @@ function ArticleSection4Block({ article }: { article: ArticleData }) {
       <div className="lg:hidden px-5 pb-12">
         <SectionRule />
         <div className="w-full rounded-[2px] overflow-hidden mb-8" style={{ aspectRatio: "754/527" }}>
-          <img alt="" className="w-full h-[117%] object-cover -mt-[8.5%]" src={section4.image} />
+          <img loading="lazy" decoding="async" alt="" className="w-full h-[117%] object-cover -mt-[8.5%]" src={section4.image} />
         </div>
         <MobileDivider />
         <p className="font-['Instrument_Serif',sans-serif] leading-[1.1] text-[#dcd1b1] mt-6 mb-5" style={{ fontSize: "clamp(28px, 7.5vw, 48px)" }}>
@@ -543,7 +543,7 @@ export default function BlogArticle({ article }: { article: ArticleData }) {
         {/* Background texture */}
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle29} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle29} />
         </div>
 
         {/* All content in normal flow — no absolute positioning on sections */}
@@ -567,7 +567,7 @@ export default function BlogArticle({ article }: { article: ArticleData }) {
         {/* Background texture */}
         <div aria-hidden className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
           <div className="absolute bg-[rgba(95,50,35,0.08)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle29} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle29} />
         </div>
 
         <div className="relative" style={{ zIndex: 1 }}>

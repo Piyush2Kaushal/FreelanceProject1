@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { RefObject, memo } from "react";
 
 interface DragHintProps {
   hintRef: RefObject<HTMLDivElement | null>;
@@ -9,7 +9,7 @@ interface DragHintProps {
  * fades out on first interaction.
  * On mobile: lifted above the bottom bar via .drag-hint-fixed media query.
  */
-export default function DragHint({ hintRef }: DragHintProps) {
+const DragHint = memo(function DragHint({ hintRef }: DragHintProps) {
   return (
     <div
       ref={hintRef}
@@ -37,4 +37,6 @@ export default function DragHint({ hintRef }: DragHintProps) {
       </span>
     </div>
   );
-}
+});
+
+export default DragHint;

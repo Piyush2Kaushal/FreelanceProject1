@@ -101,7 +101,7 @@ function ProcessCardDesktop({ step }: { step: ProcessStep }) {
       className="relative flex-shrink-0 overflow-hidden rounded-[24px]"
       style={{ width: "514px", height: "642px", backgroundColor: step.bgColor }}
     >
-      <img
+      <img decoding="async"
         src={step.bgImage}
         alt=""
         aria-hidden
@@ -130,7 +130,7 @@ function ProcessCardMobile({ step }: { step: ProcessStep }) {
       className="relative w-full overflow-hidden rounded-[16px] flex-shrink-0"
       style={{ backgroundColor: step.bgColor, minHeight: "340px" }}
     >
-      <img
+      <img decoding="async"
         src={step.bgImage}
         alt=""
         aria-hidden
@@ -163,7 +163,7 @@ function ProcessCardMobile({ step }: { step: ProcessStep }) {
 export function ProcessSection() {
   return (
     <div className="relative overflow-hidden w-full" style={{ backgroundColor: "#5d2834" }}>
-      <img
+      <img decoding="async"
         src={imgTexture}
         alt=""
         aria-hidden

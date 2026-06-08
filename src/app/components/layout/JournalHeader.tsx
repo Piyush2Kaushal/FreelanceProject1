@@ -189,7 +189,7 @@ export default function JournalHeader({ activePage = "Journal" }: JournalHeaderP
         className="journal-header-logo absolute left-[33px] top-[30px] z-10 h-[51px] w-[104px] cursor-pointer"
         onClick={() => navigate("/")}
       >
-        <img
+        <img decoding="async"
           alt="Studio Inside Eye"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           src={imgLogo}

@@ -74,7 +74,7 @@ export function FooterSection() {
           className="absolute"
           style={{ left: "50%", transform: "translateX(-50%)", top: "134px", width: "202px", height: "274px" }}
         >
-          <img src={imgMonogram} alt="Studio Inside Eye" className="w-full h-full object-cover" />
+          <img loading="lazy" decoding="async" src={imgMonogram} alt="Studio Inside Eye" className="w-full h-full object-cover" />
         </div>
 
         {/* Tagline text */}
@@ -159,7 +159,7 @@ export function FooterSection() {
 
             {/* Center: monogram */}
             <div style={{ width: "120px", height: "163px", flexShrink: 0 }}>
-              <img src={imgMonogram} alt="Studio Inside Eye" className="w-full h-full object-cover" />
+              <img loading="lazy" decoding="async" src={imgMonogram} alt="Studio Inside Eye" className="w-full h-full object-cover" />
             </div>
 
             {/* Right col: CTA */}
@@ -198,7 +198,7 @@ export function FooterSection() {
         {/* Monogram centered */}
         <div className="flex justify-center mb-6">
           <div style={{ width: "110px", height: "150px" }}>
-            <img src={imgMonogram} alt="Studio Inside Eye" className="w-full h-full object-cover" />
+            <img loading="lazy" decoding="async" src={imgMonogram} alt="Studio Inside Eye" className="w-full h-full object-cover" />
           </div>
         </div>
 

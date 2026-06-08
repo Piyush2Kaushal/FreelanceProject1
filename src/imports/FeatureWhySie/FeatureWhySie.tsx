@@ -173,7 +173,7 @@ export default function FeatureWhySie() {
         </div>
         {/* Monogram */}
         <div className="-translate-x-1/2 absolute h-[274px] left-1/2 top-[134px] w-[202px]" data-name="monogram_final6 1">
-          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMonogramFinal61} />
+          <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMonogramFinal61} />
         </div>
         {/* Stars */}
         <div className="absolute left-[calc(58.33%+33px)] size-[23px] top-[256px]">
@@ -258,7 +258,7 @@ export default function FeatureWhySie() {
         <div className="absolute h-[700px] left-0 top-0 w-full">
           <div aria-hidden className="absolute inset-0 pointer-events-none">
             <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
-            <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
+            <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
           </div>
         </div>
       </div>
@@ -268,7 +268,7 @@ export default function FeatureWhySie() {
         {/* Background texture */}
         <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
           <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
         </div>
 
         {/* Content */}
@@ -288,7 +288,7 @@ export default function FeatureWhySie() {
           {/* Monogram — centered */}
           <div className="flex justify-center mb-8">
             <div className="w-[120px] h-[163px] relative">
-              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMonogramFinal61} />
+              <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMonogramFinal61} />
             </div>
           </div>
 

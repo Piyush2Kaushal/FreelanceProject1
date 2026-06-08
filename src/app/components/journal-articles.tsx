@@ -40,7 +40,7 @@ function MobileExpandedPanel({
       }}
     >
       {/* Texture overlay */}
-      <img
+      <img loading="lazy" decoding="async"
         aria-hidden
         alt=""
         className="absolute inset-0 max-w-none object-cover opacity-10 w-full h-full pointer-events-none"
@@ -245,7 +245,7 @@ function TabletArticlesSection() {
     >
       {/* Texture */}
       <div aria-hidden className="absolute inset-0 pointer-events-none z-0">
-        <img
+        <img loading="lazy" decoding="async"
           alt=""
           className="absolute inset-0 max-w-none object-cover opacity-10 w-full h-full"
           src={imgTexture}
@@ -348,7 +348,7 @@ function TabletArticlesSection() {
           }}
         >
           {/* Texture */}
-          <img
+          <img loading="lazy" decoding="async"
             aria-hidden
             alt=""
             className="absolute inset-0 max-w-none object-cover opacity-10 w-full h-full pointer-events-none"
@@ -457,7 +457,7 @@ export function JournalArticles() {
         {/* Texture overlay */}
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(220,209,177,0.1)] inset-0" />
-          <img
+          <img loading="lazy" decoding="async"
             alt=""
             className="absolute inset-0 max-w-none object-cover opacity-10 w-full h-full"
             src={imgTexture}
@@ -482,7 +482,7 @@ export function JournalArticles() {
           }}
         >
           {/* Texture on expanded panel */}
-          <img
+          <img loading="lazy" decoding="async"
             aria-hidden
             alt=""
             className="absolute inset-0 max-w-none object-cover opacity-10 w-full h-full pointer-events-none"
@@ -645,7 +645,7 @@ export function JournalArticles() {
      <div className="flex md:hidden flex-col bg-[#dcd1b1] relative w-full overflow-hidden min-h-[calc(100dvh-400px)] max-[480px]:min-h-[calc(100dvh-360px)]">
         {/* Texture */}
         <div aria-hidden className="absolute inset-0 pointer-events-none z-0">
-          <img
+          <img loading="lazy" decoding="async"
             alt=""
             className="absolute inset-0 max-w-none object-cover opacity-10 w-full h-full"
             src={imgTexture}

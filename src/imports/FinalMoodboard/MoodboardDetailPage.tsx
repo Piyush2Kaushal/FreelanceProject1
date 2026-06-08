@@ -11,7 +11,7 @@ function Logo() {
   const navigate = useNavigate();
   return (
     <div onClick={() => navigate("/")} style={{ cursor: "pointer" }} className="logo-fixed fixed h-[49px] left-[15px] top-[36px] w-[98px] z-[100]">
-      <img alt="Studio Inside Eye" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
+      <img decoding="async" alt="Studio Inside Eye" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
     </div>
   );
 }
@@ -57,7 +57,7 @@ export default function MoodboardDetailPage({ imageSrc, imageAlt = "Moodboard" }
     <>
       {/* Background */}
       <div style={{ position: "fixed", inset: 0, backgroundColor: "rgb(245, 245, 220)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", zIndex: 0 }}>
-        <img
+        <img decoding="async"
           src={imageSrc}
           alt={imageAlt}
           draggable={false}

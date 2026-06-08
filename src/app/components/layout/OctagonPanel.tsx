@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 import imgTexture from "../../../assets/texture.png";
 
 interface OctagonPanelProps {
@@ -29,7 +29,7 @@ interface OctagonPanelProps {
  *
  * Pass a unique `clipId` per instance to avoid SVG clipPath id collisions.
  */
-export default function OctagonPanel({
+const OctagonPanel = memo(function OctagonPanel({
   clipId,
   svgWidth,
   svgHeight,
@@ -78,4 +78,6 @@ export default function OctagonPanel({
       {children}
     </section>
   );
-}
+});
+
+export default OctagonPanel;

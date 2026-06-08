@@ -20,7 +20,7 @@ export default function Wireframe() {
         <div className="absolute h-[578px] left-0 top-0 w-full">
           <div aria-hidden className="absolute inset-0 pointer-events-none">
             <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
-            <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
+            <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
           </div>
         </div>
         <p className="-translate-x-1/2 [word-break:break-word] absolute font-['font-['Hanken_Grotesk',sans-serif] leading-[1.4] left-1/2 not-italic text-[#dcd1b1] text-[38px] text-center top-[170px] tracking-[0.84px]" style={{ width: "min(1104px, calc(100% - 66px))" }}>Planning a home design or renovation project in San Jose or the Bay Area? Studio Inside Eye can help you create a home that feels personal, polished, and deeply livable.</p>
@@ -54,7 +54,7 @@ export default function Wireframe() {
         {/* Background texture */}
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(95,50,35,0.1)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-4 size-full" src={imgRectangle30} />
         </div>
 
         {/* Top divider */}

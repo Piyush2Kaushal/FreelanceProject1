@@ -40,7 +40,7 @@ function Frame1() {
     <div className="h-[63px] relative shrink-0 w-[426px]">
       <div className="absolute h-[63px] left-[-0.5px] top-0 w-[426px]">
         <div className="absolute inset-[-1.59%_-0.23%]">
-          <img alt="" className="block max-w-none size-full" height="65" src={imgVector51} width="428" />
+          <img decoding="async" alt="" className="block max-w-none size-full" height="65" src={imgVector51} width="428" />
         </div>
       </div>
       <Frame />
@@ -64,7 +64,7 @@ function Frame3() {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex items-center justify-between left-1/2 top-[26px] w-[1392px]">
       <div className="h-[51px] relative shrink-0 w-[104px]" data-name="Component 20">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
       </div>
       <Frame1 />
       <Frame2 />
@@ -82,7 +82,7 @@ function Desktop() {
       <div className="absolute h-[646px] left-0 top-0 w-[1440px]">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(220,209,177,0.1)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-10 size-full" src={imgRectangle29} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-10 size-full" src={imgRectangle29} />
         </div>
       </div>
     </div>
@@ -174,7 +174,7 @@ function Desktop1() {
       <div className="absolute h-[798px] left-0 top-0 w-[1440px]">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(220,209,177,0.1)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-10 size-full" src={imgRectangle29} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-10 size-full" src={imgRectangle29} />
         </div>
       </div>
     </div>

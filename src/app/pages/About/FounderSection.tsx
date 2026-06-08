@@ -7,7 +7,7 @@ export function FounderSection() {
       className="relative overflow-hidden w-full"
       style={{ backgroundColor: "#5d2834" }}
     >
-      <img
+      <img decoding="async"
         src={imgTexture}
         alt=""
         aria-hidden
@@ -27,7 +27,7 @@ export function FounderSection() {
             height: "818px",
           }}
         >
-          <img
+          <img decoding="async"
             src={imgPortrait}
             alt="Studio Interior"
             className="w-full h-full object-cover"
@@ -128,7 +128,7 @@ export function FounderSection() {
       <div className="hidden md:block lg:hidden relative py-14 px-8">
         {/* Portrait image */}
         <div className="w-full mb-10" style={{ height: "420px" }}>
-          <img
+          <img decoding="async"
             src={imgPortrait}
             alt="Studio Interior"
             className="w-full h-full object-cover rounded-[6px]"
@@ -206,7 +206,7 @@ export function FounderSection() {
       <div className="block md:hidden relative">
         {/* Portrait image — full bleed, clipped */}
         <div className="w-full" style={{ height: "320px" }}>
-          <img
+          <img decoding="async"
             src={imgPortrait}
             alt="Studio Interior"
             className="w-full h-full object-cover"

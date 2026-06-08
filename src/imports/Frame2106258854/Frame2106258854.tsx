@@ -437,7 +437,6 @@ function ContactForm() {
     const errs = validate(fields);
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
-    console.log("📋 Contact Form Submission:", fields);
     setSubmitted(true);
   }
 
@@ -480,7 +479,7 @@ function ContactForm() {
           <div className="relative rounded-[4px] shrink-0 w-full cursor-pointer mt-5" onClick={handleSubmit}>
             <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[4px]">
               <div className="absolute bg-[#8e3219] inset-0 rounded-[4px]" />
-              <img alt="" className="absolute max-w-none object-cover opacity-11 rounded-[4px] size-full" src={imgFrame2106258506} />
+              <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-11 rounded-[4px] size-full" src={imgFrame2106258506} />
             </div>
             <div aria-hidden className="absolute border border-[#e4d6c3] border-solid inset-0 pointer-events-none rounded-[4px]" />
             <div className="flex flex-row items-center justify-center size-full">
@@ -582,7 +581,7 @@ function Frame31() {
 function Card() {
   return (
     <div className="content-stretch flex flex-col h-auto items-center justify-start p-[28px] relative rounded-[12px] shrink-0" style={{ width: "clamp(300px, 52.1vw, 750px)", minWidth: 0 }} data-name="Card">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full" src={imgCard} style={{ height: "100%", objectFit: "cover" }} />
+      <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full" src={imgCard} style={{ height: "100%", objectFit: "cover" }} />
       <ContactForm />
     </div>
   );
@@ -872,7 +871,7 @@ function Frame37({ onOpenDrawer }: { onOpenDrawer: () => void }) {
           onClick={() => navigate("/")}
           style={{ flexShrink: 0, cursor: "pointer" }}
         >
-          <img
+          <img decoding="async"
             alt="Studio Inside Eye"
             src={imgComponent20}
             style={{ display: "block", width: 98, height: 49, objectFit: "contain", pointerEvents: "none" }}
@@ -889,7 +888,7 @@ function Frame37({ onOpenDrawer }: { onOpenDrawer: () => void }) {
           onClick={() => navigate("/")}
           style={{ position: "absolute", top: 22, left: 12, flexShrink: 0, cursor: "pointer" }}
         >
-          <img
+          <img decoding="async"
             alt="Studio Inside Eye"
             src={imgComponent20}
             style={{ display: "block", width: 78, height: 39, objectFit: "contain", pointerEvents: "none" }}
@@ -933,7 +932,7 @@ function ContactPage({ onOpenDrawer }: { onOpenDrawer: () => void }) {
     <div className="relative shrink-0 w-full" data-name="Contact Page">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute bg-[#8a2a10] inset-0" />
-        <img alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
+        <img decoding="async" alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
       <Frame37 onOpenDrawer={onOpenDrawer} />
       <Frame32 />
@@ -1022,7 +1021,7 @@ function ContactPage1() {
 
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute bg-[#8a2a10] inset-0" />
-        <img alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
+        <img decoding="async" alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
 
       <div className="absolute h-0 left-0 top-px w-full" style={{ zIndex: 1 }}>
@@ -1044,7 +1043,7 @@ function ContactPage1() {
           Designing thoughtful residential interiors across San Jose and the Bay Area, California.
         </p>
         <div className="absolute h-[138px] left-[calc(50%-138px)] top-[248px] w-[276px]" data-name="Component 20">
-          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
+          <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent20} />
         </div>
         <div className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
           <Frame4 /><Frame7 /><Frame5 /><Frame9 />
@@ -1056,7 +1055,7 @@ function ContactPage1() {
           Designing thoughtful residential interiors across San Jose and the Bay Area, California.
         </p>
         <div className="footer-logo-wrap" data-name="Component 20">
-          <img alt="Studio Inside Eye" className="size-full object-contain pointer-events-none" src={imgComponent20} />
+          <img decoding="async" alt="Studio Inside Eye" className="size-full object-contain pointer-events-none" src={imgComponent20} />
         </div>
         <div className="footer-columns">
           <Frame4 /><Frame7 /><Frame5 /><Frame9 />

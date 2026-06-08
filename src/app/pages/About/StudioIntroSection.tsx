@@ -7,7 +7,7 @@ export function StudioIntroSection() {
       className="relative overflow-hidden w-full"
       style={{ backgroundColor: "#5d2834" }}
     >
-      <img
+      <img decoding="async"
         src={imgTexture}
         alt=""
         aria-hidden
@@ -22,7 +22,7 @@ export function StudioIntroSection() {
           className="absolute"
           style={{ left: "calc(8.33% + 7px)", top: "119px", width: "331px", height: "450px" }}
         >
-          <img
+          <img decoding="async"
             src={imgMonogram}
             alt="Studio Inside Eye monogram"
             className="w-full h-full object-cover"
@@ -73,7 +73,7 @@ export function StudioIntroSection() {
       <div className="hidden md:block lg:hidden relative py-16">
         <div className="flex flex-col items-center gap-10 px-8">
           <div className="w-[220px] h-[300px]">
-            <img
+            <img decoding="async"
               src={imgMonogram}
               alt="Studio Inside Eye monogram"
               className="w-full h-full object-cover"
@@ -111,7 +111,7 @@ export function StudioIntroSection() {
       <div className="block md:hidden relative">
         <div className="flex flex-col items-center pt-12 pb-10 px-6 gap-8">
           <div style={{ width: "160px", height: "218px" }}>
-            <img
+            <img decoding="async"
               src={imgMonogram}
               alt="Studio Inside Eye monogram"
               className="w-full h-full object-cover"

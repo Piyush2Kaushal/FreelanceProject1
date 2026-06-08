@@ -2,7 +2,7 @@
 // Home1.tsx  —  Studio Inside Eye · Home Page
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import svgPaths from "./svg-n029qayjm7";
 import JournalHeader from "../../app/components/layout/JournalHeader";
 
@@ -35,7 +35,7 @@ function Frame7() {
   return (
     <div className="h-[306px] relative shrink-0 w-[224px]">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-full left-[-34.64%] max-w-none top-0 w-[156.95%]" src={imgFrame2106258500} />
+        <img decoding="async" alt="" className="absolute h-full left-[-34.64%] max-w-none top-0 w-[156.95%]" src={imgFrame2106258500} />
       </div>
     </div>
   );
@@ -44,7 +44,7 @@ function Frame7() {
 function Frame8() {
   return (
     <div className="h-[441px] relative shrink-0 w-[254px]">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258502} />
+      <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgFrame2106258502} />
     </div>
   );
 }
@@ -53,7 +53,7 @@ function Frame9() {
   return (
     <div className="h-[375px] relative shrink-0 w-[280px]">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-full left-[-46.74%] max-w-none top-0 w-[236.34%]" src={imgFrame2106258503} />
+        <img decoding="async" alt="" className="absolute h-full left-[-46.74%] max-w-none top-0 w-[236.34%]" src={imgFrame2106258503} />
       </div>
     </div>
   );
@@ -74,7 +74,7 @@ function EntireWebsite() {
     <div className="absolute h-[770px] left-0 overflow-clip top-0 w-full" data-name="Entire Website">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute bg-[rgba(254,244,219,0.95)] inset-0" />
-        <img alt="" className="absolute max-w-none object-cover size-full" src={imgEntireWebsite} />
+        <img decoding="async" alt="" className="absolute max-w-none object-cover size-full" src={imgEntireWebsite} />
       </div>
       <JournalHeader activePage="Home" />
       <Frame43 />
@@ -86,10 +86,10 @@ function EntireWebsite() {
       </p>
       <p className="-translate-x-1/2 [word-break:break-word] absolute capitalize font-['Instrument_Serif'] italic leading-[1.2] left-[calc(59.50%+317px)] text-[#703000] text-[96px] text-center top-[632px] tracking-[-3.84px] w-[524px]">Studio Inside eye</p>
       <div className="absolute h-[319px] left-[calc(58.33%+82px)] top-[-63px] w-[237px]" data-name="image 48">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
       </div>
       <div className="absolute h-[365px] left-[calc(75%-14px)] top-[-6px] w-[272px]" data-name="image 49">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
       </div>
     </div>
   );
@@ -98,7 +98,7 @@ function EntireWebsite() {
 function Frame4() {
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[33px] left-[calc(54.17%+41.5px)] rounded-[8px] top-[calc(50%+145px)] w-[71px]">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgFrame2106258466} />
+      <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgFrame2106258466} />
     </div>
   );
 }
@@ -123,7 +123,7 @@ function Group() {
 function Frame5() {
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[33px] left-[calc(37.5%+34.5px)] rounded-[8px] top-[calc(50%+195px)] w-[71px]">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgFrame2106258466} />
+      <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgFrame2106258466} />
     </div>
   );
 }
@@ -189,7 +189,7 @@ function FeatureWhySie() {
         </div>
       </div>
       <div className="absolute h-[50px] left-[calc(41.67%+71px)] top-[328px] w-[104px]" data-name="Component 20">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent21} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent21} />
       </div>
     </div>
   );
@@ -199,7 +199,7 @@ function Frame2({ heroPortraitImg }: { heroPortraitImg: string }) {
   return (
     <div className="absolute content-stretch flex flex-col items-center left-[calc(33.33%+49px)] top-[233px] w-[382px]">
       <div className="h-[268px] relative shrink-0 w-[210px]" data-name="image 55">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={heroPortraitImg} />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={heroPortraitImg} />
       </div>
     </div>
   );
@@ -213,7 +213,7 @@ function Frame1({ heroPortraitImg }: { heroPortraitImg: string }) {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%-0.5px)] top-[238px] w-[255px]">
       <div className="h-[262.368px] pointer-events-none relative shrink-0 w-[205px]" data-name="image 55">
-        <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={heroPortraitImg} />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover size-full" src={heroPortraitImg} />
         <div aria-hidden className="absolute border-[#d5c9a8] border-[5.4px] border-solid inset-[-5.4px]" />
       </div>
     </div>
@@ -230,7 +230,7 @@ interface HeroPanelProps {
   opacity: number;
 }
 
-function HeroPanel({
+const HeroPanel = memo(function HeroPanel({
   bgColor,
   patternImg,
   texturImg,
@@ -252,7 +252,7 @@ function HeroPanel({
     >
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ backgroundColor: bgColor }} />
-        <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={texturImg} />
+        <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={texturImg} />
       </div>
       {patternImg ? (
         <div
@@ -269,11 +269,11 @@ function HeroPanel({
         {description}
       </p>
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
     </div>
   );
-}
+});
 
 function CyclingHero() {
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -321,12 +321,12 @@ function Component1({ project }: { project: HomeProject }) {
     <div className="absolute h-[780px] left-0 overflow-clip top-0 w-full" data-name="28" style={{ backgroundColor: project.bgColor }}>
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ backgroundColor: project.bgColor }} />
-        <img alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={project.textureImg} />
+        <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-3 size-full" src={project.textureImg} />
       </div>
       {project.patternImg && (
         <div className="absolute h-[486px] left-[-47px] top-[-96px] w-[1534px]" data-name="Pattern6 4">
           <div className="absolute inset-0 opacity-20 overflow-hidden pointer-events-none">
-            <img alt="" className="absolute h-[239.47%] left-[-5.09%] max-w-none top-[-139.47%] w-[107.26%]" src={project.patternImg} />
+            <img loading="lazy" decoding="async" alt="" className="absolute h-[239.47%] left-[-5.09%] max-w-none top-[-139.47%] w-[107.26%]" src={project.patternImg} />
           </div>
         </div>
       )}
@@ -338,16 +338,16 @@ function Component1({ project }: { project: HomeProject }) {
         {project.description}
       </p>
       <div className="absolute h-[52px] left-[11px] top-[20px] w-[104px]" data-name="Component 20">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent22} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgComponent22} />
       </div>
       <div className="absolute h-[268px] left-[calc(41.67%+3px)] pointer-events-none top-[233px] w-[210px]" data-name="image 55">
-        <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={project.heroImg} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover size-full" src={project.heroImg} />
         <div aria-hidden className="absolute border-5 border-[#fff6d9] border-solid inset-[-5px]" />
       </div>
       <div className="absolute h-[780px] left-[11px] top-0 w-full">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(124,80,76,0.1)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
         </div>
       </div>
       <CyclingHero />
@@ -369,7 +369,7 @@ function Component2({ project }: { project: HomeProject }) {
   return (
     <div className="absolute h-[780px] left-0 overflow-clip top-[2037px] w-full" data-name="1171" style={{ backgroundColor: project.bgColor }}>
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
       <Group1 project={project} />
     </div>
@@ -394,7 +394,7 @@ function Frame10() {
     <div className="content-stretch drop-shadow-[0px_114px_16px_rgba(0,0,0,0),0px_73px_14.5px_rgba(0,0,0,0.01),0px_41px_12.5px_rgba(0,0,0,0.05),0px_18px_9px_rgba(0,0,0,0.09),0px_5px_5px_rgba(0,0,0,0.1)] flex items-center justify-center px-[28px] py-[14px] relative rounded-[4px] shrink-0">
       <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[4px]">
         <div className="absolute bg-[#703000] inset-0 rounded-[4px]" />
-        <img alt="" className="absolute max-w-none object-cover opacity-76 rounded-[4px] size-full" src={imgFrame2106258506} />
+        <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-76 rounded-[4px] size-full" src={imgFrame2106258506} />
       </div>
       <div aria-hidden className="absolute border border-[#391900] border-solid inset-0 pointer-events-none rounded-[4px]" />
       <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[20px] text-white tracking-[-0.6px] whitespace-nowrap">VIEW ALL PROJECTS</p>
@@ -540,7 +540,7 @@ function ServicesSection() {
   return (
     <div className="absolute h-[832px] left-0 overflow-clip top-[2817px] w-full" data-name="Services section">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <img alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
+        <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
         <div className="absolute bg-[rgba(218,208,173,0.95)] inset-0" />
       </div>
       <Frame13 />
@@ -675,7 +675,7 @@ function Frame38() {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+2.5px)] top-[74px]">
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos1} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos1} />
       </div>
       <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
       <Frame36 />
@@ -699,7 +699,7 @@ function ContactPage({ bgColor }: { bgColor: string }) {
     <div className="absolute h-[774px] left-0 top-[-57px] w-full" data-name="Contact Page">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ backgroundColor: bgColor, transition: `background-color ${FADE_MS}ms ease-in-out` }} />
-        <img alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
+        <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
       <div className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
         <Frame20 /><Frame21 /><Frame24 /><Frame26 />
@@ -735,7 +735,7 @@ function Frame41({ bgColor }: { bgColor: string }) {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+3px)] top-[97px]">
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos2} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos2} />
       </div>
       <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
       <Frame37 bgColor={bgColor} />
@@ -753,7 +753,7 @@ function FeatureWhySie1({ project }: { project: HomeProject }) {
       <div className="absolute h-[660px] left-0 top-0 w-full">
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           <div className="absolute bg-[rgba(124,80,76,0.1)] inset-0" />
-          <img alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
+          <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
         </div>
       </div>
       <Frame22 />
@@ -773,12 +773,12 @@ function ServicesSection1({ heroPortraitImg }: { heroPortraitImg: string }) {
   return (
     <div className="absolute h-[877px] left-0 overflow-clip top-0 w-full" data-name="Services section">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <img alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
+        <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
         <div className="absolute bg-[rgba(218,208,173,0.95)] inset-0" />
       </div>
       <div className="absolute h-[751px] left-[33px] top-[63px] right-[33px]" data-name="hero-photo">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img
+          <img decoding="async"
             alt=""
             className="absolute h-[130.42%] left-[-0.02%] max-w-none top-0 w-[100.03%]"
             src={heroPortraitImg}
@@ -823,7 +823,7 @@ function MobileImageCollage() {
       style={{ background: 'rgba(254,244,219,0.97)', minHeight: 220 }}
     >
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.06]" src={imgEntireWebsite} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.06]" src={imgEntireWebsite} />
       </div>
 
       {/* Photo strip — tablet: fills width nicely; mobile: scrollable */}
@@ -831,15 +831,15 @@ function MobileImageCollage() {
         <div className="flex gap-3 items-end overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
           {/* Photo 1 — FIX: tablet-aware clamp sizes */}
           <div className="shrink-0 overflow-hidden rounded-[2px]" style={{ width: 'clamp(110px,28vw,220px)', height: 'clamp(155px,38vw,300px)' }}>
-            <img alt="" className="w-full h-full object-cover" src={imgFrame2106258500} />
+            <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={imgFrame2106258500} />
           </div>
           {/* Photo 2 */}
           <div className="shrink-0 overflow-hidden rounded-[2px]" style={{ width: 'clamp(120px,30vw,240px)', height: 'clamp(190px,46vw,360px)' }}>
-            <img alt="" className="w-full h-full object-cover" src={imgFrame2106258502} />
+            <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={imgFrame2106258502} />
           </div>
           {/* Photo 3 */}
           <div className="shrink-0 overflow-hidden rounded-[2px]" style={{ width: 'clamp(115px,29vw,230px)', height: 'clamp(168px,42vw,330px)' }}>
-            <img alt="" className="w-full h-full object-cover" src={imgFrame2106258503} />
+            <img loading="lazy" decoding="async" alt="" className="w-full h-full object-cover" src={imgFrame2106258503} />
           </div>
         </div>
       </div>
@@ -872,7 +872,7 @@ function MobileWhySIE() {
       </div>
       <div className="flex justify-center mb-8">
         <div className="relative h-[44px] w-[88px]">
-          <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgComponent21} />
+          <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgComponent21} />
         </div>
       </div>
       <p
@@ -904,7 +904,7 @@ function MobileProjectHero({ project }: { project: HomeProject }) {
       className="relative w-full overflow-hidden"
       style={{ backgroundColor: project.bgColor, minHeight: 380 }}
     >
-      <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.03] pointer-events-none" src={project.textureImg} />
+      <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.03] pointer-events-none" src={project.textureImg} />
       {project.patternImg && (
         <div
           className="absolute inset-0 opacity-15"
@@ -915,7 +915,7 @@ function MobileProjectHero({ project }: { project: HomeProject }) {
       {/* Portrait image — FIX: tablet-aware size */}
       <div className="relative z-10 flex justify-center pt-10 pb-6">
         <div className="relative" style={{ width: 'clamp(170px, 28vw, 260px)', height: 'clamp(210px, 35vw, 320px)' }}>
-          <img alt="" className="absolute inset-0 w-full h-full object-cover" src={project.heroImg} />
+          <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={project.heroImg} />
           <div aria-hidden className="absolute border-[4px] border-solid" style={{ borderColor: '#fff6d9', inset: '-4px' }} />
         </div>
       </div>
@@ -941,7 +941,7 @@ function MobileServicesSection() {
   return (
     <div className="relative w-full overflow-hidden">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgServicesSection} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={imgServicesSection} />
         <div className="absolute inset-0 bg-[rgba(218,208,173,0.95)]" />
       </div>
 
@@ -1037,12 +1037,12 @@ function MobileLandscapePhoto({ project }: { project: HomeProject }) {
   return (
     <div className="relative w-full overflow-hidden bg-[#dad0ad]" style={{ minHeight: 260 }}>
       <div aria-hidden className="absolute inset-0 pointer-events-none">
-        <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgServicesSection} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={imgServicesSection} />
         <div className="absolute inset-0 bg-[rgba(218,208,173,0.92)]" />
       </div>
       <div className="relative px-4 py-4">
         <div className="w-full overflow-hidden rounded-[2px]" style={{ height: 'clamp(220px, 55vw, 380px)' }}>
-          <img
+          <img decoding="async"
             alt=""
             className="w-full h-full object-cover"
             src={project.heroImgLandscape ?? project.heroImg}
@@ -1065,7 +1065,7 @@ function MobileFooter({ project }: { project: HomeProject }) {
       {/* Background texture */}
       <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <div className="absolute inset-0 bg-[rgba(124,80,76,0.08)]" />
-        <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.05]" src={imgRectangle30} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.05]" src={imgRectangle30} />
       </div>
 
       {/* Star separator */}
@@ -1084,7 +1084,7 @@ function MobileFooter({ project }: { project: HomeProject }) {
         <div className="flex flex-col items-center gap-5 mb-10 pt-2">
           <div className="relative flex justify-center">
             <div className="relative" style={{ height: 70, width: 140 }}>
-              <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgPrimaryLogos2} />
+              <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgPrimaryLogos2} />
             </div>
           </div>
           <p

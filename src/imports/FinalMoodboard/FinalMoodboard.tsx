@@ -291,7 +291,7 @@ function Frame() {
         <div className="flex-none rotate-[-12.05deg]">
           <div className="h-[193px] relative w-[236px]" data-name="image 2">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[204.51%] left-0 max-w-none top-[-24.31%] w-[111.65%]" src={imgImage2} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[204.51%] left-0 max-w-none top-[-24.31%] w-[111.65%]" src={imgImage2} />
             </div>
           </div>
         </div>
@@ -300,7 +300,7 @@ function Frame() {
         <div className="flex-none rotate-[36.28deg]">
           <div className="h-[250px] relative w-[201px]" data-name="image 24">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[160%] left-[-18.57%] max-w-none top-[-25.2%] w-[132.67%]" src={imgImage24} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[160%] left-[-18.57%] max-w-none top-[-25.2%] w-[132.67%]" src={imgImage24} />
             </div>
           </div>
         </div>
@@ -309,7 +309,7 @@ function Frame() {
         <div className="flex-none rotate-[17.36deg]">
           <div className="h-[139px] relative w-[185px]" data-name="image 26">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[389.85%] left-[-94.31%] max-w-none top-[-127.66%] w-[194.31%]" src={imgImage26} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[389.85%] left-[-94.31%] max-w-none top-[-127.66%] w-[194.31%]" src={imgImage26} />
             </div>
           </div>
         </div>
@@ -317,7 +317,7 @@ function Frame() {
       <div data-object="true" className="absolute flex h-[319.983px] items-center justify-center left-[330px] top-[983px] w-[338.999px]">
         <div className="flex-none rotate-[-18.69deg]">
           <div className="h-[244.751px] relative w-[275.086px]" data-name="image 27">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage27} />
+            <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage27} />
           </div>
         </div>
       </div>
@@ -325,7 +325,7 @@ function Frame() {
         <div className="flex-none rotate-[-24.06deg]">
           <div className="h-[176.222px] relative w-[156.593px]" data-name="image 29">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[149.37%] left-[-24.5%] max-w-none top-[-34.94%] w-[252.14%]" src={imgImage29} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[149.37%] left-[-24.5%] max-w-none top-[-34.94%] w-[252.14%]" src={imgImage29} />
             </div>
           </div>
         </div>
@@ -334,83 +334,83 @@ function Frame() {
         <div className="flex-none rotate-[23.23deg]">
           <div className="h-[112.544px] relative w-[150.534px]" data-name="image 47">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[389.85%] left-[-46.92%] max-w-none top-[-211.05%] w-[194.31%]" src={imgImage26} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[389.85%] left-[-46.92%] max-w-none top-[-211.05%] w-[194.31%]" src={imgImage26} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[280px] left-[1300px] top-[650px] w-[208px]" data-name="image 30">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[176.96%] left-[-28.79%] max-w-none top-0 w-[158.51%]" src={imgImage30} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[176.96%] left-[-28.79%] max-w-none top-0 w-[158.51%]" src={imgImage30} />
         </div>
       </div>
       <div data-object="true" className="absolute flex h-[158.895px] items-center justify-center left-[920px] top-[900px] w-[148.735px]">
         <div className="flex-none rotate-[11.45deg]">
           <div className="h-[137px] relative w-[124px]" data-name="image 31">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[139.15%] left-[-19.06%] max-w-none top-[-26.89%] w-[231.07%]" src={imgImage29} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[139.15%] left-[-19.06%] max-w-none top-[-26.89%] w-[231.07%]" src={imgImage29} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[138px] left-[1810px] top-[780px] w-[128px]" data-name="image 32">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[139.15%] left-[-113.99%] max-w-none top-[-26.89%] w-[225.19%]" src={imgImage29} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[139.15%] left-[-113.99%] max-w-none top-[-26.89%] w-[225.19%]" src={imgImage29} />
         </div>
       </div>
       <div data-object="true" className="absolute flex h-[181.757px] items-center justify-center left-[1103px] top-[867px] w-[223.701px]">
         <div className="flex-none rotate-[13.02deg]">
           <div className="h-[141px] relative w-[197px]" data-name="image 36">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[135.01%] left-[-25.57%] max-w-none top-[-14.65%] w-[145.08%]" src={imgImage36} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[135.01%] left-[-25.57%] max-w-none top-[-14.65%] w-[145.08%]" src={imgImage36} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[190px] left-[758px] top-[879px] w-[90px]" data-name="image 37">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage37} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage37} />
       </div>
       <div data-object="true" className="absolute h-[161px] left-[170px] top-[20px] w-[107px]" data-name="image 38">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage38} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage38} />
       </div>
       <div data-object="true" className="absolute flex h-[268.844px] items-center justify-center left-[1277px] top-[1222px] w-[197.714px]">
         <div className="flex-none rotate-[11.86deg]">
           <div className="h-[243px] relative w-[151px]" data-name="image 40">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[129.84%] left-[-17.26%] max-w-none top-[-18.93%] w-[139.13%]" src={imgImage40} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[129.84%] left-[-17.26%] max-w-none top-[-18.93%] w-[139.13%]" src={imgImage40} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[275px] left-[442px] top-[244px] w-[197px]" data-name="image 41">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[180.28%] left-[-34.86%] max-w-none top-[-22.89%] w-[167.59%]" src={imgImage41} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[180.28%] left-[-34.86%] max-w-none top-[-22.89%] w-[167.59%]" src={imgImage41} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[191px] left-[615px] top-[641px] w-[178px]" data-name="image 42">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage42} />
+        <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage42} />
       </div>
       <div data-object="true" className="absolute flex h-[268.856px] items-center justify-center left-[982px] top-[20px] w-[330.507px]">
         <div className="flex-none rotate-[-17.69deg]">
           <div className="h-[191px] relative w-[286px]" data-name="image 43">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage43} />
+            <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage43} />
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[260px] left-[680px] top-[180px] w-[257px]" data-name="image 44">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[148.12%] left-0 max-w-none top-[-48.12%] w-full" src={imgImage44} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[148.12%] left-0 max-w-none top-[-48.12%] w-full" src={imgImage44} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[253px] left-[224px] top-[832px] w-[147px]" data-name="image 45">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[117.88%] left-[-12.25%] max-w-none top-0 w-[134.91%]" src={imgImage45} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[117.88%] left-[-12.25%] max-w-none top-0 w-[134.91%]" src={imgImage45} />
         </div>
       </div>
       <div data-object="true" className="absolute flex h-[231.315px] items-center justify-center left-[1950px] top-[1800px] w-[344.725px]">
         <div className="flex-none rotate-[-5.09deg]">
           <div className="h-[203px] relative w-[328px]" data-name="image 46">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage46} />
+            <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage46} />
           </div>
         </div>
       </div>
@@ -418,50 +418,50 @@ function Frame() {
   <div className="flex-none rotate-[7.2deg]">
     <div className="h-[190px] relative w-[190px]" data-name="image 250">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-[110%] left-[-5%] max-w-none top-[-5%] w-[110%]" src={imgImage250} />
+        <img loading="lazy" decoding="async" alt="" className="absolute h-[110%] left-[-5%] max-w-none top-[-5%] w-[110%]" src={imgImage250} />
       </div>
     </div>
   </div>
 </div>
       <div data-object="true" className="absolute h-[166px] left-[2431px] top-[475px] w-[145px]" data-name="14">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[355.42%] left-[-17.24%] max-w-none top-[-13.25%] w-[314.48%]" src={img14} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[355.42%] left-[-17.24%] max-w-none top-[-13.25%] w-[314.48%]" src={img14} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[182px] left-[2712px] top-[311px] w-[154px]" data-name="15">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[324.18%] left-[-184.91%] max-w-none top-[-8.24%] w-[296.1%]" src={img14} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[324.18%] left-[-184.91%] max-w-none top-[-8.24%] w-[296.1%]" src={img14} />
         </div>
       </div>
       <div data-object="true" className="absolute flex h-[284.799px] items-center justify-center left-[1480px] top-[80px] w-[454.692px]">
         <div className="flex-none rotate-[-17.6deg]">
           <div className="h-[164px] relative w-[425px]" data-name="16">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[359.76%] left-[-3.24%] max-w-none top-[-124.14%] w-[107.29%]" src={img14} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[359.76%] left-[-3.24%] max-w-none top-[-124.14%] w-[107.29%]" src={img14} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[190px] left-[2920px] top-[268px] w-[165px]" data-name="17">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[500%] left-[-28.65%] max-w-none top-[-341.36%] w-[447.06%]" src={img14} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[500%] left-[-28.65%] max-w-none top-[-341.36%] w-[447.06%]" src={img14} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[144px] left-[2246px] top-[268px] w-[157px]" data-name="18">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[261.06%] left-[-84.69%] max-w-none top-[-160.98%] w-[184.62%]" src={img14} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[261.06%] left-[-84.69%] max-w-none top-[-160.98%] w-[184.62%]" src={img14} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[173px] left-[177.64px] top-[339.08px] w-[264px]" data-name="image 169">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[252.14%] left-[-12.92%] max-w-none top-[-16.67%] w-[128.09%]" src={imgImage169} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[252.14%] left-[-12.92%] max-w-none top-[-16.67%] w-[128.09%]" src={imgImage169} />
         </div>
       </div>
       <div data-object="true" className="absolute flex h-[180.412px] items-center justify-center left-[754.71px] top-[1341.46px] w-[228.902px]">
         <div className="flex-none rotate-[12.03deg]">
           <div className="h-[141px] relative w-[204px]" data-name="image 170">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[226.92%] left-[-8.18%] max-w-none top-[-108.92%] w-[120.95%]" src={imgImage169} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[226.92%] left-[-8.18%] max-w-none top-[-108.92%] w-[120.95%]" src={imgImage169} />
             </div>
           </div>
         </div>
@@ -470,7 +470,7 @@ function Frame() {
         <div className="flex-none rotate-[19.14deg]">
           <div className="h-[135px] relative w-[381px]" data-name="image 171">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[437.04%] left-[-5.51%] max-w-none top-[-107.41%] w-[119.69%]" src={imgImage171} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[437.04%] left-[-5.51%] max-w-none top-[-107.41%] w-[119.69%]" src={imgImage171} />
             </div>
           </div>
         </div>
@@ -479,105 +479,105 @@ function Frame() {
         <div className="flex-none rotate-[24.41deg]">
           <div className="h-[162px] relative w-[153px]" data-name="image 172">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[365.49%] left-[-0.75%] max-w-none top-[-172.89%] w-[299.09%]" src={imgImage171} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[365.49%] left-[-0.75%] max-w-none top-[-172.89%] w-[299.09%]" src={imgImage171} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[218px] left-[1144px] top-[1599px] w-[142px]" data-name="image 175">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[270.64%] left-0 max-w-none top-0 w-[321.13%]" src={imgImage175} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[270.64%] left-0 max-w-none top-0 w-[321.13%]" src={imgImage175} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[248px] left-[152px] top-[1398px] w-[178px]" data-name="image 176">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[237.9%] left-[-152%] max-w-none top-0 w-[256.18%]" src={imgImage175} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[237.9%] left-[-152%] max-w-none top-0 w-[256.18%]" src={imgImage175} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[283px] left-[1837px] top-[1303px] w-[154px]" data-name="image 177">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[208.48%] left-[-191.27%] max-w-none top-[-104.91%] w-[296.1%]" src={imgImage175} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[208.48%] left-[-191.27%] max-w-none top-[-104.91%] w-[296.1%]" src={imgImage175} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[145px] left-[1225px] top-[206px] w-[135px]" data-name="image 178">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[333.33%] left-[-0.22%] max-w-none top-[-227.62%] w-[276.36%]" src={imgImage175} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[333.33%] left-[-0.22%] max-w-none top-[-227.62%] w-[276.36%]" src={imgImage175} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[98px] left-[2461px] top-[1005px] w-[259px]" data-name="image 179">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[602.04%] left-[-4.76%] max-w-none top-[-290.93%] w-[176.06%]" src={imgImage175} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[602.04%] left-[-4.76%] max-w-none top-[-290.93%] w-[176.06%]" src={imgImage175} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[192px] left-[558px] top-[1762px] w-[489px]" data-name="image 174">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[453.85%] left-[-16.25%] max-w-none top-[-339.39%] w-[137.76%]" src={imgImage171} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[453.85%] left-[-16.25%] max-w-none top-[-339.39%] w-[137.76%]" src={imgImage171} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[162px] left-[2480px] top-[1813px] w-[156px]" data-name="image 173">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[364.2%] left-[-176.15%] max-w-none top-[-172.89%] w-[292.31%]" src={imgImage171} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[364.2%] left-[-176.15%] max-w-none top-[-172.89%] w-[292.31%]" src={imgImage171} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[269px] left-[2691px] top-[641px] w-[327px]" data-name="image 182">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[207.43%] left-[-13.96%] max-w-none top-[-90.71%] w-[131.89%]" src={imgImage182} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[207.43%] left-[-13.96%] max-w-none top-[-90.71%] w-[131.89%]" src={imgImage182} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[203px] left-[1565px] top-[1635px] w-[349px]" data-name="image 181">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[290.64%] left-[-30.66%] max-w-none top-[-190.82%] w-[130.66%]" src={imgImage181} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[290.64%] left-[-30.66%] max-w-none top-[-190.82%] w-[130.66%]" src={imgImage181} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[203px] left-[2079px] top-[37px] w-[334px]" data-name="image 180">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[290.64%] left-0 max-w-none top-[-94.58%] w-[136.53%]" src={imgImage181} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[290.64%] left-0 max-w-none top-[-94.58%] w-[136.53%]" src={imgImage181} />
         </div>
       </div>
       <div data-object="true" className="absolute flex h-[341.76px] items-center justify-center left-[2836.73px] top-[1164.62px] w-[375.546px]">
         <div className="flex-none rotate-[34.41deg]">
           <div className="h-[193px] relative w-[323px]" data-name="image 183">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[289.12%] left-[-1.43%] max-w-none top-[-17.89%] w-[133.52%]" src={imgImage182} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[289.12%] left-[-1.43%] max-w-none top-[-17.89%] w-[133.52%]" src={imgImage182} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[214px] left-[960px] top-[368px] w-[143px]" data-name="image 161">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[170.03%] left-0 max-w-none top-0 w-[195.71%]" src={imgImage161} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[170.03%] left-0 max-w-none top-0 w-[195.71%]" src={imgImage161} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[106px] left-[1718px] top-[1148px] w-[157px]" data-name="image 184">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[556.6%] left-[-190.18%] max-w-none top-[-0.17%] w-[290.45%]" src={imgImage161} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[556.6%] left-[-190.18%] max-w-none top-[-0.17%] w-[290.45%]" src={imgImage161} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[209px] left-[120px] top-[1745px] w-[157px]" data-name="image 186">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[282.3%] left-[-190.18%] max-w-none top-[-101.06%] w-[290.45%]" src={imgImage161} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[282.3%] left-[-190.18%] max-w-none top-[-101.06%] w-[290.45%]" src={imgImage161} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[154px] left-[2653px] top-[1489px] w-[104px]" data-name="image 187">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[383.12%] left-[-338.69%] max-w-none top-[-283.32%] w-[438.46%]" src={imgImage161} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[383.12%] left-[-338.69%] max-w-none top-[-283.32%] w-[438.46%]" src={imgImage161} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[262px] left-[2977px] top-[689px] w-[181px]" data-name="image 185">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[546.3%] left-[-190.18%] max-w-none top-[-97.09%] w-[290.45%]" src={imgImage161} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[546.3%] left-[-190.18%] max-w-none top-[-97.09%] w-[290.45%]" src={imgImage161} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[187px] left-[2784px] top-[1687px] w-[363px]" data-name="image 190">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[311.96%] left-[1.36%] max-w-none top-0 w-[97.29%]" src={imgImage190} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[311.96%] left-[1.36%] max-w-none top-0 w-[97.29%]" src={imgImage190} />
         </div>
       </div>
       <div data-object="true" className="absolute flex h-[251.142px] items-center justify-center left-[3021px] top-[1022px] w-[138.581px]">
         <div className="flex-none rotate-[-15.36deg]">
           <div className="h-[177.367px] relative w-[102.397px]" data-name="image 196">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[470.49%] left-[-106.56%] max-w-none top-[-157.21%] w-[213.29%]" src={imgImage190} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[470.49%] left-[-106.56%] max-w-none top-[-157.21%] w-[213.29%]" src={imgImage190} />
             </div>
           </div>
         </div>
@@ -586,29 +586,29 @@ function Frame() {
         <div className="flex-none rotate-[19.88deg]">
           <div className="h-[137px] relative w-[192px]" data-name="image 193">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="absolute h-[521.82%] left-[-172.25%] max-w-none top-[-288.7%] w-[286.22%]" src={imgImage190} />
+              <img loading="lazy" decoding="async" alt="" className="absolute h-[521.82%] left-[-172.25%] max-w-none top-[-288.7%] w-[286.22%]" src={imgImage190} />
             </div>
           </div>
         </div>
       </div>
       <div data-object="true" className="absolute h-[156px] left-[2885px] top-[480px] w-[192px]" data-name="image 195">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[367.95%] left-[-15.41%] max-w-none top-[-256.83%] w-[231.06%]" src={imgImage190} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[367.95%] left-[-15.41%] max-w-none top-[-256.83%] w-[231.06%]" src={imgImage190} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[153px] left-[1307px] top-[1838px] w-[261px]" data-name="image 191">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[470.49%] left-[-6.66%] max-w-none top-[-150.3%] w-[213.29%]" src={imgImage190} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[470.49%] left-[-6.66%] max-w-none top-[-150.3%] w-[213.29%]" src={imgImage190} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[110px] left-[2920px] top-[1522px] w-[167px]" data-name="image 194">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[521.82%] left-[-152.69%] max-w-none top-[-402.96%] w-[265.65%]" src={imgImage190} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[521.82%] left-[-152.69%] max-w-none top-[-402.96%] w-[265.65%]" src={imgImage190} />
         </div>
       </div>
       <div data-object="true" className="absolute h-[144px] left-[2252px] top-[1442px] w-[190px]" data-name="image 25">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[111.11%] left-[-2.9%] max-w-none top-[-7.64%] w-[105.8%]" src={imgImage25} />
+          <img loading="lazy" decoding="async" alt="" className="absolute h-[111.11%] left-[-2.9%] max-w-none top-[-7.64%] w-[105.8%]" src={imgImage25} />
         </div>
       </div>
     </div>
@@ -1353,7 +1353,7 @@ gsap.set(canvas, { x: init.x, y: init.y, scale: isMobile ? 0.32 : 0.45, transfor
             pointerEvents: "none",
           }}
         >
-          <img
+          <img decoding="async"
             className="intro-logo"
             src={imgPrimaryLogos}
             alt="Studio Inside Eye"

@@ -8,7 +8,7 @@ export function BasedInSection() {
       className="relative overflow-hidden w-full"
       style={{ backgroundColor: "#5d2834" }}
     >
-      <img
+      <img decoding="async"
         src={imgTexture}
         alt=""
         aria-hidden
@@ -23,7 +23,7 @@ export function BasedInSection() {
           className="absolute"
           style={{ left: "33px", top: "250px", width: "448px", height: "448px" }}
         >
-          <img
+          <img decoding="async"
             src={imgSquareImg}
             alt="Interior project"
             className="w-full h-full object-cover"
@@ -35,7 +35,7 @@ export function BasedInSection() {
           className="absolute"
           style={{ left: "calc(16.67% + 40px)", top: "183px", width: "428px", height: "107px" }}
         >
-          <img
+          <img decoding="async"
             src={imgDecorativeText}
             alt=""
             className="w-full h-full object-cover"
@@ -90,7 +90,7 @@ export function BasedInSection() {
         {/* Two column: image left, text right */}
         <div className="flex gap-8 items-end">
           <div className="flex-shrink-0" style={{ width: "320px", height: "320px" }}>
-            <img src={imgSquareImg} alt="Interior project" className="w-full h-full object-cover" />
+            <img loading="lazy" decoding="async" src={imgSquareImg} alt="Interior project" className="w-full h-full object-cover" />
           </div>
 
           <div className="flex flex-col gap-4 items-end flex-1">
@@ -129,7 +129,7 @@ export function BasedInSection() {
       <div className="block md:hidden relative">
         {/* Square image — full width */}
         <div className="mx-5 mt-10 mb-8" style={{ aspectRatio: "1/1" }}>
-          <img src={imgSquareImg} alt="Interior project" className="w-full h-full object-cover" />
+          <img loading="lazy" decoding="async" src={imgSquareImg} alt="Interior project" className="w-full h-full object-cover" />
         </div>
 
         {/* Based In text */}

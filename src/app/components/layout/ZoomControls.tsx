@@ -1,3 +1,4 @@
+import { memo } from "react";
 interface ZoomControlsProps {
   onZoomIn: () => void;
   onZoomOut: () => void;
@@ -9,7 +10,7 @@ interface ZoomControlsProps {
  * Reusable: pass onZoomIn / onZoomOut callbacks from any canvas-based page.
  * On mobile: lifts above the bottom bar via .zoom-controls-fixed media query.
  */
-export default function ZoomControls({ onZoomIn, onZoomOut }: ZoomControlsProps) {
+const ZoomControls = memo(function ZoomControls({ onZoomIn, onZoomOut }: ZoomControlsProps) {
   return (
     <div
       className="zoom-controls-fixed"
@@ -51,4 +52,6 @@ export default function ZoomControls({ onZoomIn, onZoomOut }: ZoomControlsProps)
       </button>
     </div>
   );
-}
+});
+
+export default ZoomControls;

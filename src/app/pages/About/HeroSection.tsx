@@ -26,7 +26,7 @@ export function HeroSection() {
           }}
         >
           {/* Background image */}
-          <img
+          <img decoding="async"
             src={imgHeroBg}
             alt="Interior design space"
             className="absolute inset-0 w-full h-full object-cover"
