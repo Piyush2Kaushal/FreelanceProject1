@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, memo, useCallback } from "react";
+import { useState, useEffect, useRef, memo, useCallback, type RefObject } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTransition, type SharedRect } from "../../app/context/TransitionContext";
 import svgPaths from "./svg-n029qayjm7";
 import socialSvgPaths from "../svg-ejvbwqgg01";
 import JournalHeader from "../../app/components/layout/JournalHeader";
@@ -207,14 +208,22 @@ function Frame2({ heroPortraitImg }: { heroPortraitImg: string }) {
 // DYNAMIC HERO SECTION
 // ─────────────────────────────────────────────────────────────────────────────
 
-function Frame1({ heroPortraitImg, onClick }: { heroPortraitImg: string; onClick?: () => void }) {
+function Frame1({
+  heroPortraitImg,
+  boxRef,
+  onActivate,
+}: {
+  heroPortraitImg: string;
+  boxRef?: RefObject<HTMLDivElement>;
+  onActivate?: () => void;
+}) {
   return (
     <div
       className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%-0.5px)] top-[238px] w-[255px]"
-      onClick={onClick}
-      style={onClick ? { cursor: 'pointer', zIndex: 10 } : undefined}
+      onClick={onActivate}
+      style={onActivate ? { cursor: 'pointer', zIndex: 10 } : undefined}
     >
-      <div className="h-[262.368px] pointer-events-none relative shrink-0 w-[205px]" data-name="image 55">
+      <div ref={boxRef} className="h-[262.368px] pointer-events-none relative shrink-0 w-[205px]" data-name="image 55">
         <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover size-full" src={heroPortraitImg} />
         <div aria-hidden className="absolute border-[#d5c9a8] border-[5.4px] border-solid inset-[-5.4px]" />
       </div>
@@ -230,7 +239,7 @@ interface HeroPanelProps {
   projectName: string;
   description: string;
   opacity: number;
-  onClick?: () => void;
+  onActivate?: (rect: SharedRect, src: string) => void;
 }
 
 const HeroPanel = memo(function HeroPanel({
@@ -241,8 +250,20 @@ const HeroPanel = memo(function HeroPanel({
   projectName,
   description,
   opacity,
-  onClick,
+  onActivate,
 }: HeroPanelProps) {
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  // Measure the framed portrait box and hand its rect to the transition layer
+  const activate = useCallback(() => {
+    if (!boxRef.current || !onActivate) return;
+    const r = boxRef.current.getBoundingClientRect();
+    onActivate(
+      { top: r.top, left: r.left, width: r.width, height: r.height },
+      heroPortraitImg
+    );
+  }, [onActivate, heroPortraitImg]);
+
   return (
     <div
       className="absolute h-[780px] left-0 overflow-clip top-0 w-full"
@@ -265,11 +286,11 @@ const HeroPanel = memo(function HeroPanel({
           data-name="pattern-overlay"
         />
       ) : null}
-      <Frame1 heroPortraitImg={heroPortraitImg} onClick={onClick} />
+      <Frame1 heroPortraitImg={heroPortraitImg} boxRef={boxRef} onActivate={onActivate ? activate : undefined} />
       <p
         className="[word-break:break-word] absolute bottom-[144px] font-['Cormorant_Garamond',serif] font-light leading-[normal] left-[33px] not-italic text-[#b3ae85] text-[100px] translate-y-full uppercase whitespace-nowrap"
-        onClick={onClick}
-        style={onClick ? { cursor: 'pointer' } : undefined}
+        onClick={onActivate ? activate : undefined}
+        style={onActivate ? { cursor: 'pointer' } : undefined}
       >
         {projectName}
       </p>
@@ -311,11 +332,34 @@ function CyclingHero() {
   const current = HOME_PROJECTS[currentIdx];
   const next    = nextIdx !== null ? HOME_PROJECTS[nextIdx] : null;
 
+  const { startTransition } = useTransition();
+
+  // Build the click handler for a given project slug:
+  // capture the image rect → start the morph → navigate after a short beat
+  // so the cream backdrop can cover the route swap.
+  const makeActivate = useCallback(
+    (slug: string) => (rect: SharedRect, src: string) => {
+      // Small screens / no shared hero → plain navigation
+      if (typeof window !== "undefined" && window.innerWidth < 1024) {
+        navigate(slug);
+        return;
+      }
+      startTransition({
+        src,
+        rect,
+        borderColor: "#d5c9a8", // Home frame cream
+        borderWidth: 5.4,
+      });
+      window.setTimeout(() => navigate(slug), 300);
+    },
+    [navigate, startTransition]
+  );
+
   return (
     <div className="absolute h-[780px] left-0 top-0 w-full" style={{ zIndex: 0 }}>
-      <HeroPanel bgColor={current.bgColor} patternImg={current.patternImg} texturImg={current.textureImg} heroPortraitImg={current.heroImg} projectName={current.projectName} description={current.description} opacity={1} onClick={() => navigate(current.slug)} />
+      <HeroPanel bgColor={current.bgColor} patternImg={current.patternImg} texturImg={current.textureImg} heroPortraitImg={current.heroImg} projectName={current.projectName} description={current.description} opacity={1} onActivate={makeActivate(current.slug)} />
       {next && (
-        <HeroPanel bgColor={next.bgColor} patternImg={next.patternImg} texturImg={next.textureImg} heroPortraitImg={next.heroImg} projectName={next.projectName} description={next.description} opacity={nextOpacity} onClick={() => navigate(next.slug)} />
+        <HeroPanel bgColor={next.bgColor} patternImg={next.patternImg} texturImg={next.textureImg} heroPortraitImg={next.heroImg} projectName={next.projectName} description={next.description} opacity={nextOpacity} onActivate={makeActivate(next.slug)} />
       )}
     </div>
   );

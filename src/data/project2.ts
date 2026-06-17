@@ -8,7 +8,7 @@ import type { ProjectData } from "./types";
 
 // ── Image imports ─────────────────────────────────────────────────────────────
 import imgHeroBgTexture      from "../assets/adbe511abb684cf81f1cb3187f8b71a3a00b3c31.webp";
-import imgHeroPortrait       from "../assets/d2c1ad13369df475ff40ba177a40c02568e80cea.webp";
+import imgHeroPortrait       from "../assets/d0789128c56050759d379207723c165109533bf7.webp";
 import imgPattern65          from "../assets/aebe02d3d339cdc59b4730399fc4b35a1fa1b42b.webp";
 import imgConceptBgTexture   from "../assets/47db141b7dbab58b232f8ff786dd3c5206a565ea.webp";
 import imgLogo               from "../assets/51f0049bcba326b79ac8dbd04411794e96785978.webp";

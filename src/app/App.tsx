@@ -1,7 +1,9 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { SelectionProvider } from "./context/SelectionContext";
+import { TransitionProvider } from "./context/TransitionContext";
 import PageTransitionOverlay from "./components/PageTransitionOverlay";
+import SharedElementLayer from "./components/SharedElementLayer";
 import { projectRoutes } from "./router/projectRoutes";
 
 // ─── Route-level code splitting ──────────────────────────────────────────────
@@ -29,9 +31,10 @@ const PageFallback = () => (
 export default function App() {
   return (
     <SelectionProvider>
-      <div className="size-full">
-        <Suspense fallback={<PageFallback />}>
-          <Routes>
+      <TransitionProvider>
+        <div className="size-full">
+          <Suspense fallback={<PageFallback />}>
+            <Routes>
             <Route path="/"                                element={<FinalMoodboard />} />
             <Route path="/home"                            element={<HomePage />} />
             <Route path="/about"                           element={<AboutPage />} />
@@ -59,10 +62,12 @@ export default function App() {
                 element={route.element}
               />
             ))}
-          </Routes>
-        </Suspense>
-        <PageTransitionOverlay />
-      </div>
+            </Routes>
+          </Suspense>
+          <PageTransitionOverlay />
+          <SharedElementLayer />
+        </div>
+      </TransitionProvider>
     </SelectionProvider>
   );
 }

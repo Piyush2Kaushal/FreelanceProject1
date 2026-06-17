@@ -8,9 +8,11 @@
 // MOBILE/TABLET (<1024px): Premium vertical-scroll layout — each screen
 //   becomes a full-width vertical section with premium styling.
 // ─────────────────────────────────────────────────────────────────────────────
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { ProjectData, GalleryScreen, FullImageScreen } from "../../../data/types";
+import { useTransition } from "../../context/TransitionContext";
+import gsap from "gsap";
 import svgPaths from "../../../assets/svgPaths";
 import imgDrawerTexture from "../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
 
@@ -127,8 +129,76 @@ const BackButton = memo(function BackButton() {
 // Screen 1 – Intro
 // ─────────────────────────────────────────────────────────────────────────────
 const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["intro"] }) {
+  // While a shared-element morph is in flight, keep the real hero hidden so the
+  // flying clone is the only visible image (no double-image flash). The
+  // SharedElementLayer reveals it imperatively the instant the clone lands.
+  const { active } = useTransition();
+
+  // Capture (once) whether we arrived via the card→page morph, so the content
+  // entrance can be delayed to land in sync with the flying image.
+  const [viaTransition] = useState(() => active);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // ── Intro content entrance — mersi-style "quiet luxury" reveal ─────────────
+  // Text rises out from behind a mask (overflow-hidden wrapper + yPercent),
+  // images wipe + settle via clip-path & a micro-scale. expo.out easing, slow
+  // durations and a gentle stagger give the unhurried premium feel.
+  // The framed portrait (shared target) is intentionally NOT animated here —
+  // it is owned by the image morph and must stay untouched.
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const ctx = gsap.context(() => {
+      const lines = Array.from(
+        root.querySelectorAll<HTMLElement>("[data-reveal-line]")
+      );
+      const clips = Array.from(
+        root.querySelectorAll<HTMLElement>("[data-reveal-clip]")
+      );
+
+      if (lines.length) gsap.set(lines, { yPercent: 120 });
+      if (clips.length)
+        gsap.set(clips, {
+          clipPath: "inset(0% 0% 100% 0%)",
+          scale: 1.06,
+          transformOrigin: "50% 50%",
+        });
+
+      const start = viaTransition ? 0.45 : 0.1; // land in sync with the image
+      const tl = gsap.timeline({ delay: start });
+
+      if (clips.length)
+        tl.to(
+          clips,
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            scale: 1,
+            duration: 1.2,
+            ease: "expo.out",
+          },
+          0
+        );
+
+      if (lines.length)
+        tl.to(
+          lines,
+          {
+            yPercent: 0,
+            duration: 1.05,
+            ease: "expo.out",
+            stagger: 0.12,
+          },
+          0.12
+        );
+    }, root);
+
+    return () => ctx.revert();
+  }, [viaTransition]);
+
   return (
     <div
+      ref={rootRef}
       className="bg-[#dad0ad] h-[780px] overflow-clip relative shrink-0 w-[1440px]"
       data-name="Intro"
       style={{ contain: "layout style paint" }}
@@ -146,7 +216,7 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
       </div>
 
       {/* Decorative top-right image */}
-      <div className="absolute bottom-[147px] h-[129px] right-[47px] w-[266px]">
+      <div className="absolute bottom-[147px] h-[129px] right-[47px] w-[266px] overflow-hidden" data-reveal-clip>
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
@@ -158,21 +228,36 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
 
       {/* Project name + description block */}
       <div className="absolute content-stretch flex flex-col gap-[12px] items-start left-[calc(50%+43px)] top-[97px] w-[332px]">
-        <p
-          className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[100px] tracking-[-4px] whitespace-nowrap"
-          style={{ color: data.projectNameColor }}
-        >
-          {data.projectName}
-        </p>
-        <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic relative shrink-0 text-[14px] text-[rgba(0,0,0,0.8)] w-full">
-          {data.description}
-        </p>
+        <div className="overflow-hidden">
+          <p
+            data-reveal-line
+            className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[100px] tracking-[-4px] whitespace-nowrap"
+            style={{ color: data.projectNameColor }}
+          >
+            {data.projectName}
+          </p>
+        </div>
+        <div className="overflow-hidden w-full">
+          <p
+            data-reveal-line
+            className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic relative shrink-0 text-[14px] text-[rgba(0,0,0,0.8)] w-full"
+          >
+            {data.description}
+          </p>
+        </div>
       </div>
 
       {/* Side paragraph bottom-right */}
-      <p className="[word-break:break-word] absolute bottom-[129px] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic right-[313px] text-[14px] text-[rgba(0,0,0,0.8)] translate-x-full translate-y-full w-[287px]">
-        {data.sideParagraph}
-      </p>
+      <div className="absolute bottom-[129px] right-[313px] translate-x-full translate-y-full w-[287px]">
+        <div className="overflow-hidden w-full">
+          <p
+            data-reveal-line
+            className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-[normal] not-italic text-[14px] text-[rgba(0,0,0,0.8)] w-full"
+          >
+            {data.sideParagraph}
+          </p>
+        </div>
+      </div>
 
       {/* Hero panel (left dark box with portrait) */}
       <div
@@ -182,7 +267,12 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
         {/* Framed portrait */}
         <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 top-[calc(50%-0.5px)]">
           <div className="content-stretch flex items-center overflow-clip p-[16px] relative rounded-[inherit] size-full">
-            <div className="h-[327px] relative shrink-0 w-[232px]" data-name="image 55">
+            <div
+              className="h-[327px] relative shrink-0 w-[232px]"
+              data-name="image 55"
+              data-shared-target
+              style={{ opacity: active ? 0 : 1 }}
+            >
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <img
                   alt=""
@@ -201,16 +291,30 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
         </div>
 
         {/* Bottom caption */}
-        <div className="-translate-x-1/2 -translate-y-1/2 [word-break:break-word] absolute content-stretch flex font-['EuropaNuova-Regular:Regular',sans-serif] items-center justify-between leading-[1.5] left-1/2 not-italic text-[#dad0ad] text-[12.8px] top-[calc(50%+207.5px)] tracking-[0.896px] w-[266px] whitespace-nowrap">
-          <p className="relative shrink-0">{data.location}</p>
-          <p className="relative shrink-0">{data.year}</p>
+        <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 top-[calc(50%+207.5px)] w-[266px]">
+          <div className="overflow-hidden w-full">
+            <div
+              data-reveal-line
+              className="[word-break:break-word] content-stretch flex font-['EuropaNuova-Regular:Regular',sans-serif] items-center justify-between leading-[1.5] not-italic text-[#dad0ad] text-[12.8px] tracking-[0.896px] w-full whitespace-nowrap"
+            >
+              <p className="relative shrink-0">{data.location}</p>
+              <p className="relative shrink-0">{data.year}</p>
+            </div>
+          </div>
         </div>
 
         {/* Top caption */}
-        <div className="-translate-x-1/2 -translate-y-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%+4px)] top-[calc(50%-208.5px)] w-[266px]">
-          <div className="[word-break:break-word] content-stretch flex font-['EuropaNuova-Regular:Regular',sans-serif] items-center justify-between leading-[1.5] not-italic relative shrink-0 text-[#dad0ad] text-[12.8px] tracking-[0.896px] w-full whitespace-nowrap">
-            <p className="relative shrink-0">{data.category}</p>
-            <p className="relative shrink-0">{data.sqft}</p>
+        <div
+          className="-translate-x-1/2 -translate-y-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%+4px)] top-[calc(50%-208.5px)] w-[266px]"
+        >
+          <div className="overflow-hidden w-full">
+            <div
+              data-reveal-line
+              className="[word-break:break-word] content-stretch flex font-['EuropaNuova-Regular:Regular',sans-serif] items-center justify-between leading-[1.5] not-italic relative shrink-0 text-[#dad0ad] text-[12.8px] tracking-[0.896px] w-full whitespace-nowrap"
+            >
+              <p className="relative shrink-0">{data.category}</p>
+              <p className="relative shrink-0">{data.sqft}</p>
+            </div>
           </div>
         </div>
 
