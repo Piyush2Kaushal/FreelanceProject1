@@ -69,10 +69,31 @@ const NavButton = memo(function NavButton({
   );
 });
 
+const PROJECT_ORDER = [
+  "/projects/project-1",
+  "/projects/project-2",
+];
+
 /** Left-arrow back button row (Intro screen) */
 const BackButton = memo(function BackButton() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  function handleBack() {
+    const idx = PROJECT_ORDER.findIndex((p) => pathname.startsWith(p));
+    if (idx > 0) {
+      navigate(PROJECT_ORDER[idx - 1]);
+    } else {
+      navigate("/");
+    }
+  }
+
   return (
-    <div className="absolute content-stretch flex flex-col gap-px items-center left-[9px] top-[736px] w-[147px]">
+    <div
+      className="absolute content-stretch flex flex-col gap-px items-center left-[9px] top-[736px] w-[147px]"
+      onClick={handleBack}
+      style={{ cursor: "pointer" }}
+    >
       <div className="content-stretch flex gap-[4px] items-center relative shrink-0 w-full">
         <div className="relative shrink-0 size-[14px]" data-name="arrow-back 1">
           <svg
@@ -134,11 +155,12 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
   // flying clone is the only visible image (no double-image flash). The
   // SharedElementLayer reveals it imperatively the instant the clone lands.
   const { active } = useTransition();
-
+  const navigate = useNavigate();
   // Capture (once) whether we arrived via the card→page morph, so the content
   // entrance can be delayed to land in sync with the flying image.
   const [viaTransition] = useState(() => active);
   const rootRef = useRef<HTMLDivElement>(null);
+  
 
   // ── Intro content entrance — mersi-style "quiet luxury" reveal ─────────────
   // Text rises out from behind a mask (overflow-hidden wrapper + yPercent),
@@ -330,15 +352,19 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
         </div>
 
         {data.logoImg && (
-          <div className="absolute h-[52px] left-[11px] top-[20px] w-[104px] z-10" data-name="Component 20">
-            <img
-              alt=""
-              className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-              src={data.logoImg}
-              loading="eager"
-              decoding="async"
-            />
-          </div>
+       <div
+  className="absolute h-[52px] left-[11px] top-[20px] w-[104px] z-10 cursor-pointer"
+  data-name="Component 20"
+  onClick={() => navigate("/")}
+>
+  <img
+    alt=""
+    className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+    src={data.logoImg}
+    loading="eager"
+    decoding="async"
+  />
+</div>
         )}
 
         <BackButton />
@@ -369,6 +395,7 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
 // Screen 2 – Concept
 // ─────────────────────────────────────────────────────────────────────────────
 const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData["concept"] }) {
+  const navigate = useNavigate();
   return (
     <div
       className="h-[780px] overflow-clip relative shrink-0 w-[1440px]"
@@ -430,7 +457,11 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
 
       {/* Optional logo top-left */}
       {data.logoImg && (
-        <div className="absolute h-[59px] left-[34px] top-[22px] w-[119px]" data-name="Primary Logos">
+     <div
+     className="absolute h-[59px] left-[34px] top-[22px] w-[119px] cursor-pointer"
+     data-name="Primary Logos"
+     onClick={() => navigate("/")}
+   >
           <img
             alt=""
             className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
@@ -514,6 +545,7 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
 // Screen 3 – Experience Overview (scattered images)
 // ─────────────────────────────────────────────────────────────────────────────
 const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: ProjectData["experience"] }) {
+  const navigate = useNavigate();
   return (
     <div
       className="h-[780px] overflow-clip relative shrink-0 w-[1440px]"
@@ -572,7 +604,11 @@ const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: Projec
       </div>
 
       {/* Logo top-left */}
-      <div className="absolute h-[52px] left-[11px] top-[20px] w-[104px]" data-name="Component 20">
+      <div
+  className="absolute h-[52px] left-[11px] top-[20px] w-[104px] cursor-pointer"
+  data-name="Component 20"
+  onClick={() => navigate("/")}
+>
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"

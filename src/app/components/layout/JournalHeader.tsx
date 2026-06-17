@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import imgLogo from "../../../assets/abca832675d93471023a757571b4ecb5a568e002.webp";
+import imgLogo from "../../../assets/b00689a4e710d92b1f3dbd433c68cba70f10fc2e.webp";
 import imgLogoAbout from "../../../assets/Newlogo.png";
 import imgTexture from "../../../assets/texture.webp";
 import imgDrawerTexture from "../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";

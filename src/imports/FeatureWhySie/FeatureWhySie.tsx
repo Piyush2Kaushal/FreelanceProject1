@@ -296,7 +296,7 @@ export default function FeatureWhySie() {
           <div className="flex flex-col items-start gap-5 mb-10">
             <p
               className="font-['Inter',sans-serif] font-normal leading-normal not-italic text-[#dacdac]"
-              style={{ fontSize: "clamp(18px, 5vw, 24px)", letterSpacing: "-0.02em" }}
+              style={{ fontSize: "clamp(18px, 5vw, 22px)", letterSpacing: "-0.02em" }}
             >
               Lets shape your space.
             </p>

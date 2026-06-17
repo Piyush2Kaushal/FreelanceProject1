@@ -28,7 +28,7 @@ import imgImage161 from "../../assets/712c45694826efc0fb8bde4f565a099b0354e90f.w
 import imgImage190 from "../../assets/04c63a8d0b8d326952426bc1876a936f5218d6fd.webp";
 import imgImage25 from "../../assets/2a65409384c571664e78264b36fe89c5a4acd8be.webp";
 import imgImage250 from "../../assets/e54fc404adc1bc078bcc2d37857c47a7ed40ebb5.webp";
-import imgPrimaryLogos from "../../assets/abca832675d93471023a757571b4ecb5a568e002.webp";
+import imgPrimaryLogos from "../../assets/b00689a4e710d92b1f3dbd433c68cba70f10fc2e.webp";
 
 // ─── Layout components ────────────────────────────────────────────────────────
 import Navbar from "../../app/components/layout/Navbar";

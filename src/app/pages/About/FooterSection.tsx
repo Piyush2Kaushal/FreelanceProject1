@@ -152,7 +152,7 @@ export function FooterSection() {
           className="absolute flex flex-col gap-8 items-start"
           style={{ left: "calc(66.67% + 8px)", top: "225px", width: "443px" }}
         >
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "24px", fontWeight: 400, color: "#dacdac", letterSpacing: "-0.4px", lineHeight: "normal" }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "22px", fontWeight: 400, color: "#dacdac", letterSpacing: "-0.4px", lineHeight: "normal" }}>
             Lets shape your space.
           </p>
           <button
@@ -206,7 +206,7 @@ export function FooterSection() {
 
             {/* Right col: CTA */}
             <div className="flex flex-col gap-5 items-end">
-              <p style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", fontWeight: 400, color: "#dacdac", letterSpacing: "-0.3px", textAlign: "right" }}>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: 400, color: "#dacdac", letterSpacing: "-0.3px", textAlign: "right" }}>
                 Lets shape your space.
               </p>
               <button
@@ -275,7 +275,7 @@ export function FooterSection() {
           <p
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "18px",
+              fontSize: "16px",
               fontWeight: 400,
               color: "#dacdac",
               letterSpacing: "-0.3px",

@@ -14,12 +14,12 @@ import imgFrame2106258503  from "../../assets/78998cedd18b8246f027b5575f3ff5264b
 import imgImage48          from "../../assets/d0553f6129a7fac1b174ec3e794d941d51287eea.webp";
 import imgFrame2106258466  from "../../assets/3c69fed734b46e09bcbca5fd64d204e588c1d31e.webp";
 import imgComponent21      from "../../assets/51db19e7ba1176f759ee55b5c3fc2f8561581637.webp";
-import imgPrimaryLogos     from "../../assets/752d89eaef873a887cf65268bf35b398d34fcd07.webp";
+import imgPrimaryLogos     from "../../assets/lockup3.png";
 import imgComponent22      from "../../assets/ef5789f32fa9b15364e39033c5d7cb0a9747ec22.webp";
 import imgRectangle30      from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.webp";
 import imgServicesSection  from "../../assets/79ba139c3a44f7977c3a8ad1f6ade8cf14fbb105.webp";
 import imgFrame2106258506  from "../../assets/75226685f4f76f704b886f96c7d3f66fad2ea681.webp";
-import imgPrimaryLogos1    from "../../assets/088c9c2511f4f4a6d40114530c14c0b9ef4ace9e.webp";
+import imgPrimaryLogos1    from "../../assets/locckup7.png";
 import imgContactPage      from "../../assets/afae93e180d21f30c2ae138886efb63bc064a5e6.webp";
 import imgPrimaryLogos2    from "../../assets/4e454c35d52b905142f0f45a93315e3a6c51ea01.webp";
 
@@ -725,7 +725,7 @@ function Frame20() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center relative shrink-0 w-[231px]">
       <p className="leading-none relative shrink-0 text-[36px] w-full">Contact</p>
-      <p className="leading-[1.4] relative shrink-0 text-[20px] w-full">hello@studioinsideeye.com<br aria-hidden />San Jose, California</p>
+      <p className="leading-[1.4] relative shrink-0 text-[19px] w-full">hello@studioinsideeye.com<br aria-hidden />San Jose, California</p>
     </div>
   );
 }
@@ -734,7 +734,7 @@ function Frame21() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
       <p className="relative shrink-0 text-[32px] w-full">Menu</p>
-      <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+      <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
         {["Home","Moodboard","Philosophy","Services","Projects"].map(t => <p key={t} className="relative shrink-0 w-full">{t}</p>)}
       </div>
     </div>
@@ -745,7 +745,7 @@ function Frame24() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
       <p className="relative shrink-0 text-[32px] w-full">Projects</p>
-      <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[20px] w-full">
+      <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[19px] w-full">
         {["SIENNA","Villa","Luxhill","Remeos"].map(t => <p key={t} className="relative shrink-0 w-full">{t}</p>)}
       </div>
     </div>
@@ -756,7 +756,7 @@ function Frame26() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center leading-none relative shrink-0 w-[181px]">
       <p className="relative shrink-0 text-[32px] w-full">Socials</p>
-      <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+      <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
         {[
           { label: "Linkedin", href: "https://www.linkedin.com/in/haritha-prasad-a5b526208?utm_source=share_via&utm_content=profile&utm_medium=member_ios" },
           { label: "Instagram", href: "https://www.instagram.com/studioinsideeye?igsh=MWxvZ281YmhudTNv" },

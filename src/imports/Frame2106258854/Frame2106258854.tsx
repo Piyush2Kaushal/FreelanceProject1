@@ -1185,7 +1185,7 @@ function ContactPage1() {
 
         {/* CTA */}
         <div className="flex flex-col items-center gap-4 w-full">
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "18px", fontWeight: 400, color: "#dacdac", letterSpacing: "-0.3px", textAlign: "center" }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "16px", fontWeight: 400, color: "#dacdac", letterSpacing: "-0.3px", textAlign: "center" }}>
             Lets shape your space.
           </p>
           <button

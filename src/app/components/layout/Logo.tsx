@@ -1,5 +1,5 @@
 import { memo } from "react";
-import imgPrimaryLogos from "../../../assets/abca832675d93471023a757571b4ecb5a568e002.webp";
+import imgPrimaryLogos from "../../../assets/b00689a4e710d92b1f3dbd433c68cba70f10fc2e.webp";
 
 /**
  * Logo — fixed top-left brand mark.

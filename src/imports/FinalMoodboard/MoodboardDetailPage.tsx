@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useSelection } from "../../app/context/SelectionContext";
-import imgPrimaryLogos from "../../assets/abca832675d93471023a757571b4ecb5a568e002.webp";
+import imgPrimaryLogos from "../../assets/b00689a4e710d92b1f3dbd433c68cba70f10fc2e.webp";
 import FooterNav from "../../app/components/layout/FooterNav";
 import Navbar from "../../app/components/layout/Navbar";
 import MobileBottomBar from "../../app/components/layout/MobileBottomBar";
