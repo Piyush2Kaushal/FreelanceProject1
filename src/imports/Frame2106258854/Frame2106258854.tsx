@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import svgPaths from "./svg-3adkfsqeqb";
 import socialSvgPaths from "../svg-ejvbwqgg01";
 import imgContactPage from "../../assets/afae93e180d21f30c2ae138886efb63bc064a5e6.webp";
@@ -36,6 +36,107 @@ const BUDGET_OPTIONS = [
   "$500,000–$1,000,000",
   "$1,000,000+",
 ];
+
+/* ─── WEB3FORMS CONFIG ─────────────────────────────────────────────────────── */
+// TODO: Replace the empty string below with your Web3Forms Access Key when ready.
+// Get yours free at https://web3forms.com — no backend required.
+const WEB3FORMS_ACCESS_KEY = "";
+
+/* ─── TOAST NOTIFICATION ───────────────────────────────────────────────────── */
+// Self-contained toast that inherits the project's exact design language.
+// Colors, fonts, and radii are sourced from the existing COLOR tokens above.
+type ToastType = "success" | "error";
+interface ToastState { visible: boolean; type: ToastType; message: string; }
+
+function Toast({ toast, onDismiss }: { toast: ToastState; onDismiss: () => void }) {
+  useEffect(() => {
+    if (!toast.visible) return;
+    const t = setTimeout(onDismiss, 5000);
+    return () => clearTimeout(t);
+  }, [toast.visible, onDismiss]);
+
+  if (!toast.visible) return null;
+
+  const isSuccess = toast.type === "success";
+  const bg       = isSuccess ? "#dacdac" : "#f5ede8";
+  const border   = isSuccess ? "#88331c" : "#c0392b";
+  const textMain = isSuccess ? "#8e3219"  : "#c0392b";
+  const icon     = isSuccess
+    ? ( // checkmark circle
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+          <circle cx="10" cy="10" r="9" stroke={textMain} strokeWidth="1"/>
+          <path d="M6 10.5l2.8 2.8 5.2-5.6" stroke={textMain} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )
+    : ( // x circle
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+          <circle cx="10" cy="10" r="9" stroke={textMain} strokeWidth="1"/>
+          <path d="M7 7l6 6M13 7l-6 6" stroke={textMain} strokeWidth="1.2" strokeLinecap="round"/>
+        </svg>
+      );
+
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      style={{
+        position: "fixed",
+        bottom: 32,
+        right: 32,
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 12,
+        background: bg,
+        border: `0.5px solid ${border}`,
+        borderRadius: 10,
+        padding: "16px 20px",
+        maxWidth: 360,
+        boxShadow: "0 8px 32px rgba(142,50,25,0.15), 0 2px 8px rgba(142,50,25,0.08)",
+        animation: "toast-in 0.28s cubic-bezier(0.34,1.56,0.64,1) both",
+      }}
+    >
+      <style>{`
+        @keyframes toast-in {
+          from { opacity: 0; transform: translateY(12px) scale(0.96); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
+      <div style={{ flexShrink: 0, marginTop: 1 }}>{icon}</div>
+      <p style={{
+        fontFamily: "'Hanken Grotesk', sans-serif",
+        fontSize: 14,
+        color: textMain,
+        lineHeight: 1.5,
+        letterSpacing: "-0.1px",
+        flex: 1,
+        margin: 0,
+      }}>
+        {toast.message}
+      </p>
+      <button
+        onClick={onDismiss}
+        aria-label="Dismiss notification"
+        style={{
+          background: "transparent",
+          border: "none",
+          padding: 0,
+          cursor: "pointer",
+          color: textMain,
+          opacity: 0.6,
+          flexShrink: 0,
+          marginTop: 1,
+          lineHeight: 1,
+        }}
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        </svg>
+      </button>
+    </div>
+  );
+}
 
 /* ─── CUSTOM DROPDOWN ──────────────────────────────────────────────────────── */
 function CustomDropdown({ label, required, options, value, onChange, error, lineWidth }) {
@@ -420,80 +521,148 @@ function validate(fields) {
 }
 
 /* ─── FORM COMPONENT ───────────────────────────────────────────────────────── */
+const EMPTY_FIELDS = { firstName: "", lastName: "", email: "", address: "", projectType: "", budget: "", startDate: "", projectDescription: "" };
+
 function ContactForm() {
-  const [fields, setFields] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    projectType: "",
-    budget: "",
-    startDate: "",
-    projectDescription: "",
-  });
-  const [errors, setErrors] = useState({});
+  const [fields, setFields] = useState(EMPTY_FIELDS);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [toast, setToast] = useState<ToastState>({ visible: false, type: "success", message: "" });
 
-  const set = (key) => (val) => setFields((f) => ({ ...f, [key]: val }));
+  const set = (key: string) => (val: string) => setFields((f) => ({ ...f, [key]: val }));
+  const dismissToast = useCallback(() => setToast((t) => ({ ...t, visible: false })), []);
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    // Prevent double-submit while a request is in flight
+    if (isLoading) return;
+
     const errs = validate(fields);
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
-    setSubmitted(true);
+
+    setIsLoading(true);
+
+    try {
+      const payload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: "New Project Inquiry",
+        name: `${fields.firstName} ${fields.lastName}`,
+        email: fields.email,
+        "Project Address": fields.address,
+        "Project Type": fields.projectType,
+        "Budget Range": fields.budget,
+        "Preferred Start Date": fields.startDate || "Not specified",
+        "Project Description": fields.projectDescription,
+      };
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setSubmitted(true);
+        setFields(EMPTY_FIELDS);
+        setErrors({});
+        setToast({ visible: true, type: "success", message: "Message sent successfully. We'll get back to you soon." });
+      } else {
+        throw new Error(data.message || "Submission failed");
+      }
+    } catch {
+      setToast({ visible: true, type: "error", message: "Something went wrong. Please try again." });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
-    <div
-      className="bg-[#dacdac] content-stretch flex flex-col items-center justify-center p-[28px] relative rounded-[12px] shrink-0 w-full max-w-[708px]"
-      style={{ gap: 28 }}
-      data-name="Card"
-    >
-      <div aria-hidden className="absolute border border-[#88331c] border-solid inset-[-1px] pointer-events-none rounded-[13px]" />
+    <>
+      <Toast toast={toast} onDismiss={dismissToast} />
+      <div
+        className="bg-[#dacdac] content-stretch flex flex-col items-center justify-center p-[28px] relative rounded-[12px] shrink-0 w-full max-w-[708px]"
+        style={{ gap: 28 }}
+        data-name="Card"
+      >
+        <div aria-hidden className="absolute border border-[#88331c] border-solid inset-[-1px] pointer-events-none rounded-[13px]" />
 
-      {submitted ? (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24, padding: "40px 20px", textAlign: "center" }}>
-          <p style={{ fontFamily: "var(--font-instrument-serif)", fontSize: 48, color: "#8e3219", lineHeight: 1 }}>Thank you!</p>
-          <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 18, color: "#90341c", lineHeight: 1.5 }}>
-            Your inquiry has been received.<br />We'll be in touch within 2–3 business days.
-          </p>
-          <button
-            onClick={() => { setSubmitted(false); setFields({ firstName:"",lastName:"",email:"",address:"",projectType:"",budget:"",startDate:"",projectDescription:"" }); setErrors({}); }}
-            style={{ marginTop: 8, background: "transparent", border: `0.5px solid #8e3219`, borderRadius: 4, padding: "10px 28px", fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 16, color: "#8e3219", cursor: "pointer", letterSpacing: "-0.3px" }}
-          >
-            Submit another inquiry
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="content-stretch flex flex-wrap gap-x-[52px] gap-y-[20px] items-start relative shrink-0 w-full">
-            <TextInput label="First Name" required value={fields.firstName} onChange={set("firstName")} error={errors.firstName} width={284} />
-            <TextInput label="Last Name" required value={fields.lastName} onChange={set("lastName")} error={errors.lastName} width={302} />
+        {submitted ? (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24, padding: "40px 20px", textAlign: "center" }}>
+            <p style={{ fontFamily: "var(--font-instrument-serif)", fontSize: 48, color: "#8e3219", lineHeight: 1 }}>Thank you!</p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 18, color: "#90341c", lineHeight: 1.5 }}>
+              Your inquiry has been received.<br />We'll be in touch within 2–3 business days.
+            </p>
+            <button
+              onClick={() => { setSubmitted(false); setErrors({}); }}
+              style={{ marginTop: 8, background: "transparent", border: `0.5px solid #8e3219`, borderRadius: 4, padding: "10px 28px", fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 16, color: "#8e3219", cursor: "pointer", letterSpacing: "-0.3px" }}
+            >
+              Submit another inquiry
+            </button>
           </div>
-          <TextInput label="Email" required value={fields.email} onChange={set("email")} error={errors.email} fullWidth />
-          <TextInput label="Project Address" required value={fields.address} onChange={set("address")} error={errors.address} fullWidth />
-          <div className="content-stretch flex flex-wrap gap-x-[52px] gap-y-[20px] items-start relative shrink-0 w-full">
-            <CustomDropdown label="Type of project" required options={PROJECT_TYPES} value={fields.projectType} onChange={set("projectType")} error={errors.projectType} lineWidth={284} />
-            <CustomDropdown label="Project Budget" required options={BUDGET_OPTIONS} value={fields.budget} onChange={set("budget")} error={errors.budget} lineWidth={302} />
-          </div>
-          <DateField value={fields.startDate} onChange={set("startDate")} error={errors.startDate} />
-          <TextAreaField label="Tell us about your project" required value={fields.projectDescription} onChange={set("projectDescription")} error={errors.projectDescription} />
-
-          <div className="relative rounded-[4px] shrink-0 w-full cursor-pointer mt-5" onClick={handleSubmit}>
-            <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[4px]">
-              <div className="absolute bg-[#8e3219] inset-0 rounded-[4px]" />
-              <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-11 rounded-[4px] size-full" src={imgFrame2106258506} />
+        ) : (
+          <>
+            <div className="content-stretch flex flex-wrap gap-x-[52px] gap-y-[20px] items-start relative shrink-0 w-full">
+              <TextInput label="First Name" required value={fields.firstName} onChange={set("firstName")} error={errors.firstName} width={284} />
+              <TextInput label="Last Name" required value={fields.lastName} onChange={set("lastName")} error={errors.lastName} width={302} />
             </div>
-            <div aria-hidden className="absolute border border-[#e4d6c3] border-solid inset-0 pointer-events-none rounded-[4px]" />
-            <div className="flex flex-row items-center justify-center size-full">
-              <div className="content-stretch flex items-center justify-center px-[28px] py-[14px] relative size-full">
-                <p className="font-['Inter:Medium',sans-serif] font-medium leading-normal not-italic relative shrink-0 text-[#dacdac] text-[18px] tracking-[-0.6px] whitespace-nowrap">Send Inquiry</p>
+            <TextInput label="Email" required value={fields.email} onChange={set("email")} error={errors.email} fullWidth />
+            <TextInput label="Project Address" required value={fields.address} onChange={set("address")} error={errors.address} fullWidth />
+            <div className="content-stretch flex flex-wrap gap-x-[52px] gap-y-[20px] items-start relative shrink-0 w-full">
+              <CustomDropdown label="Type of project" required options={PROJECT_TYPES} value={fields.projectType} onChange={set("projectType")} error={errors.projectType} lineWidth={284} />
+              <CustomDropdown label="Project Budget" required options={BUDGET_OPTIONS} value={fields.budget} onChange={set("budget")} error={errors.budget} lineWidth={302} />
+            </div>
+            <DateField value={fields.startDate} onChange={set("startDate")} error={errors.startDate} />
+            <TextAreaField label="Tell us about your project" required value={fields.projectDescription} onChange={set("projectDescription")} error={errors.projectDescription} />
+
+            {/* Submit button — visually identical; pointer-events and opacity signal loading state */}
+            <div
+              className="relative rounded-[4px] shrink-0 w-full mt-5"
+              style={{ cursor: isLoading ? "not-allowed" : "pointer", opacity: isLoading ? 0.75 : 1, transition: "opacity 0.2s ease" }}
+              onClick={handleSubmit}
+              role="button"
+              tabIndex={0}
+              aria-disabled={isLoading}
+              aria-label={isLoading ? "Sending inquiry…" : "Send Inquiry"}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleSubmit(); } }}
+            >
+              <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[4px]">
+                <div className="absolute bg-[#8e3219] inset-0 rounded-[4px]" />
+                <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-11 rounded-[4px] size-full" src={imgFrame2106258506} />
+              </div>
+              <div aria-hidden className="absolute border border-[#e4d6c3] border-solid inset-0 pointer-events-none rounded-[4px]" />
+              <div className="flex flex-row items-center justify-center size-full">
+                <div className="content-stretch flex items-center justify-center px-[28px] py-[14px] relative size-full">
+                  {isLoading ? (
+                    <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      {/* Minimal spinner that matches the button's existing text color */}
+                      <svg
+                        width="18" height="18" viewBox="0 0 18 18" fill="none"
+                        style={{ animation: "spin 0.8s linear infinite", flexShrink: 0 }}
+                        aria-hidden
+                      >
+                        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                        <circle cx="9" cy="9" r="7" stroke="#dacdac" strokeWidth="1.5" strokeOpacity="0.3"/>
+                        <path d="M9 2a7 7 0 0 1 7 7" stroke="#dacdac" strokeWidth="1.5" strokeLinecap="round"/>
+                      </svg>
+                      <p className="font-['Inter:Medium',sans-serif] font-medium leading-normal not-italic relative shrink-0 text-[#dacdac] text-[18px] tracking-[-0.6px] whitespace-nowrap">
+                        Sending…
+                      </p>
+                    </span>
+                  ) : (
+                    <p className="font-['Inter:Medium',sans-serif] font-medium leading-normal not-italic relative shrink-0 text-[#dacdac] text-[18px] tracking-[-0.6px] whitespace-nowrap">
+                      Send Inquiry
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 
