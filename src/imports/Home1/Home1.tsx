@@ -1298,13 +1298,21 @@ function MobileServicesSection() {
         </div>
 
         <div className="flex">
-          <button
-            className="relative flex items-center justify-center rounded-[4px] font-['Inter',sans-serif] font-medium text-[#d5c9a8]tracking-[-0.02em] cursor-pointer hover:opacity-90 transition-opacity"
-            style={{ background: '#703000', padding: '14px 28px', fontSize: 'clamp(14px, 3.5vw, 17px)' }}
-          >
-            View all projects
-          </button>
-        </div>
+  <button
+    className="relative flex items-center justify-center rounded-[4px] font-['Inter',sans-serif] font-medium cursor-pointer transition-[transform,filter] duration-500 ease-out hover:-translate-y-[2px] hover:brightness-110"
+    style={{
+      background: '#703000',
+      color: '#d5c9a8',
+      padding: '14px 28px',
+      fontSize: 'clamp(14px, 3.5vw, 17px)',
+      letterSpacing: '-0.038em',
+      border: '1px solid #391900',
+      boxShadow: '0px 5px 5px rgba(0,0,0,0.10), 0px 18px 9px rgba(0,0,0,0.09)',
+    }}
+  >
+    View all projects
+  </button>
+</div>
       </div>
     </div>
   );
