@@ -1254,16 +1254,46 @@ const responsiveStyles = `
   }
 
   /* ── MacBook zoom fix: 1101px–1280px ── */
-  @media (max-width: 1280px) and (min-width: 1101px) {
-    .contact-nav-pill {
-      width: clamp(340px, 29vw, 420px) !important;
-    }
+  /* ── Responsive fixes: 1101px–1290px (laptop / MacBook-zoom band) ── */
+  @media (max-width: 1290px) and (min-width: 1101px) {
+
+    /* Issue 1 — Navbar pill.
+       The old rule shrank the pill's SVG (width:100% on a clamped container)
+       while the absolutely-positioned links kept their fixed size, so the
+       links overflowed the pill. The links fit fine inside the natural 420px
+       pill, so we stop shrinking it and instead ease the logo + outer padding
+       down fluidly (both land on their natural values at 1290 → no jump). */
     .contact-navbar-full {
-      padding-left: 24px !important;
-      padding-right: 24px !important;
+      padding-left: clamp(24px, 2.64vw, 34px) !important;
+      padding-right: clamp(24px, 2.64vw, 34px) !important;
     }
-    .contact-nav-pill svg {
-      width: 100% !important;
+    .contact-navbar-full [data-name="Component 20"] img {
+      width: clamp(84px, 7.6vw, 98px) !important;
+      height: auto !important;
+    }
+
+    /* Issue 3 — Hero left column (Frame31).
+       Floor the column width at 466px so the studio-info row (Frame28) and the
+       email stop clipping, then trim Frame32's gap + side padding so the wider
+       column still fits beside the card. All three ease to their natural
+       values at 1290. */
+    [class*="gap-\\[65px\\]"] {
+      width: max(40vw, 466px) !important;
+    }
+    [data-name="Contact Page"]:first-of-type
+      > div:not([aria-hidden]):not(.contact-navbar-full):not(.contact-navbar-mobile) {
+      gap: clamp(16px, calc(5.18vw - 41px), 34px) !important;
+      padding-left: clamp(20px, calc(5.5vw - 40px), 34px) !important;
+      padding-right: clamp(20px, calc(5.5vw - 40px), 34px) !important;
+    }
+
+    /* Issue 2 — Footer columns.
+       Contact / Menu / Projects / Socials are absolutely positioned with an
+       82px gap + left offset (~1020px total), which runs past the viewport
+       below ~1224px. Shrink only the inter-column gap (back to 82px at 1290)
+       so they fit with no other repositioning. */
+    .footer-desktop-layout [class*="gap-\\[82px\\]"] {
+      gap: clamp(24px, calc(25.4vw - 246px), 82px) !important;
     }
   }
 
