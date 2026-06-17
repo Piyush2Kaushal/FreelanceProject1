@@ -1128,6 +1128,7 @@ function Frame9() {
 
 /* ─── FOOTER (ContactPage1) ─────────────────────────────────────────────────── */
 function ContactPage1() {
+  const navigate = useNavigate();
   return (
     <div className="footer-section relative shrink-0 w-full" data-name="Contact Page">
 
@@ -1191,6 +1192,7 @@ function ContactPage1() {
           <button
             className="flex items-center justify-center rounded-[4px] cursor-pointer hover:opacity-90 transition-opacity w-full"
             style={{ backgroundColor: "#dad0ad", padding: "15px 24px", fontFamily: "Inter, sans-serif", fontSize: "16px", fontWeight: 500, color: "#504d39", letterSpacing: "-0.4px", border: "none" }}
+            onClick={() => navigate('/contact')}
           >
             Start your project
           </button>

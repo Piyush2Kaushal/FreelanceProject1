@@ -1,6 +1,7 @@
 import imgMonogram from "figma:asset/1e097404f088f36f9dff5f7f9dd3a94d8d74cdfa.webp";
 import svgPaths from "../../../imports/svg-ejvbwqgg01";
 import imgTexture from "../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
+import { useNavigate } from "react-router-dom";
 // "in" glyph (LinkedIn) — drawn without its own background, since the
 // surrounding tile already supplies the beige square.
 const LINKEDIN_PATH =
@@ -48,6 +49,7 @@ function SocialIcon({ path, clipId, href }: { path: string; clipId: string; href
 }
 
 export function FooterSection() {
+  const navigate = useNavigate();
   return (
     <div
       className="relative overflow-hidden w-full"
@@ -158,6 +160,7 @@ export function FooterSection() {
           <button
             className="flex items-center justify-center rounded-[4px] cursor-pointer hover:opacity-90 transition-opacity"
             style={{ backgroundColor: "#dad0ad", padding: "16px 28px", fontFamily: "Inter, sans-serif", fontSize: "18px", fontWeight: 500, color: "#504d39", letterSpacing: "-0.54px", border: "none", whiteSpace: "nowrap" }}
+            onClick={() => navigate('/contact')}
           >
             Start your project
           </button>
@@ -212,6 +215,7 @@ export function FooterSection() {
               <button
                 className="flex items-center justify-center rounded-[4px] cursor-pointer hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: "#dad0ad", padding: "12px 20px", fontFamily: "Inter, sans-serif", fontSize: "15px", fontWeight: 500, color: "#504d39", border: "none" }}
+                onClick={() => navigate('/contact')}
               >
                 Start your project
               </button>
@@ -296,6 +300,7 @@ export function FooterSection() {
               letterSpacing: "-0.4px",
               border: "none",
             }}
+            onClick={() => navigate('/contact')}
           >
             Start your project
           </button>

@@ -1,6 +1,7 @@
 import svgPaths from "./svg-yx504ut4xt";
 import imgMonogramFinal61 from "../../assets/1e097404f088f36f9dff5f7f9dd3a94d8d74cdfa.webp";
 import imgRectangle30 from "../../assets/23497d1b739628a6a7bb08b118680a57cca44246.webp";
+import { useNavigate } from "react-router-dom";
 
 // ── Icon frames ───────────────────────────────────────────────────────────────
 function Frame() {
@@ -162,6 +163,7 @@ function StarDecoration() {
 }
 
 export default function FeatureWhySie() {
+  const navigate = useNavigate();
   return (
     <>
       {/* ── DESKTOP: original absolute layout ── */}
@@ -245,7 +247,7 @@ export default function FeatureWhySie() {
         >
           <p className="[word-break:break-word] font-['Inter',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#dacdac] text-[26px] tracking-[-0.4px] w-full">Lets shape your space.</p>
           <div className="content-stretch flex gap-[16px] items-center relative shrink-0 w-full flex-wrap">
-            <div className="bg-[#dad0ad] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
+            <div className="bg-[#dad0ad] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0 cursor-pointer hover:opacity-90 transition-opacity" onClick={() => navigate('/contact')}>
               <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#504d39] text-[18px] tracking-[-0.54px] whitespace-nowrap">{` Start your project`}</p>
             </div>
             <div className="content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
@@ -301,7 +303,7 @@ export default function FeatureWhySie() {
               Lets shape your space.
             </p>
             <div className="flex flex-wrap gap-3">
-              <button className="bg-[#dad0ad] flex items-center justify-center px-6 py-3 rounded-[4px] border-none cursor-pointer hover:opacity-90 transition-opacity">
+              <button className="bg-[#dad0ad] flex items-center justify-center px-6 py-3 rounded-[4px] border-none cursor-pointer hover:opacity-90 transition-opacity" onClick={() => navigate('/contact')}>
                 <p className="font-['Inter',sans-serif] font-medium leading-normal not-italic text-[#504d39] text-[16px] tracking-[-0.02em] whitespace-nowrap">Start your project</p>
               </button>
               <button className="relative flex items-center justify-center px-6 py-3 rounded-[4px] border border-[#dad0ad] bg-transparent cursor-pointer hover:opacity-90 transition-opacity">
