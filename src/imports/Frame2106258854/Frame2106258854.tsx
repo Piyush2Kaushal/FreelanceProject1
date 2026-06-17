@@ -551,10 +551,11 @@ function Frame27() {
   );
 }
 
+
 function Frame28() {
   return (
   <div
-  className="content-stretch flex items-center md:justify-between gap-2 relative shrink-0"
+  className="content-stretch flex items-center md:justify-between gap-2 relative shrink-0 flex-wrap"
   style={{ width: "min(473px, 100%)" }}
 >
       <Frame26 />
@@ -1051,7 +1052,7 @@ function Frame4() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-center justify-center relative shrink-0 w-[231px]">
       <p className="leading-none relative shrink-0 text-[36px] w-full">Contact</p>
-      <p className="leading-[1.4] relative shrink-0 text-[20px] w-full">
+      <p className="leading-[1.4] relative shrink-0 text-[19px] w-full">
         hello@studioinsideeye.com<br aria-hidden />San Jose, California
       </p>
     </div>
@@ -1060,7 +1061,7 @@ function Frame4() {
 
 function Frame3() {
   return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
       <p className="relative shrink-0 w-full">Home</p>
       <p className="relative shrink-0 w-full">Moodboard</p>
       <p className="relative shrink-0 w-full">Philosophy</p>
@@ -1081,7 +1082,7 @@ function Frame7() {
 
 function Frame6() {
   return (
-    <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[20px] w-full">
+    <div className="content-stretch flex flex-col gap-[11px] items-center justify-center relative shrink-0 text-[19px] w-full">
       <p className="relative shrink-0 w-full">Echo</p>
       <p className="relative shrink-0 w-full">Villa</p>
       <p className="relative shrink-0 w-full">Luxhill</p>
@@ -1101,7 +1102,7 @@ function Frame5() {
 
 function Frame10() {
   return (
-    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[20px] w-full">
+    <div className="content-stretch flex flex-col gap-[11px] items-start relative shrink-0 text-[19px] w-full">
       <a href="https://www.linkedin.com/in/haritha-prasad-a5b526208?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
         <p className="relative shrink-0 w-full">Linkedin</p>
       </a>
@@ -1176,7 +1177,7 @@ function ContactPage1() {
           className="footer-tagline text-center"
           style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: 400, color: "#decfae", letterSpacing: "0.12em" }}
         >
-          R O O T E D. A U T H E N T I C . Y O U R S
+          R O O T E D . A U T H E N T I C . Y O U R S
         </p>
 
         {/* Vertical divider */}
@@ -1256,7 +1257,17 @@ const responsiveStyles = `
   /* ── MacBook zoom fix: 1101px–1280px ── */
   /* ── Responsive fixes: 1101px–1290px (laptop / MacBook-zoom band) ── */
   @media (max-width: 1290px) and (min-width: 1101px) {
-
+    /* Issue 4 — Email block overlap in Frame28 */
+    [class*="gap-\\[65px\\]"] [class*="w-\\[153px\\]"] {
+      width: auto !important;
+      min-width: 0 !important;
+      flex-shrink: 1 !important;
+    }
+    [class*="gap-\\[65px\\]"] [class*="w-\\[473px\\]"],
+    [class*="gap-\\[65px\\]"] > div:last-child {
+      flex-wrap: wrap !important;
+      row-gap: 8px !important;
+    }
     /* Issue 1 — Navbar pill.
        The old rule shrank the pill's SVG (width:100% on a clamped container)
        while the absolutely-positioned links kept their fixed size, so the
@@ -1323,6 +1334,13 @@ const responsiveStyles = `
   }
 
   @media (max-width: 1100px) {
+    /* Tab view — Start your project button cap */
+.footer-mobile-layout button {
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: 320px !important;
+  align-self: center !important;
+}
     /* ── Upper hero section ── */
     [data-name="Contact Page"]:first-of-type { height: auto !important; min-height: 100dvh; }
     [data-name="Contact Page"]:first-of-type > div:not([aria-hidden]):not(.contact-navbar-full):not(.contact-navbar-mobile) {
@@ -1332,7 +1350,7 @@ const responsiveStyles = `
     }
     [data-name="Contact Page"]:first-of-type > div:not([aria-hidden]):not(.contact-navbar-full):not(.contact-navbar-mobile) > div:first-child { width: 100% !important; }
     [data-name="Contact Page"]:first-of-type [class*="w-\\[193px\\]"] { width: 80px !important; min-width: 0 !important; }
-    [data-name="Card"]:last-of-type { width: 100% !important; height: auto !important; }
+    [data-name="Card"]:last-of-type { width: min(600px, 100%) !important; height: auto !important; align-self: center !important; }
     [data-name="Card"]:last-of-type [data-name="Card"] { width: 100% !important; }
     [data-name="Card"] [class*="gap-\\[52px\\]"] { flex-wrap: wrap !important; gap: 28px !important; }
 
@@ -1360,6 +1378,11 @@ const responsiveStyles = `
 
   @media (max-width: 600px) {
     [data-name="Contact Page"]:first-of-type [class*="w-\\[193px\\]"] { display: none !important; }
+
+    .footer-mobile-layout button {
+      width: 100% !important;
+      max-width: none !important;
+    }
   
     [data-name="Card"]:last-of-type {
       padding: 14px !important;

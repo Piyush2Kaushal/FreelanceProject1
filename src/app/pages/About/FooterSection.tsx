@@ -124,7 +124,7 @@ export function FooterSection() {
           className="absolute"
           style={{ left: "33px", top: "235px", fontFamily: "Inter, sans-serif", fontSize: "22px", fontWeight: 400, color: "#decfae", whiteSpace: "nowrap", letterSpacing: "0.1px" }}
         >
-          R O O T E D. A U T H E N T I C. Y O U R S
+          R O O T E D . A U T H E N T I C . Y O U R S
         </p>
 
         {/* Horizontal divider */}
@@ -187,7 +187,7 @@ export function FooterSection() {
             {/* Left col */}
             <div className="flex flex-col gap-3">
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", fontWeight: 400, color: "#decfae", letterSpacing: "0.1px" }}>
-                R O O T E D. A U T H E N T I C. Y O U R S
+                R O O T E D . A U T H E N T I C . Y O U R S
               </p>
               <div className="flex items-start gap-2 mt-4">
                 <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
@@ -262,7 +262,7 @@ export function FooterSection() {
             letterSpacing: "0.12em",
           }}
         >
-          R O O T E D. A U T H E N T I C . Y O U R S
+          R O O T E D . A U T H E N T I C . Y O U R S
         </p>
 
         {/* Vertical divider */}

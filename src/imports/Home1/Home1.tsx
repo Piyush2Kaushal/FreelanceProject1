@@ -4,6 +4,7 @@ import { useTransition, type SharedRect } from "../../app/context/TransitionCont
 import svgPaths from "./svg-n029qayjm7";
 import socialSvgPaths from "../svg-ejvbwqgg01";
 import JournalHeader from "../../app/components/layout/JournalHeader";
+import { useReveal } from "../../app/hooks/useReveal";
 
 // ── Static assets (never change) ─────────────────────────────────────────────
 import imgEntireWebsite    from "../../assets/0dd65294414a90d32335209969f40ac5042eb287.webp";
@@ -60,7 +61,12 @@ function Frame9() {
 
 function Frame43() {
   return (
-    <div className="absolute content-stretch flex gap-[20px] items-end left-[33px] top-[281px]">
+    <div
+      className="absolute content-stretch flex gap-[20px] items-end left-[33px] top-[281px]"
+      data-anim="intro"
+      data-anim-variant="zoom"
+      data-anim-order="1"
+    >
       <Frame7 />
       <Frame8 />
       <Frame9 />
@@ -77,18 +83,40 @@ function EntireWebsite() {
       </div>
       <JournalHeader activePage="Home" />
       <Frame43 />
-      <p className="-translate-x-full [word-break:break-word] absolute capitalize font-['IBM_Plex_Serif',serif] h-[66px] leading-[0] left-[calc(59.50%+579px)] not-italic text-[#553319] text-[0px] text-right top-[566px] tracking-[-0.88px] w-[558px]">
+      <p
+        data-anim="intro"
+        data-anim-variant="text"
+        data-anim-order="3"
+        data-anim-blur="6"
+        className="-translate-x-full [word-break:break-word] absolute capitalize font-['IBM_Plex_Serif',serif] h-[66px] leading-[0] left-[calc(59.50%+579px)] not-italic text-[#553319] text-[0px] text-right top-[566px] tracking-[-0.88px] w-[558px]">
         <span className="font-['IBM_Plex_Serif',serif] leading-[1.2] text-[22px] font font-semibold">A Boutique interior design studio</span>
         <span className="leading-[1.2] text-[22px]">{` creating spaces`}</span>
         <span className="leading-[1.2] text-[22px]">{` `}</span>
         <span className="leading-[1.2] text-[22px]">that are rooted, intentional, and designed for you.</span>
       </p>
-      <p className="-translate-x-1/2 [word-break:break-word] absolute capitalize font-['Instrument_Serif'] italic leading-[1.2] left-[calc(59.50%+317px)] text-[#703000] text-[96px] text-center top-[632px] tracking-[-3.84px] w-[524px]">Studio Inside eye</p>
-      <div className="absolute h-[319px] left-[calc(58.33%+82px)] top-[-63px] w-[237px]" data-name="image 48">
-        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+      <p
+        data-anim="intro"
+        data-anim-variant="text"
+        data-anim-order="4"
+        data-anim-blur="10"
+        className="-translate-x-1/2 [word-break:break-word] absolute capitalize font-['Instrument_Serif'] italic leading-[1.2] left-[calc(59.50%+317px)] text-[#703000] text-[96px] text-center top-[632px] tracking-[-3.84px] w-[524px]">Studio Inside eye</p>
+      <div
+        data-anim="intro"
+        data-anim-variant="fade"
+        data-anim-order="0"
+        className="absolute h-[319px] left-[calc(58.33%+82px)] top-[-63px] w-[237px]" data-name="image 48">
+        <div data-anim="parallax" data-parallax-speed="0.05" className="absolute inset-0">
+          <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+        </div>
       </div>
-      <div className="absolute h-[365px] left-[calc(75%-14px)] top-[-6px] w-[272px]" data-name="image 49">
-        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+      <div
+        data-anim="intro"
+        data-anim-variant="fade"
+        data-anim-order="2"
+        className="absolute h-[365px] left-[calc(75%-14px)] top-[-6px] w-[272px]" data-name="image 49">
+        <div data-anim="parallax" data-parallax-speed="0.085" className="absolute inset-0">
+          <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+        </div>
       </div>
     </div>
   );
@@ -105,11 +133,20 @@ function Frame4() {
 function Group() {
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute contents left-[calc(50%+1px)] top-[calc(50%+1.5px)]">
-      <div className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(50%-0.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%+67.5px)] tracking-[-1px] w-[683px] whitespace-pre-wrap">
+      <div
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="6"
+        data-anim-delay="0.05"
+        className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(50%-0.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%+67.5px)] tracking-[-1px] w-[683px] whitespace-pre-wrap">
         <p className="leading-[normal] mb-0">At Studio Inside Eye, every space starts with you.</p>
         <p className="leading-[normal]">{`We design around how you live,              what you need, what you value.`}</p>
       </div>
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[normal] left-[calc(50%+2.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%-220.5px)] tracking-[-1px] w-[683px]">
+      <p
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="6"
+        className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[normal] left-[calc(50%+2.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%-220.5px)] tracking-[-1px] w-[683px]">
         Designing timeless residential interiors for modern
         <br aria-hidden />
         California, across San Jose and the Bay Area.
@@ -219,13 +256,13 @@ function Frame1({
 }) {
   return (
     <div
-      className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%-0.5px)] top-[238px] w-[255px]"
+      className="group/hero -translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%-0.5px)] top-[238px] w-[255px]"
       onClick={onActivate}
       style={onActivate ? { cursor: 'pointer', zIndex: 10 } : undefined}
     >
       <div ref={boxRef} className="h-[262.368px] pointer-events-none relative shrink-0 w-[205px]" data-name="image 55">
-        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover size-full" src={heroPortraitImg} />
-        <div aria-hidden className="absolute border-[#d5c9a8] border-[5.4px] border-solid inset-[-5.4px]" />
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover size-full transition-[filter] duration-700 ease-out group-hover/hero:brightness-[1.05]" src={heroPortraitImg} />
+        <div aria-hidden className="absolute border-[#d5c9a8] border-[5.4px] border-solid inset-[-5.4px] transition-shadow duration-700 ease-out group-hover/hero:shadow-[0_18px_50px_-20px_rgba(60,40,10,0.55)]" />
       </div>
     </div>
   );
@@ -435,7 +472,11 @@ function Component2({ project }: { project: HomeProject }) {
 
 function Frame16() {
   return (
-    <div className="[word-break:break-word] content-stretch flex flex-col gap-[20px] items-start not-italic relative shrink-0">
+    <div
+      data-anim="reveal"
+      data-anim-variant="text"
+      data-anim-blur="6"
+      className="[word-break:break-word] content-stretch flex flex-col gap-[20px] items-start not-italic relative shrink-0">
       <p className="capitalize font-['Instrument_Serif',sans-serif] leading-none relative shrink-0 text-[#5d5e36] text-[76px] w-[476px]">Full-Service Residential interior design</p>
       <p className="font-['Hanken_Grotesk',sans-serif] leading-[1.3] relative shrink-0 text-[#5c5d36] text-[22px] tracking-[0.5px] w-[476px]">Thoughtfully designed residential spaces from initial concept to final installation</p>
     </div>
@@ -444,13 +485,17 @@ function Frame16() {
 
 function Frame10() {
   return (
-    <div className="content-stretch drop-shadow-[0px_114px_16px_rgba(0,0,0,0),0px_73px_14.5px_rgba(0,0,0,0.01),0px_41px_12.5px_rgba(0,0,0,0.05),0px_18px_9px_rgba(0,0,0,0.09),0px_5px_5px_rgba(0,0,0,0.1)] flex items-center justify-center px-[28px] py-[14px] relative rounded-[4px] shrink-0">
+    <div
+      data-anim="reveal"
+      data-anim-variant="fade"
+      data-anim-delay="0.15"
+      className="group/btn cursor-pointer transition-[transform,filter] duration-500 ease-out will-change-transform hover:-translate-y-[2px] hover:brightness-110 content-stretch drop-shadow-[0px_114px_16px_rgba(0,0,0,0),0px_73px_14.5px_rgba(0,0,0,0.01),0px_41px_12.5px_rgba(0,0,0,0.05),0px_18px_9px_rgba(0,0,0,0.09),0px_5px_5px_rgba(0,0,0,0.1)] flex items-center justify-center px-[28px] py-[14px] relative rounded-[4px] shrink-0">
       <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[4px]">
         <div className="absolute bg-[#703000] inset-0 rounded-[4px]" />
         <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-76 rounded-[4px] size-full" src={imgFrame2106258506} />
       </div>
       <div aria-hidden className="absolute border border-[#391900] border-solid inset-0 pointer-events-none rounded-[4px]" />
-      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[20px] text-[#d5c9a8] tracking-[-0.6px] whitespace-nowrap">View all projects</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[20px] text-[#d5c9a8] tracking-[-0.6px] whitespace-nowrap transition-transform duration-500 ease-out group-hover/btn:translate-x-[2px]">View all projects</p>
     </div>
   );
 }
@@ -466,7 +511,10 @@ function Frame13() {
 
 function Frame23() {
   return (
-    <div className="absolute content-stretch flex flex-col gap-[12px] items-start left-[101px] top-[174px] w-[129px]">
+    <div
+      data-anim="reveal"
+      data-anim-variant="text"
+      className="absolute content-stretch flex flex-col gap-[12px] items-start left-[101px] top-[174px] w-[129px]">
       <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-none min-w-full not-italic relative shrink-0 text-[#5d5e36] text-[14px] tracking-[2.8px] uppercase w-[min-content]">Our Services</p>
       <div className="h-0 relative shrink-0 w-[82px]">
         <div className="absolute inset-[-0.6px_0_0_0]">
@@ -490,7 +538,10 @@ function Frame11() {
 
 function Frame14() {
   return (
-    <div className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+47px)] top-[223px]">
+    <div
+      data-anim="reveal"
+      data-anim-variant="text"
+      className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+47px)] top-[223px]">
       <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">01</p>
       <div className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
         <div className="flex-none rotate-90">
@@ -524,7 +575,11 @@ function Frame12() {
 
 function Frame15() {
   return (
-    <div className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+40px)] top-[465px]">
+    <div
+      data-anim="reveal"
+      data-anim-variant="text"
+      data-anim-delay="0.12"
+      className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+40px)] top-[465px]">
       <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">02</p>
       <div className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
         <div className="flex-none rotate-90">
@@ -561,11 +616,11 @@ function ArrowNarrowDownSvgrepoCom() {
 
 function Frame18() {
   return (
-    <div className="absolute left-[calc(91.67%-3px)] rounded-[50px] size-[63px] top-[263px]">
-      <div aria-hidden className="absolute bg-[rgba(255,255,255,0.04)] inset-0 pointer-events-none rounded-[50px]" />
+    <div className="group/arrow cursor-pointer transition-transform duration-500 ease-out hover:scale-[1.07] absolute left-[calc(91.67%-3px)] rounded-[50px] size-[63px] top-[263px]">
+      <div aria-hidden className="absolute bg-[rgba(255,255,255,0.04)] inset-0 pointer-events-none rounded-[50px] transition-colors duration-500 group-hover/arrow:bg-[rgba(112,48,0,0.06)]" />
       <div className="overflow-clip relative rounded-[inherit] size-full">
         <div className="-translate-x-1/2 -translate-y-1/2 absolute flex items-center justify-center left-[calc(50%+0.5px)] size-[38px] top-[calc(50%+0.5px)]">
-          <div className="-rotate-90 flex-none"><ArrowNarrowDownSvgrepoCom /></div>
+          <div className="-rotate-90 flex-none transition-transform duration-500 ease-out group-hover/arrow:translate-x-[3px]"><ArrowNarrowDownSvgrepoCom /></div>
         </div>
       </div>
       <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_0px_4px_0px_rgba(0,0,0,0.25)]" />
@@ -576,11 +631,11 @@ function Frame18() {
 
 function Frame19() {
   return (
-    <div className="absolute left-[calc(91.67%-3px)] rounded-[50px] size-[63px] top-[475px]">
-      <div aria-hidden className="absolute bg-[rgba(255,255,255,0.04)] inset-0 pointer-events-none rounded-[50px]" />
+    <div className="group/arrow cursor-pointer transition-transform duration-500 ease-out hover:scale-[1.07] absolute left-[calc(91.67%-3px)] rounded-[50px] size-[63px] top-[475px]">
+      <div aria-hidden className="absolute bg-[rgba(255,255,255,0.04)] inset-0 pointer-events-none rounded-[50px] transition-colors duration-500 group-hover/arrow:bg-[rgba(112,48,0,0.06)]" />
       <div className="overflow-clip relative rounded-[inherit] size-full">
         <div className="-translate-x-1/2 -translate-y-1/2 absolute flex items-center justify-center left-[calc(50%+0.5px)] size-[38px] top-[calc(50%+0.5px)]">
-          <div className="-rotate-90 flex-none"><ArrowNarrowDownSvgrepoCom /></div>
+          <div className="-rotate-90 flex-none transition-transform duration-500 ease-out group-hover/arrow:translate-x-[3px]"><ArrowNarrowDownSvgrepoCom /></div>
         </div>
       </div>
       <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_0px_4px_0px_rgba(0,0,0,0.25)]" />
@@ -766,7 +821,11 @@ function ContactPage({ bgColor }: { bgColor: string }) {
         <div className="absolute inset-0" style={{ backgroundColor: bgColor, transition: `background-color ${FADE_MS}ms ease-in-out` }} />
         <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
-      <div className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
+      <div
+        data-anim="reveal"
+        data-anim-variant="fade"
+        data-anim-delay="0.1"
+        className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
         <Frame20 /><Frame21 /><Frame24 /><Frame26 />
       </div>
       <div className="absolute h-0 left-0 top-px w-full">
@@ -789,7 +848,7 @@ function Frame37({ bgColor, slug }: { bgColor: string; slug: string }) {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0 cursor-pointer hover:opacity-90 transition-opacity"
+      className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0 cursor-pointer transition-[transform,box-shadow,filter] duration-500 ease-out will-change-transform hover:-translate-y-[2px] hover:brightness-[1.03] hover:shadow-[0_14px_28px_-12px_rgba(0,0,0,0.45)]"
       onClick={() => navigate('/contact')}
     >
       <p
@@ -802,7 +861,11 @@ function Frame37({ bgColor, slug }: { bgColor: string; slug: string }) {
 
 function Frame41({ bgColor, slug }: { bgColor: string; slug: string }) {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+3px)] top-[97px]">
+    <div
+      data-anim="reveal"
+      data-anim-variant="text"
+      data-anim-blur="6"
+      className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+3px)] top-[97px]">
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
         <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos2} />
       </div>
@@ -878,7 +941,10 @@ function ServicesSection1({ heroPortraitImg }: { heroPortraitImg: string }) {
         <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover size-full" src={imgServicesSection} />
         <div className="absolute bg-[rgba(218,208,173,0.95)] inset-0" />
       </div>
-      <div className="absolute h-[751px] left-[33px] top-[63px] right-[33px]" data-name="hero-photo">
+      <div
+        data-anim="reveal"
+        data-anim-variant="zoom"
+        className="absolute h-[751px] left-[33px] top-[63px] right-[33px]" data-name="hero-photo">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
           {/* Base layer — always visible, no transition needed */}
@@ -949,7 +1015,12 @@ function MobileHeroTop() {
       </div>
 
       {/* Images — both start from top: 0, items-start se */}
-      <div className="relative flex items-start justify-center gap-0" style={{ zIndex: 1 }}>
+      <div
+        className="relative flex items-start justify-center gap-0"
+        style={{ zIndex: 1 }}
+        data-anim="reveal"
+        data-anim-variant="zoom"
+      >
         {/* Left image — chhoti height, top se start */}
         <div
   className="shrink-0 overflow-hidden"
@@ -1011,7 +1082,7 @@ function MobileImageCollage() {
       </div>
 
       {/* Studio tagline text — FIRST */}
-      <div className="relative px-5 pt-6 pb-5 text-end">
+      <div data-anim="reveal" data-anim-variant="text" data-anim-blur="6" className="relative px-5 pt-6 pb-5 text-end">
   <p
     className="font-['Instrument_Serif'] italic text-[#703000] leading-[1.1] mb-1"
     style={{ fontSize: 'clamp(36px, 11vw, 60px)', letterSpacing: '-0.02em' }}
@@ -1027,7 +1098,7 @@ function MobileImageCollage() {
 </div>
 
       {/* Photo strip — Figma layout: left 2 stacked + right 1 big */}
-      <div className="relative px-4 pb-5">
+      <div data-anim="reveal" data-anim-variant="zoom" className="relative px-4 pb-5">
         <div className="flex gap-2 items-stretch">
 
           {/* Left column — 2 images stacked */}
@@ -1075,6 +1146,9 @@ function MobileWhySIE() {
       <p
         className="font-['Instrument_Serif',sans-serif] not-italic text-[#5d5e36] text-center leading-[1.25] mx-auto"
         style={{ fontSize: 'clamp(20px, 5.5vw, 28px)', maxWidth: 440, letterSpacing: '-0.02em' }}
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="6"
       >
         At Studio Inside Eye, every space starts with you. We design around how you live, what you need, what you value.
       </p>
@@ -1105,6 +1179,8 @@ function MobileProjectHero({ project }: { project: HomeProject }) {
       <div
         className="relative z-10 flex justify-center pt-10 pb-6 cursor-pointer"
         onClick={() => navigate(project.slug)}
+        data-anim="reveal"
+        data-anim-variant="zoom"
       >
         <div className="relative" style={{ width: 'clamp(190px, 42vw, 280px)', height: 'clamp(240px, 52vw, 360px)' }}>
           <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover" src={project.heroImg} />
@@ -1117,6 +1193,10 @@ function MobileProjectHero({ project }: { project: HomeProject }) {
         className="relative text-center z-10 px-5 font-['Cormorant_Garamond',serif] font-light uppercase text-[rgba(253,235,206,0.55)] leading-none mb-6 mt-4 cursor-pointer"
         style={{ fontSize: 'clamp(52px, 16vw, 84px)', letterSpacing: '-0.02em' }}
         onClick={() => navigate(project.slug)}
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="8"
+        data-anim-delay="0.08"
       >
         {project.projectName}
       </p>
@@ -1141,7 +1221,7 @@ function MobileServicesSection() {
 
       <div className="relative px-5 pt-10 pb-10">
         {/* Section label */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-6" data-anim="reveal" data-anim-variant="text">
           <svg className="shrink-0" width="10" height="10" viewBox="0 0 16 16" fill="none">
             <path d={svgPaths.p24533600} fill="#703000" />
           </svg>
@@ -1151,6 +1231,10 @@ function MobileServicesSection() {
         <p
           className="font-['Instrument_Serif',sans-serif] text-[#5d5e36] capitalize leading-[1.1] mb-3"
           style={{ fontSize: 'clamp(34px, 9vw, 56px)', letterSpacing: '-0.02em' }}
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-blur="6"
+          data-anim-delay="0.06"
         >
           Full-Service Residential interior design
         </p>
@@ -1164,7 +1248,7 @@ function MobileServicesSection() {
         <div className="w-full h-px mb-8" style={{ background: 'rgba(0,0,0,0.12)' }} />
 
         {/* Service 01 */}
-        <div className="mb-8 md:flex md:gap-12 md:items-start">
+        <div className="mb-8 md:flex md:gap-12 md:items-start" data-anim="reveal" data-anim-variant="text" data-anim-delay="0.04">
           <div className="flex items-start gap-4 mb-3 md:flex-1">
             <p
               className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-none shrink-0"
@@ -1190,7 +1274,7 @@ function MobileServicesSection() {
         <div className="w-full h-px mb-8" style={{ background: 'rgba(0,0,0,0.12)' }} />
 
         {/* Service 02 */}
-        <div className="mb-10 md:flex md:gap-12 md:items-start">
+        <div className="mb-10 md:flex md:gap-12 md:items-start" data-anim="reveal" data-anim-variant="text" data-anim-delay="0.12">
           <div className="flex items-start gap-4 mb-3 md:flex-1">
             <p
               className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-none shrink-0"
@@ -1241,6 +1325,8 @@ function MobileLandscapePhoto({ project }: { project: HomeProject }) {
         <div
           className="w-full overflow-hidden rounded-[2px] relative"
           style={{ height: 'clamp(220px, 55vw, 380px)' }}
+          data-anim="reveal"
+          data-anim-variant="zoom"
         >
           {/* Base layer */}
           <img
@@ -1323,7 +1409,7 @@ function MobileFooter({ project }: { project: HomeProject }) {
 
       <div className="relative px-5 pt-8 pb-8" style={{ zIndex: 1 }}>
 
-        <div className="flex flex-col items-center gap-5 mb-10 pt-2">
+        <div className="flex flex-col items-center gap-5 mb-10 pt-2" data-anim="reveal" data-anim-variant="fade" data-anim-delay="0.05">
           <div className="relative flex justify-center">
             <div className="relative" style={{ height: 70, width: 140 }}>
               <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgPrimaryLogos2} />
@@ -1439,6 +1525,16 @@ export default function Home() {
   const desktopScale = useDesktopScale();
   const isScaled = desktopScale < 1;
 
+  // ── Motion engine ──────────────────────────────────────────────────────────
+  // Motion roots — the entrance + scroll choreography is scoped to each layout.
+  // Purely additive: never reads, sets or changes layout. The project-hero /
+  // shared-element region is intentionally left untagged, so the Home → Project
+  // morph keeps measuring an identical, untouched box.
+  const desktopMotionRef = useRef<HTMLDivElement>(null);
+  const mobileMotionRef = useRef<HTMLDivElement>(null);
+  useReveal(desktopMotionRef, { enableParallax: true });
+  useReveal(mobileMotionRef, { enableParallax: false });
+
   useEffect(() => {
     const id = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % HOME_PROJECTS.length);
@@ -1459,6 +1555,7 @@ export default function Home() {
         style={isScaled ? { height: CANVAS_HEIGHT * desktopScale, overflow: "hidden" } : undefined}
       >
         <div
+          ref={desktopMotionRef}
           className="relative"
           data-name="HOME 1 CANVAS"
           style={
@@ -1494,6 +1591,7 @@ export default function Home() {
           8. MobileFooter
       ═══════════════════════════════════════════════════════════════════ */}
       <div
+        ref={mobileMotionRef}
         className="lg:hidden flex flex-col w-full min-h-screen overflow-x-hidden"
         data-name="HOME 1 MOBILE"
       >

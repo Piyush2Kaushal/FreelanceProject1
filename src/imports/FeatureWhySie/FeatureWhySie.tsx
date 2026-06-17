@@ -224,7 +224,7 @@ export default function FeatureWhySie() {
           </div>
         </div>
         {/* Tagline */}
-        <p className="[word-break:break-word] absolute font-['Inter',sans-serif] font-normal leading-[normal] left-[33px] not-italic text-[#decfae] text-[22px] top-[235px] whitespace-nowrap">R O O T E D. A U TE N T I C. Y O U R S</p>
+        <p className="[word-break:break-word] absolute font-['Inter',sans-serif] font-normal leading-[normal] left-[33px] not-italic text-[#decfae] text-[22px] top-[235px] whitespace-nowrap">R O O T E D . A U TE N T I C . Y O U R S</p>
         {/* Location pin + address */}
         <div className="absolute left-[33px] size-[32px] top-[337px]">
           <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 32">
@@ -280,7 +280,7 @@ export default function FeatureWhySie() {
               className="font-['Inter',sans-serif] font-normal leading-normal not-italic text-[#decfae] tracking-[0.06em]"
               style={{ fontSize: "clamp(11px, 3vw, 14px)" }}
             >
-              R O O T E D. &nbsp;A U T H E N T I C. &nbsp;Y O U R S
+              R O O T E D . &nbsp;A U T H E N T I C. &nbsp;Y O U R S
             </p>
             <StarDecoration />
           </div>

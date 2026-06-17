@@ -12,6 +12,7 @@ import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { useNavigate, useLocation } from "react-router-dom";
 import type { ProjectData, GalleryScreen, FullImageScreen } from "../../../data/types";
 import { useTransition } from "../../context/TransitionContext";
+import { useReveal } from "../../hooks/useReveal";
 import gsap from "gsap";
 import svgPaths from "../../../assets/svgPaths";
 import imgDrawerTexture from "../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
@@ -441,7 +442,12 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
       )}
 
       {/* Main right-side image */}
-      <div className="absolute h-[670px] left-[calc(39.5%+15px)] top-[71px] w-[805px]" data-name="image 57">
+      <div
+        className="absolute h-[670px] left-[calc(39.5%+15px)] top-[71px] w-[805px]"
+        data-name="image 57"
+        data-anim="reveal"
+        data-anim-variant="zoom"
+      >
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
@@ -455,6 +461,10 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
       <div
         className="[word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(8.33%-96px)] not-italic text-[64px] top-[260px] whitespace-nowrap"
         style={{ color: data.headingColor }}
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="6"
+        data-anim-delay="0.05"
       >
         <p className="leading-[0.9] mb-0 whitespace-pre">{data.headingLine1}</p>
         <p className="font-['Instrument_Serif',sans-serif] italic leading-[0.9] whitespace-pre">
@@ -466,17 +476,30 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
       <p
         className="[word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0.9] left-[calc(4.17%-31px)] not-italic text-[16px] top-[229px] whitespace-nowrap"
         style={{ color: data.headingColor }}
+        data-anim="reveal"
+        data-anim-variant="text"
       >
         Concept
       </p>
 
       {/* Sub-description */}
-      <p className="[word-break:break-word] absolute font-['Hanken_Grotesk',sans-serif] leading-[normal] left-[24px] not-italic text-[14px] text-[rgba(0,0,0,0.6)] top-[392px] w-[233px]">
+      <p
+        className="[word-break:break-word] absolute font-['Hanken_Grotesk',sans-serif] leading-[normal] left-[24px] not-italic text-[14px] text-[rgba(0,0,0,0.6)] top-[392px] w-[233px]"
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-delay="0.12"
+      >
         {data.subDescription}
       </p>
 
       {/* Body paragraphs */}
-      <div className="[word-break:break-word] absolute bottom-[251px] font-['Hanken_Grotesk',sans-serif] leading-[0] left-[24px] not-italic text-[rgba(0,0,0,0.6)] translate-y-full w-[467px] whitespace-pre-wrap" style={{ fontSize: "18px" }}>
+      <div
+        className="[word-break:break-word] absolute bottom-[251px] font-['Hanken_Grotesk',sans-serif] leading-[0] left-[24px] not-italic text-[rgba(0,0,0,0.6)] translate-y-full w-[467px] whitespace-pre-wrap"
+        style={{ fontSize: "18px" }}
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-delay="0.18"
+      >
         <p className="leading-[normal] mb-0">{data.bodyParagraph1}</p>
         <p className="leading-[normal] mb-0">​</p>
         <p className="leading-[normal]">{data.bodyParagraph2}</p>
@@ -512,7 +535,13 @@ const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: Projec
 
       {/* Scattered images */}
       {data.images.map((img, i) => (
-        <div key={i} className={img.className}>
+        <div
+          key={i}
+          className={img.className}
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-delay={(0.06 * i).toFixed(2)}
+        >
           <img
             alt=""
             className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
@@ -524,7 +553,13 @@ const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: Projec
       ))}
 
       {/* "The Experience" centred text block */}
-      <div className="[word-break:break-word] absolute content-stretch flex flex-col gap-[20px] items-center left-[calc(33.33%+29px)] not-italic text-[#dad0ad] text-center top-[378px] w-[452px]">
+      <div
+        className="[word-break:break-word] absolute content-stretch flex flex-col gap-[20px] items-center left-[calc(33.33%+29px)] not-italic text-[#dad0ad] text-center top-[378px] w-[452px]"
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="6"
+        data-anim-delay="0.1"
+      >
         <p className="font-['Instrument_Serif',sans-serif] leading-[0] min-w-full relative shrink-0 text-[0px] w-[min-content]">
           <span className="leading-[0.9] text-[84px]">The </span>
           <span className="font-['Instrument_Serif',sans-serif] italic leading-[0.9] text-[84px]">
@@ -602,6 +637,9 @@ const GalleryScreenItem = memo(function GalleryScreenItem({
                 .filter(Boolean)
                 .join(" ")}
               data-name={`gallery-img-${i}`}
+              data-anim="reveal"
+              data-anim-variant="zoom"
+              data-anim-delay={(0.09 * i).toFixed(2)}
             >
               <img
                 alt=""
@@ -645,6 +683,8 @@ const FullImageScreenItem = memo(function FullImageScreenItem({
             className="h-full relative shrink-0"
             style={{ width: `${widthPx - 24 * 2}px` }}
             data-name="full-image"
+            data-anim="reveal"
+            data-anim-variant="zoom"
           >
             <img
               alt=""
@@ -671,7 +711,13 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
       data-name="testtimonial"
     >
       {/* Testimonial text block */}
-      <div className="absolute content-stretch flex flex-col gap-[16px] items-start left-[calc(33.33%+30px)] top-[191px] w-[587px]">
+      <div
+        className="absolute content-stretch flex flex-col gap-[16px] items-start left-[calc(33.33%+30px)] top-[191px] w-[587px]"
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="6"
+        data-anim-delay="0.05"
+      >
         <div className="content-stretch flex flex-col items-start relative shrink-0 w-[496px]">
           <p
             className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[normal] not-italic relative shrink-0 text-[64px] text-center whitespace-nowrap"
@@ -692,6 +738,9 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
       <div
         className="-translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Cormorant_Garamond',serif] font-semibold justify-center leading-[0] left-[calc(58.33%+83px)] not-italic text-[128px] top-[233px] whitespace-nowrap"
         style={{ color: data.quoteAccentColor }}
+        data-anim="reveal"
+        data-anim-variant="fade"
+        data-anim-delay="0.25"
       >
         <p className="leading-[normal]">"</p>
       </div>
@@ -706,7 +755,12 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
       </div>
 
       {/* Monogram image top-left */}
-      <div className="absolute h-[451px] left-0 top-[10px] w-[320px]" data-name="monogram_final4 2">
+      <div
+        className="absolute h-[451px] left-0 top-[10px] w-[320px]"
+        data-name="monogram_final4 2"
+        data-anim="reveal"
+        data-anim-variant="zoom"
+      >
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
@@ -1735,8 +1789,21 @@ function DesktopProjectPage({ project }: { project: ProjectData }) {
   // ancestors, so we set it manually here).
   const scaledWidth = totalWidth * scale;
 
+  // ── Scroll-linked reveals for the horizontal journey ───────────────────────
+  // As each screen AFTER the intro scrolls into the horizontal viewport, its
+  // tagged elements wipe/settle in — the same quiet-luxury language as the
+  // intro, scoped to this scroll container. The intro screen owns its own
+  // entrance (data-reveal-*) and the shared-element target is never tagged, so
+  // the Home → Project morph and the intro choreography stay exactly as-is.
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useReveal(scrollRef, {
+    scrollRoot: scrollRef,
+    rootMargin: "0px -7% 0px -7%",
+  });
+
   return (
     <div
+      ref={scrollRef}
       style={{
         width: "100vw",
         height: "100vh",
