@@ -291,7 +291,7 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
         <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 top-[calc(50%-0.5px)]">
           <div className="content-stretch flex items-center overflow-clip p-[16px] relative rounded-[inherit] size-full">
             <div
-              className="h-[327px] relative shrink-0 w-[232px]"
+              className="h-[321.362px] relative shrink-0 w-[228px]"
               data-name="image 55"
               data-shared-target
               style={{ opacity: active ? 0 : 1 }}
@@ -299,7 +299,7 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <img
                   alt=""
-                  className="absolute h-[100.11%] left-[-10.38%] max-w-none top-[-0.05%] w-[110.38%]"
+                  className="absolute inset-0 max-w-none object-cover size-full"
                   src={data.heroPortraitImg}
                   loading="eager"
                   decoding="async"

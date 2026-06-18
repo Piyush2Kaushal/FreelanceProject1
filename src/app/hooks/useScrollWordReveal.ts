@@ -50,9 +50,9 @@ export interface ScrollWordRevealOptions {
   band?: number;
   /** Viewport fraction (element top) where the fill begins. Default 0.82. */
   start?: number;
-  /** Viewport fraction (element top) where the fill completes. Default 0.30. */
+  /** Viewport fraction (element top) where the fill completes. Default 0.22. */
   end?: number;
-  /** Per-frame catch-up (0–1). Lower = smoother / more "scrub" lag. Default 0.1. */
+  /** Per-frame catch-up (0–1). Lower = smoother / more "scrub" lag. Default 0.075. */
   smooth?: number;
   /**
    * Opt-in: run the colour fill even when the OS has "Reduce Motion" ON.
@@ -134,7 +134,7 @@ function ensureRunning() {
 }
 
 // Split text nodes into per-character spans; whitespace stays plain text so
-// wrapping / pre-wrap behaviour is unchanged. Tagged `swr-ch` for safe re-query.
+// wrapping / pre-wrap / <br> behaviour is unchanged. Tagged `swr-ch` for safe re-query.
 function splitChars(root: HTMLElement): HTMLSpanElement[] {
   const chars: HTMLSpanElement[] = [];
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -171,10 +171,10 @@ export function useScrollWordReveal<T extends HTMLElement = HTMLDivElement>(
     const el = ref.current;
     if (!el || typeof window === "undefined") return;
 
-    const band = options.band ?? 2;
-    const start = options.start ?? 0.82;
-    const end = options.end ?? 0.3;
-    const smooth = options.smooth ?? 0.1;
+    const band   = options.band   ?? 2;
+    const start  = options.start  ?? 0.82;
+    const end    = options.end    ?? 0.22;
+    const smooth = options.smooth ?? 0.075;
 
     const dark =
       parseRGB(options.darkColor ?? "") ??

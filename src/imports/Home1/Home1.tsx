@@ -325,7 +325,7 @@ function Frame1({
       onClick={onActivate}
       style={onActivate ? { cursor: 'pointer', zIndex: 10 } : undefined}
     >
-      <div ref={boxRef} className="h-[262.368px] pointer-events-none relative shrink-0 w-[205px]" data-name="image 55">
+      <div ref={boxRef} className="h-[267.487px] pointer-events-none relative shrink-0 w-[209px]" data-name="image 55">
         <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover size-full transition-[filter] duration-700 ease-out group-hover/hero:brightness-[1.05]" src={heroPortraitImg} />
         <div aria-hidden className="absolute border-[#d5c9a8] border-[5.4px] border-solid inset-[-5.4px] transition-shadow duration-700 ease-out group-hover/hero:shadow-[0_18px_50px_-20px_rgba(60,40,10,0.55)]" />
       </div>
