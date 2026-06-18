@@ -59,18 +59,47 @@ export interface RevealOptions {
   rootMargin?: string;
   /** Enable scroll-linked parallax for [data-anim="parallax"] elements. */
   enableParallax?: boolean;
+  /**
+   * Opt-in: play animations even when the OS has "Reduce Motion" ON.
+   * Default false → reduce-motion is honored (content shows fully, no motion),
+   * so pages that DON'T pass this stay unaffected. The Project page passes
+   * `true` so its signature scroll reveal works regardless of the OS setting.
+   */
+  forceMotion?: boolean;
 }
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DEBUG — set to `false` once everything works. While `true`, a small live badge
+// is pinned to the bottom-left of the screen reporting WHY animations may not be
+// playing (reduced-motion, wrong viewport width, gsap missing, no targets found,
+// nothing triggered). This turns "nothing seems to happen" into a hard answer.
+// ─────────────────────────────────────────────────────────────────────────────
+const DEBUG = false;
 
 // ── Per-variant start/end states ─────────────────────────────────────────────
 function fromState(variant: Variant, blur: number): gsap.TweenVars {
   const base: gsap.TweenVars = { opacity: 0 };
   if (blur > 0) base.filter = `blur(${blur}px)`;
   switch (variant) {
-    case "zoom":
-      // clip wipes up from the bottom + a gentle over-scale that settles in
-      return { ...base, clipPath: "inset(0% 0% 100% 0%)", scale: 1.08, transformOrigin: "50% 50%" };
+    case "zoom": {
+      // PREMIUM IMAGE REVEAL — a soft bottom-to-top clip wipe paired with a
+      // gentle upward drift and a whisper of scale that settles in. The clip is
+      // collapsed to the BOTTOM edge so the image unveils from the bottom
+      // upward; transformOrigin at the bottom anchors it as it settles,
+      // reinforcing the rise. A subtle focus-pull (blur) gives the quiet,
+      // "developing" feel — classic and unhurried, never flashy.
+      const softBlur = blur > 0 ? blur : 5;
+      return {
+        opacity: 0,
+        filter: `blur(${softBlur}px)`,
+        clipPath: "inset(100% 0% 0% 0%)", // collapsed to bottom edge → reveals upward
+        y: 34,
+        scale: 1.045,
+        transformOrigin: "50% 100%",
+      };
+    }
     case "fade":
       return { ...base };
     case "text":
@@ -85,7 +114,17 @@ function toState(variant: Variant, blur: number, delay: number): gsap.TweenVars 
   if (blur > 0) base.filter = "blur(0px)";
   switch (variant) {
     case "zoom":
-      return { ...base, clipPath: "inset(0% 0% 0% 0%)", scale: 1, duration: 1.3, ease: "expo.out" };
+      // Long, even deceleration (power3.out) reads as smooth & premium — the
+      // image glides up into its resting position rather than snapping.
+      return {
+        ...base,
+        clipPath: "inset(0% 0% 0% 0%)",
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 1.5,
+        ease: "power3.out",
+      };
     case "fade":
       return { ...base, duration: 1.0, ease: "power2.out" };
     case "text":
@@ -114,17 +153,64 @@ export function useReveal(
   rootRef: RefObject<HTMLElement | null>,
   options: RevealOptions = {}
 ): void {
-  const { scrollRoot, rootMargin = "0px 0px -12% 0px", enableParallax = false } = options;
+  const { scrollRoot, enableParallax = false, forceMotion = false } = options;
 
   useLayoutEffect(() => {
     const root = rootRef.current;
     if (!root || typeof window === "undefined") return;
 
-    // Respect reduced-motion: leave everything in its natural visible state.
-    if (window.matchMedia(REDUCED_QUERY).matches) return;
+    const osReduced = window.matchMedia(REDUCED_QUERY).matches;
+    // Effective gate: only suppress motion if the OS asks AND this call did NOT
+    // opt into forceMotion. So pages that don't pass forceMotion keep honoring
+    // the OS setting and are completely unaffected.
+    const reduced = osReduced && !forceMotion;
 
-    let observer: IntersectionObserver | null = null;
-    let rafId = 0;
+    // ── Live diagnostic badge (DEBUG only) ─────────────────────────────────
+    // Reports the exact reason animations may not play. Stays pinned bottom-left.
+    const counts = { found: 0, revealed: 0 };
+    let hud: HTMLElement | null = null;
+    const paintHud = () => {
+      if (!hud) return;
+      const w = window.innerWidth;
+      const hasGsap = typeof gsap !== "undefined" && !!gsap;
+      const motionLine = osReduced
+        ? forceMotion
+          ? "reduce-motion: ON (OS) \u2192 overridden, animating \u2713"
+          : "reduce-motion: ON  \u26a0 OS is blocking ALL animation"
+        : "reduce-motion: off \u2713";
+      hud.textContent =
+        "useReveal · diagnostics\n" +
+        `viewport: ${w}\u00d7${window.innerHeight}px` +
+        (w < 1024 ? "  \u26a0 <1024 \u2192 MOBILE layout (desktop anims off)" : "  (desktop)") + "\n" +
+        motionLine + "\n" +
+        `gsap loaded: ${hasGsap ? "yes \u2713" : "NO  \u26a0 gsap not installed"}\n` +
+        `reveal targets found: ${counts.found}${counts.found === 0 ? "  (scroll/await load)" : " \u2713"}\n` +
+        `revealed so far: ${counts.revealed}`;
+    };
+    if (DEBUG) {
+      hud = document.createElement("div");
+      hud.style.cssText =
+        "position:fixed;left:12px;bottom:12px;z-index:2147483647;" +
+        "font:11px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre;" +
+        "background:rgba(10,10,12,.86);color:#f4f4f5;padding:10px 13px;border-radius:10px;" +
+        "box-shadow:0 6px 24px rgba(0,0,0,.35);pointer-events:none;max-width:72vw;letter-spacing:.2px;";
+      document.body.appendChild(hud);
+      paintHud();
+      window.addEventListener("resize", paintHud, { passive: true });
+    }
+    const teardownHud = () => {
+      if (DEBUG) window.removeEventListener("resize", paintHud);
+      if (hud && hud.parentNode) hud.parentNode.removeChild(hud);
+      hud = null;
+    };
+
+    // Respect reduced-motion: leave everything in its natural visible state.
+    // (The badge stays up so you can SEE this is why nothing animates.)
+    if (reduced) return teardownHud;
+
+    let rafId = 0;        // parallax rAF loop
+    let revealRaf = 0;    // reveal scroll-check rAF
+    const cleanups: Array<() => void> = [];
 
     const ctx = gsap.context(() => {
       // ── 1. Intro — entrance choreography on mount ──────────────────────────
@@ -142,34 +228,81 @@ export function useReveal(
         });
       });
 
-      // ── 2. Reveal — play as elements enter the (scroll) viewport ───────────
-      const revealEls = gsap.utils.toArray<HTMLElement>(root.querySelectorAll('[data-anim="reveal"]'));
+      // ── 2. Reveal — scroll-driven, tied directly to scroll position ────────
+      // We deliberately DON'T use IntersectionObserver here. On this page the
+      // reveal targets live inside a `transform: scale()` strip, and IO is
+      // unreliable when the root / ancestors are transformed — it often reports
+      // elements as "already visible", so the wipe never actually plays (which
+      // is why no change was felt). Reading getBoundingClientRect() each frame
+      // returns the TRUE on-screen box (it accounts for every transform + the
+      // horizontal scroll), so each image reveals exactly as it slides into
+      // view — "jaise jaise scroll, vaise vaise reveal".
+      const revealEls = gsap.utils.toArray<HTMLElement>(
+        root.querySelectorAll('[data-anim="reveal"]')
+      );
+      const pending = new Set<HTMLElement>(); // still hidden / waiting to trigger
       revealEls.forEach((el) => {
-        const variant = readVariant(el);
-        const blur = readBlur(el);
-        gsap.set(el, fromState(variant, blur));
+        gsap.set(el, fromState(readVariant(el), readBlur(el)));
+        pending.add(el);
       });
+      counts.found = revealEls.length;
+      paintHud();
 
       if (revealEls.length) {
-        observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              const el = entry.target as HTMLElement;
-              const variant = readVariant(el);
-              const blur = readBlur(el);
-              const delay = readNum(el.dataset.animDelay, 0);
-              gsap.set(el, { willChange: "opacity, clip-path, transform, filter" });
-              gsap.to(el, {
-                ...toState(variant, blur, delay),
-                onComplete: () => { gsap.set(el, { willChange: "auto", clearProps: "filter" }); },
-              });
-              observer?.unobserve(el);
-            });
-          },
-          { root: scrollRoot?.current ?? null, rootMargin, threshold: 0.12 }
-        );
-        revealEls.forEach((el) => observer!.observe(el));
+        const reveal = (el: HTMLElement) => {
+          pending.delete(el);
+          counts.revealed++;
+          paintHud();
+          const variant = readVariant(el);
+          const blur = readBlur(el);
+          const delay = readNum(el.dataset.animDelay, 0);
+          gsap.set(el, { willChange: "opacity, clip-path, transform, filter" });
+          gsap.to(el, {
+            ...toState(variant, blur, delay),
+            onComplete: () =>
+              gsap.set(el, { willChange: "auto", clearProps: "filter" }),
+          });
+        };
+
+        const check = () => {
+          revealRaf = 0;
+          if (!pending.size) return;
+          const vw = window.innerWidth;
+          const vh = window.innerHeight;
+          // Fire once an element has entered ~9% past the viewport edge (and is
+          // not yet leaving) so the bottom-to-top wipe is always actually seen.
+          const padX = vw * 0.09;
+          const padY = vh * 0.04;
+          pending.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.width === 0 && r.height === 0) return; // not laid out yet
+            const inView =
+              r.left < vw - padX &&
+              r.right > padX &&
+              r.top < vh - padY &&
+              r.bottom > padY;
+            if (inView) reveal(el);
+          });
+        };
+
+        const schedule = () => {
+          if (revealRaf) return;
+          revealRaf = requestAnimationFrame(check);
+        };
+
+        // Drive off the horizontal scroll container (falls back to the window).
+        const scroller: EventTarget = scrollRoot?.current ?? window;
+        scroller.addEventListener("scroll", schedule, { passive: true });
+        window.addEventListener("resize", schedule, { passive: true });
+        cleanups.push(() => scroller.removeEventListener("scroll", schedule));
+        cleanups.push(() => window.removeEventListener("resize", schedule));
+
+        // Initial passes — reveal whatever is already on screen, with a couple of
+        // follow-ups to catch the scale-strip's late layout after fonts/images.
+        schedule();
+        const t1 = window.setTimeout(schedule, 120);
+        const t2 = window.setTimeout(schedule, 400);
+        cleanups.push(() => { clearTimeout(t1); clearTimeout(t2); });
       }
 
       // ── 3. Parallax — subtle scroll-linked depth (desktop / pointer only) ──
@@ -204,8 +337,10 @@ export function useReveal(
     }, root);
 
     return () => {
-      if (observer) observer.disconnect();
+      teardownHud();
+      cleanups.forEach((fn) => fn());
       if (rafId) cancelAnimationFrame(rafId);
+      if (revealRaf) cancelAnimationFrame(revealRaf);
       ctx.revert();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1835,6 +1835,7 @@ function DesktopProjectPage({ project }: { project: ProjectData }) {
   useReveal(scrollRef, {
     scrollRoot: scrollRef,
     rootMargin: "0px -7% 0px -7%",
+    forceMotion: true, // project page plays its reveal even if OS Reduce Motion is ON
   });
 
   return (

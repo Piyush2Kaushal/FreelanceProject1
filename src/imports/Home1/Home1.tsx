@@ -5,6 +5,7 @@ import svgPaths from "./svg-n029qayjm7";
 import socialSvgPaths from "../svg-ejvbwqgg01";
 import JournalHeader from "../../app/components/layout/JournalHeader";
 import { useReveal } from "../../app/hooks/useReveal";
+import { useScrollWordReveal } from "../../app/hooks/useScrollWordReveal";
 import { LampLightOverlay, useLampActive } from "./LampLight";
 
 // ── Static assets (never change) ─────────────────────────────────────────────
@@ -195,21 +196,21 @@ function Frame4() {
 }
 
 function Group() {
+  // Home-page intro: per-letter colour fill on scroll (replaces the generic
+  // clip-wipe reveal on just these two text blocks). forceMotion so it plays
+  // even when the OS has Reduce Motion ON.
+  const introRef = useScrollWordReveal<HTMLDivElement>({ forceMotion: true });
+  const taglineRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute contents left-[calc(50%+1px)] top-[calc(50%+1.5px)]">
       <div
-        data-anim="reveal"
-        data-anim-variant="text"
-        data-anim-blur="6"
-        data-anim-delay="0.05"
+        ref={introRef}
         className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(50%-0.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%+67.5px)] tracking-[-1px] w-[683px] whitespace-pre-wrap">
         <p className="leading-[normal] mb-0">At Studio Inside Eye, every space starts with you.</p>
         <p className="leading-[normal]">{`We design around how you live,              what you need, what you value.`}</p>
       </div>
       <p
-        data-anim="reveal"
-        data-anim-variant="text"
-        data-anim-blur="6"
+        ref={taglineRef}
         className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[normal] left-[calc(50%+2.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%-220.5px)] tracking-[-1px] w-[683px]">
         Designing timeless residential interiors for modern
         <br aria-hidden />
@@ -1202,6 +1203,9 @@ function MobileImageCollage() {
 
 /** Mobile — "Why SIE" / about section */
 function MobileWhySIE() {
+  // Same per-letter colour fill as desktop, for the matching mobile text.
+  const mTaglineRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
+  const mIntroRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
   return (
     <div className="bg-[#faf0d7] w-full overflow-hidden px-5 py-12">
       <div className="flex justify-center mb-6">
@@ -1213,6 +1217,7 @@ function MobileWhySIE() {
         </div>
       </div>
       <p
+        ref={mTaglineRef}
         className="font-['Instrument_Serif',sans-serif] not-italic text-[#5d5e36] text-center leading-[1.2] mb-6 mx-auto"
         style={{ fontSize: 'clamp(22px, 6vw, 32px)', maxWidth: 480, letterSpacing: '-0.03em' }}
       >
@@ -1222,11 +1227,9 @@ function MobileWhySIE() {
         <div className="h-10 w-px bg-[#C98F00] opacity-60" />
       </div>
       <p
+        ref={mIntroRef}
         className="font-['Instrument_Serif',sans-serif] not-italic text-[#5d5e36] text-center leading-[1.25] mx-auto"
         style={{ fontSize: 'clamp(20px, 5.5vw, 28px)', maxWidth: 440, letterSpacing: '-0.02em' }}
-        data-anim="reveal"
-        data-anim-variant="text"
-        data-anim-blur="6"
       >
         At Studio Inside Eye, every space starts with you. We design around how you live, what you need, what you value.
       </p>
