@@ -5,6 +5,7 @@ import svgPaths from "./svg-n029qayjm7";
 import socialSvgPaths from "../svg-ejvbwqgg01";
 import JournalHeader from "../../app/components/layout/JournalHeader";
 import { useReveal } from "../../app/hooks/useReveal";
+import { LampLightOverlay, useLampActive } from "./LampLight";
 
 // ── Static assets (never change) ─────────────────────────────────────────────
 import imgEntireWebsite    from "../../assets/0dd65294414a90d32335209969f40ac5042eb287.webp";
@@ -74,6 +75,85 @@ function Frame43() {
   );
 }
 
+// ─── Desktop lamp containers with hover beam ──────────────────────────────────
+function DesktopLamp48() {
+  const { active, handlers } = useLampActive();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dims, setDims] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver(() => {
+      const r = containerRef.current!.getBoundingClientRect();
+      setDims({ w: r.width, h: r.height });
+    });
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      data-anim="intro"
+      data-anim-variant="fade"
+      data-anim-order="0"
+      className="absolute h-[319px] left-[calc(58.33%+82px)] top-[-63px] w-[237px]"
+      style={{ overflow: "visible", zIndex: 10 }}
+      {...handlers}
+      data-name="image 48"
+    >
+      <div data-anim="parallax" data-parallax-speed="0.05" className="absolute inset-0">
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+      </div>
+      <LampLightOverlay
+        active={active}
+        containerWidth={dims.w}
+        containerHeight={dims.h}
+        beamOriginPercent={88}
+      />
+    </div>
+  );
+}
+
+function DesktopLamp49() {
+  const { active, handlers } = useLampActive();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dims, setDims] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver(() => {
+      const r = containerRef.current!.getBoundingClientRect();
+      setDims({ w: r.width, h: r.height });
+    });
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      data-anim="intro"
+      data-anim-variant="fade"
+      data-anim-order="2"
+      className="absolute h-[365px] left-[calc(75%-14px)] top-[-6px] w-[272px]"
+      style={{ overflow: "visible", zIndex: 10 }}
+      {...handlers}
+      data-name="image 49"
+    >
+      <div data-anim="parallax" data-parallax-speed="0.085" className="absolute inset-0">
+        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+      </div>
+      <LampLightOverlay
+        active={active}
+        containerWidth={dims.w}
+        containerHeight={dims.h}
+        beamOriginPercent={88}
+      />
+    </div>
+  );
+}
+
 function EntireWebsite() {
   return (
     <div className="absolute h-[770px] left-0 overflow-clip top-0 w-full" data-name="Entire Website">
@@ -100,24 +180,8 @@ function EntireWebsite() {
         data-anim-order="4"
         data-anim-blur="10"
         className="-translate-x-1/2 [word-break:break-word] absolute capitalize font-['Instrument_Serif'] italic leading-[1.2] left-[calc(59.50%+317px)] text-[#703000] text-[96px] text-center top-[632px] tracking-[-3.84px] w-[524px]">Studio Inside eye</p>
-      <div
-        data-anim="intro"
-        data-anim-variant="fade"
-        data-anim-order="0"
-        className="absolute h-[319px] left-[calc(58.33%+82px)] top-[-63px] w-[237px]" data-name="image 48">
-        <div data-anim="parallax" data-parallax-speed="0.05" className="absolute inset-0">
-          <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
-        </div>
-      </div>
-      <div
-        data-anim="intro"
-        data-anim-variant="fade"
-        data-anim-order="2"
-        className="absolute h-[365px] left-[calc(75%-14px)] top-[-6px] w-[272px]" data-name="image 49">
-        <div data-anim="parallax" data-parallax-speed="0.085" className="absolute inset-0">
-          <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
-        </div>
-      </div>
+      <DesktopLamp48 />
+      <DesktopLamp49 />
     </div>
   );
 }
@@ -291,7 +355,6 @@ const HeroPanel = memo(function HeroPanel({
 }: HeroPanelProps) {
   const boxRef = useRef<HTMLDivElement>(null);
 
-  // Measure the framed portrait box and hand its rect to the transition layer
   const activate = useCallback(() => {
     if (!boxRef.current || !onActivate) return;
     const r = boxRef.current.getBoundingClientRect();
@@ -371,12 +434,8 @@ function CyclingHero() {
 
   const { startTransition } = useTransition();
 
-  // Build the click handler for a given project slug:
-  // capture the image rect → start the morph → navigate after a short beat
-  // so the cream backdrop can cover the route swap.
   const makeActivate = useCallback(
     (slug: string) => (rect: SharedRect, src: string) => {
-      // Small screens / no shared hero → plain navigation
       if (typeof window !== "undefined" && window.innerWidth < 1024) {
         navigate(slug);
         return;
@@ -384,7 +443,7 @@ function CyclingHero() {
       startTransition({
         src,
         rect,
-        borderColor: "#d5c9a8", // Home frame cream
+        borderColor: "#d5c9a8",
         borderWidth: 5.4,
       });
       window.setTimeout(() => navigate(slug), 300);
@@ -909,25 +968,18 @@ function useCrossfade(src: string) {
 
   useEffect(() => {
     if (src === displayed) return;
-
-    // mount new image at opacity 0
     setIncoming(src);
     setIncomingOpacity(0);
-
-    // two rAFs to ensure browser paints the opacity-0 frame first
     requestAnimationFrame(() => {
       requestAnimationFrame(() => setIncomingOpacity(1));
     });
-
-    // after fade completes → promote incoming to base, remove overlay
     timerRef.current = setTimeout(() => {
       setDisplayed(src);
       setIncoming(null);
       setIncomingOpacity(0);
     }, FADE_MS + 80);
-
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-  }, [src]);                                    // displayed intentionally omitted
+  }, [src]);
 
   return { displayed, incoming, incomingOpacity };
 }
@@ -946,16 +998,12 @@ function ServicesSection1({ heroPortraitImg }: { heroPortraitImg: string }) {
         data-anim-variant="zoom"
         className="absolute h-[751px] left-[33px] top-[63px] right-[33px]" data-name="hero-photo">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-
-          {/* Base layer — always visible, no transition needed */}
           <img
             decoding="async"
             alt=""
             className="absolute h-[130.42%] left-[-0.02%] max-w-none top-0 w-[100.03%]"
             src={displayed}
           />
-
-          {/* Incoming layer — crossfades in on top, then unmounts */}
           {incoming && (
             <img
               decoding="async"
@@ -969,7 +1017,6 @@ function ServicesSection1({ heroPortraitImg }: { heroPortraitImg: string }) {
               }}
             />
           )}
-
         </div>
       </div>
     </div>
@@ -988,16 +1035,31 @@ function Component3({ project }: { project: HomeProject }) {
 // MOBILE / TABLET COMPONENTS
 // ─────────────────────────────────────────────────────────────────────────────
 
-/**
- * Mobile — Two images from desktop top-right, shown at the very top (top: 0).
- * Left image is shorter, right image is taller — mirroring the desktop feel.
- */
-
-
-/** Mobile Header strip — cream bg, logo + hamburger */
-/** Mobile — Header floats OVER images, both start from top: 0 */
 /** Mobile — Header floats OVER images, both start from top: 0 */
 function MobileHeroTop() {
+  const lamp1 = useLampActive();
+  const lamp2 = useLampActive();
+
+  const ref1 = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
+  const [dims1, setDims1] = useState({ w: 0, h: 0 });
+  const [dims2, setDims2] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    const observe = (el: HTMLDivElement | null, setDims: (d: { w: number; h: number }) => void) => {
+      if (!el) return () => {};
+      const ro = new ResizeObserver(() => {
+        const r = el.getBoundingClientRect();
+        setDims({ w: r.width, h: r.height });
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    };
+    const d1 = observe(ref1.current, setDims1);
+    const d2 = observe(ref2.current, setDims2);
+    return () => { d1(); d2(); };
+  }, []);
+
   return (
     <div
       className="relative w-full overflow-hidden"
@@ -1014,40 +1076,49 @@ function MobileHeroTop() {
         />
       </div>
 
-      {/* Images — both start from top: 0, items-start se */}
+      {/* Images — both start from top: 0, items-start */}
       <div
         className="relative flex items-start justify-center gap-0"
         style={{ zIndex: 1 }}
         data-anim="reveal"
         data-anim-variant="zoom"
       >
-        {/* Left image — chhoti height, top se start */}
+        {/* Left image — shorter, top-aligned */}
         <div
-  className="shrink-0 overflow-hidden"
-  style={{
-    width: 'clamp(145px, 36vw, 272px)',
-    height: 'clamp(150px, 32vw, 230px)',
-    marginRight: '-7vh',
-  }}
-  
->
-  <img
-    loading="lazy"
-    decoding="async"
-    alt=""
-    className="w-full h-full object-cover object-bottom"
-    src={imgImage48}
-  />
-</div>
+          ref={ref1}
+          className="shrink-0 overflow-visible relative"
+          style={{
+            width: 'clamp(145px, 36vw, 272px)',
+            height: 'clamp(150px, 32vw, 230px)',
+            marginRight: '-7vh',
+          }}
+          {...lamp1.handlers}
+        >
+          <img
+            loading="lazy"
+            decoding="async"
+            alt=""
+            className="w-full h-full object-cover object-bottom"
+            src={imgImage48}
+            style={{ display: 'block' }}
+          />
+          <LampLightOverlay
+            active={lamp1.active}
+            containerWidth={dims1.w}
+            containerHeight={dims1.h}
+            beamOriginPercent={88}
+          />
+        </div>
 
-        {/* Right image — badi height, top se start */}
+        {/* Right image — taller, top-aligned */}
         <div
-          className="shrink-0 overflow-hidden"
+          ref={ref2}
+          className="shrink-0 overflow-visible relative"
           style={{
             width: 'clamp(145px, 36vw, 272px)',
             height: 'clamp(220px, 54vw, 380px)',
-            
           }}
+          {...lamp2.handlers}
         >
           <img
             loading="lazy"
@@ -1055,6 +1126,13 @@ function MobileHeroTop() {
             alt=""
             className="w-full h-full object-cover"
             src={imgImage48}
+            style={{ display: 'block' }}
+          />
+          <LampLightOverlay
+            active={lamp2.active}
+            containerWidth={dims2.w}
+            containerHeight={dims2.h}
+            beamOriginPercent={88}
           />
         </div>
       </div>
@@ -1343,8 +1421,6 @@ function MobileLandscapePhoto({ project }: { project: HomeProject }) {
             className="absolute inset-0 w-full h-full object-cover"
             src={displayed}
           />
-
-          {/* Incoming layer — crossfades in on top, then unmounts */}
           {incoming && (
             <img
               decoding="async"
@@ -1364,12 +1440,9 @@ function MobileLandscapePhoto({ project }: { project: HomeProject }) {
   );
 }
 
-// "in" glyph (LinkedIn) — drawn without its own background, since the
-// surrounding tile already supplies the beige square.
 const LINKEDIN_PATH =
   "M5.46 7.43h-.02c-1.22 0-2-.83-2-1.87 0-1.06.81-1.87 2.05-1.87 1.24 0 2 .8 2.02 1.87 0 1.04-.78 1.87-2.05 1.87zM7.27 20.1H3.65V9h3.62v11.1zM20.34 20.1h-3.62v-5.8c0-1.45-.52-2.45-1.83-2.45-1 0-1.6.67-1.86 1.33-.1.23-.12.55-.12.88v6.04h-3.62s.05-9.79 0-10.8h3.62v1.53a3.6 3.6 0 0 1 3.26-1.79c2.39 0 4.18 1.56 4.18 4.89v6.17z";
 
-/** Beige square social icon tile used in the mobile footer */
 function MobileFooterSocialIcon({ path, href }: { path: string; href?: string }) {
   const tile = (
     <div
@@ -1424,7 +1497,6 @@ function MobileFooter({ project }: { project: HomeProject }) {
             </div>
           </div>
 
-          {/* Small star + vertical divider, beneath the logo */}
           <div className="flex flex-col items-center">
             <svg width="15" height="15" viewBox="0 0 23 23" fill="none">
               <path d={svgPaths.p25b23d00} fill="#DAD0AD" />
@@ -1453,7 +1525,6 @@ function MobileFooter({ project }: { project: HomeProject }) {
           </button>
         </div>
 
-        {/* Horizontal divider with star, centered */}
         <div className="relative flex justify-center mb-8">
           <div className="w-full h-px" style={{ background: 'rgba(218,205,172,0.3)' }} />
           <div className="absolute" style={{ top: '50%', transform: 'translateY(-50%)' }}>
@@ -1476,10 +1547,8 @@ function MobileFooter({ project }: { project: HomeProject }) {
           <MobileFooterSocialIcon path={socialSvgPaths.p1dbc3000} />
         </div>
 
-        {/* Divider */}
         <div className="w-full h-px mb-5" style={{ background: 'rgba(218,205,172,0.25)' }} />
 
-        {/* Copyright */}
         <p
           className="font-['Hanken_Grotesk',sans-serif] text-[rgba(238,221,160,0.65)] tracking-[0.02em] text-center"
           style={{ fontSize: 'clamp(10px, 2.5vw, 12px)' }}
@@ -1533,11 +1602,6 @@ export default function Home() {
   const desktopScale = useDesktopScale();
   const isScaled = desktopScale < 1;
 
-  // ── Motion engine ──────────────────────────────────────────────────────────
-  // Motion roots — the entrance + scroll choreography is scoped to each layout.
-  // Purely additive: never reads, sets or changes layout. The project-hero /
-  // shared-element region is intentionally left untagged, so the Home → Project
-  // morph keeps measuring an identical, untouched box.
   const desktopMotionRef = useRef<HTMLDivElement>(null);
   const mobileMotionRef = useRef<HTMLDivElement>(null);
   useReveal(desktopMotionRef, { enableParallax: true });
@@ -1588,40 +1652,18 @@ export default function Home() {
 
       {/* ═══════════════════════════════════════════════════════════════════
           MOBILE / TABLET  (below lg)
-          Order:
-          1. MobileTopImages  — two desktop-style images, flush to top (top: 0)
-          2. MobileHeaderStrip — logo/nav header
-          3. MobileImageCollage — tagline text first, then 3-photo strip
-          4. MobileWhySIE
-          5. MobileProjectHero
-          6. MobileServicesSection
-          7. MobileLandscapePhoto
-          8. MobileFooter
       ═══════════════════════════════════════════════════════════════════ */}
       <div
         ref={mobileMotionRef}
         className="lg:hidden flex flex-col w-full min-h-screen overflow-x-hidden"
         data-name="HOME 1 MOBILE"
       >
-        {/* 1. Two top-right desktop images — shown at very top, top: 0 */}
         <MobileHeroTop />
-
-        {/* 3. Tagline text + 3-image collage (text first, images below) */}
         <MobileImageCollage />
-
-        {/* 4. Why SIE / philosophy */}
         <MobileWhySIE />
-
-        {/* 5. Project hero panel */}
         <MobileProjectHero project={project} />
-
-        {/* 6. Services */}
         <MobileServicesSection />
-
-        {/* 7. Landscape photo */}
         <MobileLandscapePhoto project={project} />
-
-        {/* 8. Footer */}
         <MobileFooter project={project} />
       </div>
     </>

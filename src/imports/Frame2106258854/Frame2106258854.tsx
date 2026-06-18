@@ -40,7 +40,7 @@ const BUDGET_OPTIONS = [
 /* ─── WEB3FORMS CONFIG ─────────────────────────────────────────────────────── */
 // TODO: Replace the empty string below with your Web3Forms Access Key when ready.
 // Get yours free at https://web3forms.com — no backend required.
-const WEB3FORMS_ACCESS_KEY = "";
+const WEB3FORMS_ACCESS_KEY = "082ba6bc-aaa0-484b-a76a-2f2d1645bbf3";
 
 /* ─── TOAST NOTIFICATION ───────────────────────────────────────────────────── */
 // Self-contained toast that inherits the project's exact design language.
@@ -59,8 +59,8 @@ function Toast({ toast, onDismiss }: { toast: ToastState; onDismiss: () => void 
 
   const isSuccess = toast.type === "success";
   const bg       = isSuccess ? "#dacdac" : "#f5ede8";
-  const border   = isSuccess ? "#88331c" : "#c0392b";
-  const textMain = isSuccess ? "#8e3219"  : "#c0392b";
+  const border   = isSuccess ? "#82853D" : "#c0392b";
+  const textMain = isSuccess ? "#5c5d36"  : "#c0392b";
   const icon     = isSuccess
     ? ( // checkmark circle
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
@@ -1478,7 +1478,18 @@ const responsiveStyles = `
       gap: clamp(24px, calc(25.4vw - 246px), 82px) !important;
     }
   }
-
+  /* ── Autofill background fix — browser apna white box inject karta hai,
+  ise transparent-looking inset box-shadow se override karo ── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+ -webkit-box-shadow: 0 0 0 1000px #dacdac inset !important;
+ box-shadow: 0 0 0 1000px #dacdac inset !important;
+ -webkit-text-fill-color: #8e3219 !important;
+ caret-color: #8e3219 !important;
+ transition: background-color 5000s ease-in-out 0s !important;
+}
   /* ── Navbar: 1100px–751px — full pill visible, gap narrows responsively ── */
   @media (max-width: 1100px) and (min-width: 751px) {
     .contact-navbar-full {
