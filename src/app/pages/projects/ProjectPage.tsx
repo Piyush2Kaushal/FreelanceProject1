@@ -13,6 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import type { ProjectData, GalleryScreen, FullImageScreen } from "../../../data/types";
 import { useTransition } from "../../context/TransitionContext";
 import { useReveal } from "../../hooks/useReveal";
+import { useMobileReveal } from "../../hooks/useMobileReveal";
 import gsap from "gsap";
 import svgPaths from "../../../assets/svgPaths";
 import imgDrawerTexture from "../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
@@ -180,16 +181,28 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
         root.querySelectorAll<HTMLElement>("[data-reveal-clip]")
       );
 
-      if (lines.length) gsap.set(lines, { yPercent: 120 });
+      if (lines.length)
+        gsap.set(lines, { yPercent: 120, willChange: "transform" });
       if (clips.length)
         gsap.set(clips, {
           clipPath: "inset(0% 0% 100% 0%)",
           scale: 1.06,
           transformOrigin: "50% 50%",
+          willChange: "clip-path, transform",
         });
 
       const start = viaTransition ? 0.45 : 0.1; // land in sync with the image
-      const tl = gsap.timeline({ delay: start });
+      // Promote the entrance layers up-front (GPU hint) so the first animated
+      // frame — which on a card→page nav runs alongside the shared-element morph
+      // — doesn't pay layer-creation cost mid-motion. Hint is released the
+      // instant the entrance settles, exactly like the scroll-reveal path does.
+      const tl = gsap.timeline({
+        delay: start,
+        onComplete: () => {
+          if (lines.length) gsap.set(lines, { willChange: "auto" });
+          if (clips.length) gsap.set(clips, { willChange: "auto" });
+        },
+      });
 
       if (clips.length)
         tl.to(
@@ -955,6 +968,8 @@ function MobileProjectNav({ logoImg, bgColor, bgTextureImg }: {
           <div
             className="h-[40px] w-[88px] relative cursor-pointer shrink-0"
             onClick={() => navigate("/home")}
+            data-m-reveal
+            data-m-variant="rise"
           >
             <img
               alt="Studio Inside Eye"
@@ -966,6 +981,8 @@ function MobileProjectNav({ logoImg, bgColor, bgTextureImg }: {
           <div
             className="font-['Instrument_Serif',sans-serif] text-[#dad0ad] text-[18px] cursor-pointer"
             onClick={() => navigate("/home")}
+            data-m-reveal
+            data-m-variant="rise"
           >
             Studio Inside Eye
           </div>
@@ -975,6 +992,9 @@ function MobileProjectNav({ logoImg, bgColor, bgTextureImg }: {
         <button
           onClick={() => setDrawerOpen(true)}
           aria-label="Open menu"
+          data-m-reveal
+          data-m-variant="rise"
+          data-m-delay="0.06"
           style={{
             width: 36,
             height: 36,
@@ -1181,7 +1201,7 @@ function MobileProjectNav({ logoImg, bgColor, bgTextureImg }: {
 // ─── Mobile Section Label ─────────────────────────────────────────────────────
 function MobileSectionLabel({ number, label, color }: { number: string; label: string; color: string }) {
   return (
-    <div className="flex items-center gap-3 mb-6">
+    <div className="flex items-center gap-3 mb-6" data-m-reveal data-m-variant="rise">
       <span
         className="font-['Hanken_Grotesk',sans-serif] text-[11px] tracking-[0.15em] uppercase opacity-50"
         style={{ color }}
@@ -1226,7 +1246,7 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
 
         <div className="relative">
           {/* AREA caption row */}
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center justify-between mb-5" data-m-reveal data-m-variant="rise" data-m-delay="0.1">
             <span
               className="font-['EuropaNuova-Regular',sans-serif] uppercase"
               style={{ fontSize: "clamp(10px, 2.6vw, 12px)", letterSpacing: "0.15em", color: "#dad0ad", opacity: 0.75 }}
@@ -1245,6 +1265,9 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
           <div
             className="relative w-full p-[10px]"
             style={{ aspectRatio: "4/5", border: "1px solid rgba(218,208,173,0.35)" }}
+            data-m-reveal
+            data-m-variant="image"
+            data-m-delay="0.18"
           >
             <div className="relative w-full h-full overflow-hidden">
               <img
@@ -1258,7 +1281,7 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
           </div>
 
           {/* COMPLETED caption row */}
-          <div className="flex items-center justify-between mt-5 mb-10">
+          <div className="flex items-center justify-between mt-5 mb-10" data-m-reveal data-m-variant="rise" data-m-delay="0.26">
             <span
               className="font-['EuropaNuova-Regular',sans-serif] uppercase"
               style={{ fontSize: "clamp(10px, 2.6vw, 12px)", letterSpacing: "0.15em", color: "#dad0ad", opacity: 0.75 }}
@@ -1277,6 +1300,9 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
           <p
             className="font-['Instrument_Serif',sans-serif] text-center leading-none uppercase"
             style={{ fontSize: "clamp(64px, 22vw, 110px)", color: "#dad0ad", letterSpacing: "-0.03em" }}
+            data-m-reveal
+            data-m-variant="text"
+            data-m-delay="0.3"
           >
             {data.projectName}
           </p>
@@ -1292,6 +1318,8 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
         <p
           className="font-['Instrument_Serif',sans-serif] leading-none mb-4 uppercase"
           style={{ fontSize: "clamp(40px, 13vw, 64px)", color: data.heroPanelBg, letterSpacing: "-0.02em" }}
+          data-m-reveal
+          data-m-variant="text"
         >
           {data.projectName}
         </p>
@@ -1300,12 +1328,15 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
         <p
           className="font-['Hanken_Grotesk',sans-serif] leading-[1.65] mb-10 opacity-75"
           style={{ fontSize: "clamp(13px, 3.5vw, 15px)", color: "rgba(0,0,0,0.65)" }}
+          data-m-reveal
+          data-m-variant="rise"
+          data-m-delay="0.08"
         >
           {data.description}
         </p>
 
         {/* Secondary image */}
-        <div className="w-full rounded-[2px] overflow-hidden mb-10" style={{ aspectRatio: "4/3" }}>
+        <div className="w-full rounded-[2px] overflow-hidden mb-10" style={{ aspectRatio: "4/3" }} data-m-reveal data-m-variant="image" data-m-delay="0.1">
           <img
             alt={`${data.projectName} detail`}
             className="w-full h-full object-cover"
@@ -1316,7 +1347,7 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
         </div>
 
         {/* Texture pattern swatch */}
-        <div className="flex justify-end mb-8">
+        <div className="flex justify-end mb-8" data-m-reveal data-m-variant="fade" data-m-delay="0.05">
           <div
             aria-hidden
             className="w-[120px] h-[64px] rounded-[2px]"
@@ -1340,6 +1371,8 @@ function MobileIntroSection({ data, mainImg, bgTextureImg }: {
         <p
           className="font-['Hanken_Grotesk',sans-serif] leading-[1.7] text-center opacity-70"
           style={{ fontSize: "clamp(13px, 3.5vw, 15px)", color: "rgba(0,0,0,0.6)" }}
+          data-m-reveal
+          data-m-variant="rise"
         >
           {data.sideParagraph}
         </p>
@@ -1389,7 +1422,7 @@ function MobileConceptSection({ data }: { data: ProjectData["concept"] }) {
         <MobileSectionLabel number="02" label="Concept" color={data.headingColor} />
 
         {/* Heading */}
-        <div className="mb-4">
+        <div className="mb-4" data-m-reveal data-m-variant="text" data-m-delay="0.06">
           <p
             className="font-['Instrument_Serif',sans-serif] leading-[0.9]"
             style={{
@@ -1417,6 +1450,9 @@ function MobileConceptSection({ data }: { data: ProjectData["concept"] }) {
             fontSize: "clamp(13px, 3.5vw, 15px)",
             color: data.headingColor,
           }}
+          data-m-reveal
+          data-m-variant="rise"
+          data-m-delay="0.12"
         >
           {data.subDescription}
         </p>
@@ -1425,6 +1461,8 @@ function MobileConceptSection({ data }: { data: ProjectData["concept"] }) {
         <div
           className="w-full rounded-[2px] overflow-hidden mb-8"
           style={{ aspectRatio: "3/4" }}
+          data-m-reveal
+          data-m-variant="image"
         >
           <img
             alt="Concept"
@@ -1442,6 +1480,8 @@ function MobileConceptSection({ data }: { data: ProjectData["concept"] }) {
             fontSize: "clamp(14px, 3.8vw, 16px)",
             color: "rgba(0,0,0,0.65)",
           }}
+          data-m-reveal
+          data-m-variant="rise"
         >
           <p className="mb-4">{data.bodyParagraph1}</p>
           <p>{data.bodyParagraph2}</p>
@@ -1481,6 +1521,8 @@ function MobileExperienceSection({ data }: { data: ProjectData["experience"] }) 
             <div
               className="overflow-hidden rounded-[2px]"
               style={{ width: "65%", aspectRatio: "3/4" }}
+              data-m-reveal
+              data-m-variant="image"
             >
               <img
                 alt=""
@@ -1494,7 +1536,7 @@ function MobileExperienceSection({ data }: { data: ProjectData["experience"] }) 
         )}
 
         {/* Heading */}
-        <div className="mb-5 text-center px-6">
+        <div className="mb-5 text-center px-6" data-m-reveal data-m-variant="text">
           <p
             className="font-['Instrument_Serif',sans-serif] leading-[1]"
             style={{
@@ -1513,6 +1555,9 @@ function MobileExperienceSection({ data }: { data: ProjectData["experience"] }) 
             fontSize: "clamp(13px, 3.5vw, 15px)",
             color: "rgba(218,208,173,0.75)",
           }}
+          data-m-reveal
+          data-m-variant="rise"
+          data-m-delay="0.08"
         >
           {data.experienceSubtitle}
         </p>
@@ -1525,6 +1570,9 @@ function MobileExperienceSection({ data }: { data: ProjectData["experience"] }) 
                 key={i}
                 className="overflow-hidden rounded-[2px]"
                 style={{ aspectRatio: "3/4" }}
+                data-m-reveal
+                data-m-variant="image"
+                data-m-delay={i % 2 === 1 ? "0.08" : undefined}
               >
                 <img
                   alt=""
@@ -1581,6 +1629,9 @@ function MobileGallerySection({
               key={i}
               className="w-full overflow-hidden rounded-[2px]"
               style={{ aspectRatio: "3/4" }}
+              data-m-reveal
+              data-m-variant="image"
+              data-m-delay={i === 1 ? "0.05" : undefined}
             >
               <img
                 alt=""
@@ -1612,6 +1663,8 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
         <div
           className="mb-4"
           style={{ width: "45%", maxWidth: "160px" }}
+          data-m-reveal
+          data-m-variant="rise"
         >
           <img
             alt=""
@@ -1629,6 +1682,9 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             fontSize: "clamp(30px, 9vw, 48px)",
             color: data.quoteAccentColor,
           }}
+          data-m-reveal
+          data-m-variant="text"
+          data-m-delay="0.05"
         >
           Client Testimonial
         </h2>
@@ -1642,6 +1698,8 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             fontSize: "clamp(15px, 4vw, 19px)",
             color: "rgba(58,54,54,0.85)",
           }}
+          data-m-reveal
+          data-m-variant="rise"
         >
           {data.quote}
         </p>
@@ -1653,6 +1711,9 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             fontSize: "clamp(14px, 3.8vw, 17px)",
             color: "rgba(58,54,54,0.75)",
           }}
+          data-m-reveal
+          data-m-variant="rise"
+          data-m-delay="0.06"
         >
           {data.attribution}
         </p>
@@ -1665,6 +1726,8 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
           backgroundColor: data.quoteAccentColor,
           opacity: 0.15,
         }}
+        data-m-reveal
+        data-m-variant="fade"
       />
 
       {/* ── Enquiry block ── */}
@@ -1676,6 +1739,8 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             color: "#747272",
             opacity: 0.75,
           }}
+          data-m-reveal
+          data-m-variant="rise"
         >
           We would love to hear from you;
         </p>
@@ -1690,12 +1755,15 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             textDecorationColor: "#747272",
             opacity: 0.85,
           }}
+          data-m-reveal
+          data-m-variant="rise"
+          data-m-delay="0.05"
         >
           {data.enquiryEmail}
         </a>
 
         {/* Send Enquiry pill button */}
-        <div className="flex justify-end mb-10">
+        <div className="flex justify-end mb-10" data-m-reveal data-m-variant="rise" data-m-delay="0.1">
           <button
             onClick={() => navigate("/contact")}
             className="flex items-center justify-center px-8 py-3 rounded-[59px] transition-opacity hover:opacity-80"
@@ -1719,6 +1787,8 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
       <div
         className="w-full overflow-hidden"
         style={{ height: "32px" }}
+        data-m-reveal
+        data-m-variant="rise"
       >
         <img
           alt=""
@@ -1740,8 +1810,15 @@ function MobileProjectPage({ project }: { project: ProjectData }) {
   const logoImg = project.intro.logoImg ?? project.experience.logoImg;
   const navBgColor = project.intro.heroPanelBg;
 
+  // Mobile-only premium scroll-reveal layer (no-op on desktop). forceMotion mirrors
+  // the desktop useReveal/useScrollWordReveal so the page isn't half-animated on
+  // devices with OS "Reduce Motion" enabled.
+  const revealRoot = useRef<HTMLDivElement>(null);
+  useMobileReveal(revealRoot, { forceMotion: true });
+
   return (
     <div
+      ref={revealRoot}
       className="w-full min-h-screen overflow-x-hidden"
       style={{ backgroundColor: project.intro.heroPanelBg }}
     >
