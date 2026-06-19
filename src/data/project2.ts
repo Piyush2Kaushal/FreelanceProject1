@@ -49,7 +49,7 @@ export const project2Data: ProjectData = {
     sqft:                 "1400 SQFT",
     heroPanelBg:          "#6b6e39",
     heroPanelOverlayBg:   "rgba(107,110,57,0.1)",
-    decorativeTopRightImg: imgHeroBgTexture,
+    decorativeTopRightImg: imgPattern65,
     heroPortraitImg:      imgHeroPortrait,
     patternImg:           imgPattern65,
     navStrokeColor:       "#6B6E39",

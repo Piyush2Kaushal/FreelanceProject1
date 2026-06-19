@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useScrollWordReveal } from "../../app/hooks/useScrollWordReveal";
 import svgPaths from "./svg-3adkfsqeqb";
 import socialSvgPaths from "../svg-ejvbwqgg01";
 import imgContactPage from "../../assets/afae93e180d21f30c2ae138886efb63bc064a5e6.webp";
@@ -1298,6 +1299,31 @@ function Frame9() {
 /* ─── FOOTER (ContactPage1) ─────────────────────────────────────────────────── */
 function ContactPage1() {
   const navigate = useNavigate();
+
+  // Desktop accent paragraph — per-character scroll-colour fill
+  // lightColor: muted dim tone barely visible on the dark #8d2d1b bg
+  // darkColor:  full accent #d5c9a8 (the element's own colour)
+  const accentRef = useScrollWordReveal<HTMLParagraphElement>({
+    lightColor: "#7a5048",
+    darkColor:  "#d5c9a8",
+    band:   3,
+    start:  0.92,
+    end:    0.3,
+    smooth: 0.07,
+    forceMotion: true,
+  });
+
+  // Mobile tagline — same effect
+  const mobileTaglineRef = useScrollWordReveal<HTMLParagraphElement>({
+    lightColor: "#7a5048",
+    darkColor:  "#decfae",
+    band:   2,
+    start:  0.9,
+    end:    0.6,
+    smooth: 0.07,
+    forceMotion: true,
+  });
+
   return (
     <div className="footer-section relative shrink-0 w-full" data-name="Contact Page">
 
@@ -1321,7 +1347,7 @@ function ContactPage1() {
       </div>
 
       <div className="footer-desktop-layout" style={{ height: 774 }}>
-        <p className="[word-break:break-word] absolute font-['P22GrosvenorW00-Regular',sans-serif] leading-[1.1] left-[40px] not-italic text-[#d5c9a8] text-[40px] top-[53px] tracking-[1.2px] w-[561px]">
+        <p ref={accentRef} className="[word-break:break-word] absolute font-['P22GrosvenorW00-Regular',sans-serif] leading-[1.1] left-[40px] not-italic text-[#d5c9a8] text-[40px] top-[53px] tracking-[1.2px] w-[561px]">
           Designing thoughtful residential interiors across San Jose and the Bay Area, California.
         </p>
         <div className="absolute h-[138px] left-[calc(50%-138px)] top-[248px] w-[276px]" data-name="Component 20">
@@ -1344,6 +1370,7 @@ function ContactPage1() {
 
         {/* Tagline */}
         <p
+          ref={mobileTaglineRef}
           className="footer-tagline text-center"
           style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: 400, color: "#decfae", letterSpacing: "0.12em" }}
         >
