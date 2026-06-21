@@ -10,12 +10,7 @@ import { projectRoutes } from "./router/projectRoutes";
 // Each lazy() creates a separate JS chunk → only the current page's JS +
 // images are fetched, dramatically reducing initial bundle size.
 const FinalMoodboard  = lazy(() => import("../imports/FinalMoodboard/FinalMoodboard"));
-const MoodboardPage2  = lazy(() => import("../imports/FinalMoodboard/MoodboardPage2"));
-const MoodboardPage3  = lazy(() => import("../imports/FinalMoodboard/MoodboardPage3"));
-const MoodboardPage4  = lazy(() => import("../imports/FinalMoodboard/MoodboardPage4"));
-const MoodboardPage5  = lazy(() => import("../imports/FinalMoodboard/MoodboardPage5"));
-const MoodboardPage6  = lazy(() => import("../imports/FinalMoodboard/MoodboardPage6"));
-const MoodboardPage7  = lazy(() => import("../imports/FinalMoodboard/MoodboardPage7"));
+const MoodboardDetailPage = lazy(() => import("../imports/FinalMoodboard/MoodboardDetailPage"));
 const ContactPage     = lazy(() => import("../imports/Frame2106258854/Frame2106258854"));
 const JournalPage     = lazy(() => import("../imports/Journal/JournalPage"));
 const AboutPage       = lazy(() => import("./pages/About/AboutPage"));
@@ -47,12 +42,10 @@ export default function App() {
             {/* Dynamic slug-based article route — each slug maps to its ArticleData */}
             <Route path="/journal/article/:slug"           element={<ArticlePage />} />
 
-            <Route path="/detail/red/scandinavian"         element={<MoodboardPage2 />} />
-            <Route path="/detail/red/transitional"         element={<MoodboardPage3 />} />
-            <Route path="/detail/red/midcentury"           element={<MoodboardPage4 />} />
-            <Route path="/detail/beige/scandinavian"       element={<MoodboardPage5 />} />
-            <Route path="/detail/beige/transitional"       element={<MoodboardPage6 />} />
-            <Route path="/detail/beige/midcentury"         element={<MoodboardPage7 />} />
+            {/* One persistent route for all 6 combinations — keeps Navbar,
+                FooterNav, MobileBottomBar and the Logo mounted across every
+                "Generate" click. Only the moodboard image crossfades. */}
+            <Route path="/detail/:color/:style"            element={<MoodboardDetailPage />} />
 
             {/* ── Project Pages ───────────────────────────────────────────── */}
             {projectRoutes.map((route) => (

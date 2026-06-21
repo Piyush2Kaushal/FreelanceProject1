@@ -189,7 +189,7 @@ function EntireWebsite() {
 
 function Frame4() {
   return (
-    <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[33px] left-[calc(54.17%+41.5px)] rounded-[8px] top-[calc(50%+145px)] w-[71px]">
+    <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[33px] left-[calc(54.17%+41.5px)] rounded-[8px] top-[calc(50%+190px)] w-[71px]">
       <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgFrame2106258466} />
     </div>
   );
@@ -205,7 +205,7 @@ function Group() {
     <div className="-translate-x-1/2 -translate-y-1/2 absolute contents left-[calc(50%+1px)] top-[calc(50%+1.5px)]">
       <div
         ref={introRef}
-        className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(50%-0.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%+67.5px)] tracking-[-1px] w-[683px] whitespace-pre-wrap">
+        className="-translate-x-1/2 [word-break:break-word] absolute font-['Instrument_Serif',sans-serif] leading-[0] left-[calc(50%-0.5px)] not-italic text-[#5d5e36] text-[40px] text-center top-[calc(50%+112.5px)] tracking-[-1px] w-[683px] whitespace-pre-wrap">
         <p className="leading-[normal] mb-0">At Studio Inside Eye, every space starts with you.</p>
         <p className="leading-[normal]">{`We design around how you live,              what you need, what you value.`}</p>
       </div>
@@ -223,7 +223,7 @@ function Group() {
 
 function Frame5() {
   return (
-    <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[33px] left-[calc(37.5%+34.5px)] rounded-[8px] top-[calc(50%+195px)] w-[71px]">
+    <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[33px] left-[calc(37.5%+34.5px)] rounded-[8px] top-[calc(50%+240px)] w-[71px]">
       <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgFrame2106258466} />
     </div>
   );
@@ -245,12 +245,12 @@ function FeatureWhySie() {
           </div>
         </div>
       </div>
-      <div className="-translate-x-1/2 absolute flex h-[133px] items-center justify-center left-[calc(50%-1px)] top-[547px] w-0">
+      <div className="-translate-x-1/2 absolute flex h-[178px] items-center justify-center left-[calc(50%-1px)] top-[547px] w-0">
         <div className="flex-none rotate-90">
-          <div className="h-0 relative w-[133px]">
+          <div className="h-0 relative w-[178px]">
             <div className="absolute inset-[-0.5px_0_0_0]">
-              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 133 0.5">
-                <line id="Line 49" stroke="var(--stroke-0, #C98F00)" strokeWidth="0.5" x2="133" y1="0.25" y2="0.25" />
+              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 178 0.5">
+                <line id="Line 49" stroke="var(--stroke-0, #C98F00)" strokeWidth="0.5" x2="178" y1="0.25" y2="0.25" />
               </svg>
             </div>
           </div>
@@ -1218,13 +1218,13 @@ function MobileWhySIE() {
       </div>
       <p
         ref={mTaglineRef}
-        className="font-['Instrument_Serif',sans-serif] not-italic text-[#5d5e36] text-center leading-[1.2] mb-6 mx-auto"
+        className="font-['Instrument_Serif',sans-serif] not-italic text-[#5d5e36] text-center leading-[1.2] mb-10 mx-auto"
         style={{ fontSize: 'clamp(22px, 6vw, 32px)', maxWidth: 480, letterSpacing: '-0.03em' }}
       >
         Designing timeless residential interiors for modern California, across San Jose and the Bay Area.
       </p>
-      <div className="flex justify-center mb-6">
-        <div className="h-10 w-px bg-[#C98F00] opacity-60" />
+      <div className="flex justify-center mb-10">
+        <div className="h-14 w-px bg-[#C98F00] opacity-60" />
       </div>
       <p
         ref={mIntroRef}

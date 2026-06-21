@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelection } from "../context/SelectionContext";
 
@@ -8,18 +8,27 @@ export default function PageTransitionOverlay() {
   const isDetail = location.pathname.startsWith("/detail");
 
   const [visible, setVisible] = useState(isDetail);
+  const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
     if (isNavigating) setVisible(true);
   }, [isNavigating]);
 
   useEffect(() => {
-    if (isDetail) {
+    const wasDetail = prevPathRef.current.startsWith("/detail");
+    const enteringDetail = isDetail && !wasDetail;
+    prevPathRef.current = location.pathname;
+
+    // Only cover the swap when arriving at /detail from somewhere else.
+    // Moving between two /detail/* combinations (regenerate) is handled by
+    // MoodboardDetailPage's own image crossfade — covering it here would
+    // just reintroduce the "reload" flash we're trying to avoid.
+    if (enteringDetail) {
       setVisible(true);
       const id = setTimeout(() => setVisible(false), 80);
       return () => clearTimeout(id);
     }
-  }, [location.pathname]);
+  }, [location.pathname, isDetail]);
 
   return (
     <div
