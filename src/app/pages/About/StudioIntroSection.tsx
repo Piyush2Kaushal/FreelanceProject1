@@ -53,6 +53,10 @@ export function StudioIntroSection() {
 
         {/* Studio description — right aligned */}
         <div
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-blur="6"
+          data-anim-delay="0.12"
           className="absolute"
           style={{
             right: "33px",
@@ -101,7 +105,7 @@ export function StudioIntroSection() {
               style={{ opacity: 0.9 }}
             />
           </div>
-          <p className="text-right" style={{ maxWidth: "600px" }}>
+          <p data-anim="reveal" data-anim-variant="text" data-anim-blur="6" data-anim-delay="0.1" className="text-right" style={{ maxWidth: "600px" }}>
             <span
               style={{
                 fontFamily: "'Hanken Grotesk', sans-serif",
@@ -139,7 +143,7 @@ export function StudioIntroSection() {
               style={{ opacity: 0.9 }}
             />
           </div>
-          <p className="text-center" style={{ maxWidth: "340px" }}>
+          <p data-anim="reveal" data-anim-variant="text" data-anim-blur="6" data-anim-delay="0.1" className="text-center" style={{ maxWidth: "340px" }}>
             <span
               style={{
                 fontFamily: "'Hanken Grotesk', sans-serif",

@@ -41,6 +41,8 @@ export function BasedInSection() {
       <div className="hidden lg:block relative" style={{ height: "897px" }}>
         {/* Square image — left */}
         <div
+          data-anim="reveal"
+          data-anim-variant="zoom"
           className="absolute"
           style={{ left: "33px", top: "250px", width: "448px", height: "448px" }}
         >
@@ -53,6 +55,9 @@ export function BasedInSection() {
 
         {/* Decorative heading image — center top */}
         <div
+          data-anim="reveal"
+          data-anim-variant="zoom"
+          data-anim-delay="0.12"
           className="absolute"
           style={{ left: "calc(16.67% + 40px)", top: "183px", width: "428px", height: "107px" }}
         >
@@ -65,6 +70,10 @@ export function BasedInSection() {
 
         {/* "Based In" content — right side */}
         <div
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-blur="6"
+          data-anim-delay="0.18"
           className="absolute flex flex-col gap-4 items-end"
           style={{ right: "33px", top: "524px" }}
         >
@@ -110,11 +119,11 @@ export function BasedInSection() {
       <div className="hidden md:block lg:hidden relative py-14 px-8">
         {/* Two column: image left, text right */}
         <div className="flex gap-8 items-end">
-          <div className="flex-shrink-0" style={{ width: "320px", height: "320px" }}>
+          <div data-anim="reveal" data-anim-variant="zoom" className="flex-shrink-0" style={{ width: "320px", height: "320px" }}>
             <img loading="lazy" decoding="async" src={imgSquareImg} alt="Interior project" className="w-full h-full object-cover" />
           </div>
 
-          <div className="flex flex-col gap-4 items-end flex-1">
+          <div data-anim="reveal" data-anim-variant="text" data-anim-blur="6" data-anim-delay="0.12" className="flex flex-col gap-4 items-end flex-1">
             <p
               style={{
                 fontFamily: "'Hanken Grotesk', sans-serif",
@@ -149,12 +158,12 @@ export function BasedInSection() {
       {/* ── MOBILE LAYOUT (< md) ── */}
       <div className="block md:hidden relative">
         {/* Square image — full width */}
-        <div className="mx-5 mt-10 mb-8" style={{ aspectRatio: "1/1" }}>
+        <div data-anim="reveal" data-anim-variant="zoom" className="mx-5 mt-10 mb-8" style={{ aspectRatio: "1/1" }}>
           <img loading="lazy" decoding="async" src={imgSquareImg} alt="Interior project" className="w-full h-full object-cover" />
         </div>
 
         {/* Based In text */}
-        <div className="px-5 pb-10 flex flex-col gap-4 items-end">
+        <div data-anim="reveal" data-anim-variant="text" data-anim-blur="6" data-anim-delay="0.1" className="px-5 pb-10 flex flex-col gap-4 items-end">
           <p
             style={{
               fontFamily: "'Hanken Grotesk', sans-serif",

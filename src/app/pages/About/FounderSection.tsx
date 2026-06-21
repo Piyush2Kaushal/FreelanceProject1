@@ -40,6 +40,8 @@ export function FounderSection() {
       <div className="hidden lg:block relative" style={{ height: "1028px" }}>
         {/* Portrait image — right half */}
         <div
+          data-anim="reveal"
+          data-anim-variant="zoom"
           className="absolute"
           style={{
             right: "33px",
@@ -57,6 +59,8 @@ export function FounderSection() {
 
         {/* Studio title — left */}
         <div
+          data-anim="reveal"
+          data-anim-variant="text"
           className="absolute flex flex-col gap-1"
           style={{
             left: "clamp(33px, calc(8.33% + 89px), 209px)",
@@ -94,6 +98,9 @@ export function FounderSection() {
 
         {/* Divider line */}
         <div
+          data-anim="reveal"
+          data-anim-variant="fade"
+          data-anim-delay="0.1"
           className="absolute h-px"
           style={{
             left: "clamp(33px, calc(8.33% + 89px), 209px)",
@@ -106,6 +113,10 @@ export function FounderSection() {
 
         {/* Founder info */}
         <div
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-blur="5"
+          data-anim-delay="0.16"
           className="absolute flex items-start justify-between"
           style={{
             left: "33px",
@@ -148,7 +159,7 @@ export function FounderSection() {
       {/* ── TABLET LAYOUT (md–lg) ── */}
       <div className="hidden md:block lg:hidden relative py-14 px-8">
         {/* Portrait image */}
-        <div className="w-full mb-10" style={{ height: "420px" }}>
+        <div data-anim="reveal" data-anim-variant="zoom" className="w-full mb-10" style={{ height: "420px" }}>
           <img decoding="async"
             src={imgPortrait}
             alt="Studio Interior"
@@ -157,7 +168,7 @@ export function FounderSection() {
         </div>
 
         {/* Title block */}
-        <div className="flex flex-col gap-1 mb-10">
+        <div data-anim="reveal" data-anim-variant="text" className="flex flex-col gap-1 mb-10">
           <p
             style={{
               fontFamily: "'Hanken Grotesk', sans-serif",
@@ -188,12 +199,15 @@ export function FounderSection() {
 
         {/* Divider */}
         <div
+          data-anim="reveal"
+          data-anim-variant="fade"
+          data-anim-delay="0.08"
           className="h-px mb-8"
           style={{ backgroundColor: "#CCBCA2", opacity: 0.6 }}
         />
 
         {/* Founder info */}
-        <div className="flex flex-col gap-3">
+        <div data-anim="reveal" data-anim-variant="text" data-anim-blur="5" data-anim-delay="0.14" className="flex flex-col gap-3">
           <p
             style={{
               fontFamily: "'Hanken Grotesk', sans-serif",
@@ -226,7 +240,7 @@ export function FounderSection() {
       {/* ── MOBILE LAYOUT (< md) ── */}
       <div className="block md:hidden relative">
         {/* Portrait image — full bleed, clipped */}
-        <div className="w-full" style={{ height: "320px" }}>
+        <div data-anim="reveal" data-anim-variant="zoom" className="w-full" style={{ height: "320px" }}>
           <img decoding="async"
             src={imgPortrait}
             alt="Studio Interior"
@@ -237,7 +251,7 @@ export function FounderSection() {
         {/* Content */}
         <div className="px-5 pt-8 pb-10">
           {/* Title */}
-          <div className="flex flex-col gap-1 mb-8">
+          <div data-anim="reveal" data-anim-variant="text" className="flex flex-col gap-1 mb-8">
             <p
               style={{
                 fontFamily: "'Hanken Grotesk', sans-serif",
@@ -268,12 +282,15 @@ export function FounderSection() {
 
           {/* Divider */}
           <div
+            data-anim="reveal"
+            data-anim-variant="fade"
+            data-anim-delay="0.08"
             className="h-px mb-6"
             style={{ backgroundColor: "#CCBCA2", opacity: 0.6 }}
           />
 
           {/* Founder label + text */}
-          <div className="flex flex-col gap-3">
+          <div data-anim="reveal" data-anim-variant="text" data-anim-blur="5" data-anim-delay="0.14" className="flex flex-col gap-3">
             <p
               style={{
                 fontFamily: "'Hanken Grotesk', sans-serif",

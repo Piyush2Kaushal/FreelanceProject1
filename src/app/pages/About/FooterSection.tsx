@@ -115,6 +115,8 @@ export function FooterSection() {
 
         {/* Monogram — centered */}
         <div
+          data-anim="reveal"
+          data-anim-variant="fade"
           className="absolute"
           style={{ left: "50%", transform: "translateX(-50%)", top: "134px", width: "202px", height: "274px" }}
         >
@@ -123,6 +125,8 @@ export function FooterSection() {
 
         {/* Tagline text */}
         <p
+          data-anim="reveal"
+          data-anim-variant="text"
           className="absolute"
           style={{ left: "33px", top: "235px", fontFamily: "Inter, sans-serif", fontSize: "22px", fontWeight: 400, color: "#decfae", whiteSpace: "nowrap", letterSpacing: "0.1px" }}
         >
@@ -141,6 +145,9 @@ export function FooterSection() {
 
         {/* Address */}
         <p
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-delay="0.08"
           className="absolute"
           style={{ left: "75px", top: "345px", fontFamily: "Inter, sans-serif", fontSize: "22px", fontWeight: 400, color: "#dacdac", lineHeight: 1.5, whiteSpace: "nowrap" }}
         >
@@ -151,6 +158,9 @@ export function FooterSection() {
 
         {/* CTA — right */}
         <div
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-delay="0.14"
           className="absolute flex flex-col gap-8 items-start"
           style={{ left: "calc(66.67% + 8px)", top: "225px", width: "443px" }}
         >
@@ -168,6 +178,9 @@ export function FooterSection() {
 
         {/* Bottom bar */}
         <div
+          data-anim="reveal"
+          data-anim-variant="fade"
+          data-anim-delay="0.2"
           className="absolute flex items-center justify-between"
           style={{ left: "33px", top: "527px", width: "calc(100% - 48px)", maxWidth: "1392px" }}
         >
@@ -185,7 +198,7 @@ export function FooterSection() {
       {/* ── TABLET LAYOUT (md–lg) ── */}
       <div className="hidden md:block lg:hidden relative py-12 px-8">
         {/* 3-col dividers */}
-        <div className="relative flex justify-center mb-10">
+        <div data-anim="reveal" data-anim-variant="text" className="relative flex justify-center mb-10">
           <div className="flex items-start justify-between w-full" style={{ maxWidth: "600px" }}>
             {/* Left col */}
             <div className="flex flex-col gap-3">
@@ -227,7 +240,7 @@ export function FooterSection() {
         <div className="h-px my-8" style={{ backgroundColor: "#DAD0AD", opacity: 0.6 }} />
 
         {/* Bottom bar */}
-        <div className="flex items-center justify-between">
+        <div data-anim="reveal" data-anim-variant="fade" data-anim-delay="0.1" className="flex items-center justify-between">
           <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "14px", fontWeight: 300, color: "#fef4db", letterSpacing: "-0.2px" }}>
             ©️ 2025 Studio Inside Eye. All rights reserved
           </p>
@@ -242,7 +255,7 @@ export function FooterSection() {
       {/* ── MOBILE LAYOUT (< md) ── */}
       <div className="block md:hidden relative px-5 pt-10 pb-8">
         {/* Monogram centered */}
-        <div className="flex justify-center mb-6">
+        <div data-anim="reveal" data-anim-variant="fade" className="flex justify-center mb-6">
           <div style={{ width: "110px", height: "150px" }}>
             <img loading="lazy" decoding="async" src={imgMonogram} alt="Studio Inside Eye" className="w-full h-full object-cover" />
           </div>
@@ -257,6 +270,8 @@ export function FooterSection() {
 
         {/* Tagline */}
         <p
+          data-anim="reveal"
+          data-anim-variant="text"
           className="text-center mb-6"
           style={{
             fontFamily: "Inter, sans-serif",
@@ -275,7 +290,7 @@ export function FooterSection() {
         </div>
 
         {/* CTA */}
-        <div className="flex flex-col items-center gap-4 mb-8">
+        <div data-anim="reveal" data-anim-variant="text" data-anim-delay="0.08" className="flex flex-col items-center gap-4 mb-8">
           <p
             style={{
               fontFamily: "Inter, sans-serif",

@@ -16,6 +16,9 @@ export function HeroSection() {
 
         {/* Hero image container */}
         <div
+          data-anim="intro"
+          data-anim-variant="zoom"
+          data-anim-order="0"
           className="absolute rounded-[8px] overflow-hidden"
           style={{
             left: "clamp(12px, 2.3vw, 33px)",
@@ -36,6 +39,9 @@ export function HeroSection() {
 
           {/* "About" text — bottom left */}
           <p
+            data-anim="intro"
+            data-anim-variant="text"
+            data-anim-order="2"
             className="absolute"
             style={{
               fontFamily: "'Instrument Serif', serif",
@@ -53,6 +59,9 @@ export function HeroSection() {
 
           {/* Talk to us → bottom right */}
           <div
+            data-anim="intro"
+            data-anim-variant="fade"
+            data-anim-order="3"
             className="absolute flex flex-col items-end gap-[5px]"
             style={{
               right: "clamp(16px, 2.5vw, 32px)",

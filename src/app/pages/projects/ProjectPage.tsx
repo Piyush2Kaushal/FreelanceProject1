@@ -758,14 +758,12 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
       className="h-[780px] overflow-clip relative shrink-0 w-[1440px]"
       style={{ backgroundColor: data.testimonialBgColor, contain: "layout style paint" }}
       data-name="testtimonial"
+      data-anim="reveal"
+      data-anim-variant="fade"
     >
       {/* Testimonial text block */}
       <div
         className="absolute content-stretch flex flex-col gap-[16px] items-start left-[calc(33.33%+30px)] top-[191px] w-[587px]"
-        data-anim="reveal"
-        data-anim-variant="text"
-        data-anim-blur="6"
-        data-anim-delay="0.05"
       >
         <div className="content-stretch flex flex-col items-start relative shrink-0 w-[496px]">
           <p
@@ -787,9 +785,6 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
       <div
         className="-translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Cormorant_Garamond',serif] font-semibold justify-center leading-[0] left-[calc(58.33%+83px)] not-italic text-[128px] top-[233px] whitespace-nowrap"
         style={{ color: data.quoteAccentColor }}
-        data-anim="reveal"
-        data-anim-variant="fade"
-        data-anim-delay="0.25"
       >
         <p className="leading-[normal]">"</p>
       </div>
@@ -807,8 +802,6 @@ const TestimonialScreen = memo(function TestimonialScreen({ data }: { data: Proj
       <div
         className="absolute h-[451px] left-0 top-[10px] w-[320px]"
         data-name="monogram_final4 2"
-        data-anim="reveal"
-        data-anim-variant="zoom"
       >
         <img
           alt=""
@@ -1656,6 +1649,8 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
     <section
       className="relative w-full overflow-hidden"
       style={{ backgroundColor: data.testimonialBgColor }}
+      data-m-reveal
+      data-m-variant="fade"
     >
       {/* ── Top block: Monogram + Heading ── */}
       <div className="relative px-6 pt-10 pb-0">
@@ -1663,8 +1658,6 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
         <div
           className="mb-4"
           style={{ width: "45%", maxWidth: "160px" }}
-          data-m-reveal
-          data-m-variant="rise"
         >
           <img
             alt=""
@@ -1682,9 +1675,6 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             fontSize: "clamp(30px, 9vw, 48px)",
             color: data.quoteAccentColor,
           }}
-          data-m-reveal
-          data-m-variant="text"
-          data-m-delay="0.05"
         >
           Client Testimonial
         </h2>
@@ -1698,8 +1688,6 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             fontSize: "clamp(15px, 4vw, 19px)",
             color: "rgba(58,54,54,0.85)",
           }}
-          data-m-reveal
-          data-m-variant="rise"
         >
           {data.quote}
         </p>
@@ -1711,9 +1699,6 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             fontSize: "clamp(14px, 3.8vw, 17px)",
             color: "rgba(58,54,54,0.75)",
           }}
-          data-m-reveal
-          data-m-variant="rise"
-          data-m-delay="0.06"
         >
           {data.attribution}
         </p>
@@ -1726,8 +1711,6 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
           backgroundColor: data.quoteAccentColor,
           opacity: 0.15,
         }}
-        data-m-reveal
-        data-m-variant="fade"
       />
 
       {/* ── Enquiry block ── */}
@@ -1739,8 +1722,6 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             color: "#747272",
             opacity: 0.75,
           }}
-          data-m-reveal
-          data-m-variant="rise"
         >
           We would love to hear from you;
         </p>
@@ -1755,15 +1736,12 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
             textDecorationColor: "#747272",
             opacity: 0.85,
           }}
-          data-m-reveal
-          data-m-variant="rise"
-          data-m-delay="0.05"
         >
           {data.enquiryEmail}
         </a>
 
         {/* Send Enquiry pill button */}
-        <div className="flex justify-end mb-10" data-m-reveal data-m-variant="rise" data-m-delay="0.1">
+        <div className="flex justify-end mb-10">
           <button
             onClick={() => navigate("/contact")}
             className="flex items-center justify-center px-8 py-3 rounded-[59px] transition-opacity hover:opacity-80"
@@ -1787,8 +1765,6 @@ function MobileTestimonialSection({ data }: { data: ProjectData["testimonial"] }
       <div
         className="w-full overflow-hidden"
         style={{ height: "32px" }}
-        data-m-reveal
-        data-m-variant="rise"
       >
         <img
           alt=""
