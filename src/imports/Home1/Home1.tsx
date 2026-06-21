@@ -199,8 +199,8 @@ function Group() {
   // Home-page intro: per-letter colour fill on scroll (replaces the generic
   // clip-wipe reveal on just these two text blocks). forceMotion so it plays
   // even when the OS has Reduce Motion ON.
-  const introRef = useScrollWordReveal<HTMLDivElement>({ forceMotion: true });
   const taglineRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
+  const introRef = useScrollWordReveal<HTMLDivElement>({ forceMotion: true, chainRef: taglineRef });
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute contents left-[calc(50%+1px)] top-[calc(50%+1.5px)]">
       <div
@@ -1205,7 +1205,7 @@ function MobileImageCollage() {
 function MobileWhySIE() {
   // Same per-letter colour fill as desktop, for the matching mobile text.
   const mTaglineRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
-  const mIntroRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
+  const mIntroRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true, chainRef: mTaglineRef });
   return (
     <div className="bg-[#faf0d7] w-full overflow-hidden px-5 py-12">
       <div className="flex justify-center mb-6">

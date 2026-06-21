@@ -60,6 +60,20 @@ export interface ScrollWordRevealOptions {
    * animation), so any element that doesn't pass this stays unaffected.
    */
   forceMotion?: boolean;
+  /**
+   * Sequence this reveal AFTER another element's reveal (e.g. a paragraph
+   * above it). When set, this entry ignores its OWN position entirely for
+   * triggering — it stays fully in the resting/light colour until the
+   * target element's reveal reaches 100%, then plays over this entry's own
+   * start/end window length, driven by the target's continued scroll past
+   * its completion point. This guarantees the two can never run at the same
+   * time, regardless of viewport size, scale, or the gap between them.
+   *
+   * Usage: declare the FIRST element's hook first, then pass its ref here.
+   *   const firstRef  = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
+   *   const secondRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true, chainRef: firstRef });
+   */
+  chainRef?: RefObject<HTMLElement | null>;
 }
 
 // Reference faded ink measured at ~ (202,198,190) — a warm light grey.
@@ -76,9 +90,11 @@ interface Entry {
   start: number;
   end: number;
   smooth: number;
+  chainEl: HTMLElement | null; // gate element — must finish before this entry starts
+  P: number; // last computed 0–1 progress, readable by entries chained off this one
 }
 
-const registry = new Set<Entry>();
+const registry = new Map<HTMLElement, Entry>();
 let rafId = 0;
 
 function smoothstep(p: number) {
@@ -99,11 +115,27 @@ function parseRGB(s: string): [number, number, number] | null {
 function tick() {
   const vh = window.innerHeight || 1;
   registry.forEach((e) => {
-    const startLine = vh * e.start;
-    const endLine = vh * e.end;
-    const r = e.el.getBoundingClientRect();
-    let P = (startLine - r.top) / (startLine - endLine);
+    let P: number;
+
+    if (e.chainEl) {
+      // Chained: stay untouched until the gate element's reveal hits 100%,
+      // then play out over this entry's own start/end window length, driven
+      // by the gate element continuing to scroll past ITS completion line.
+      const gate = registry.get(e.chainEl);
+      const gateEndFrac = gate ? gate.end : e.end;
+      const gateLine = vh * gateEndFrac;          // screen line where gate finishes
+      const windowPx = vh * (e.start - e.end) || 1; // this entry's own reveal length
+      const gRect = e.chainEl.getBoundingClientRect();
+      P = (gateLine - gRect.top) / windowPx;
+    } else {
+      const startLine = vh * e.start;
+      const endLine = vh * e.end;
+      const r = e.el.getBoundingClientRect();
+      P = (startLine - r.top) / (startLine - endLine);
+    }
+
     P = P < 0 ? 0 : P > 1 ? 1 : P;
+    e.P = P;
 
     const N = e.chars.length;
     const target = P * (N + e.band);
@@ -211,12 +243,14 @@ export function useScrollWordReveal<T extends HTMLElement = HTMLDivElement>(
       start,
       end,
       smooth,
+      chainEl: options.chainRef?.current ?? null,
+      P: 0,
     };
-    registry.add(entry);
+    registry.set(el, entry);
     ensureRunning();
 
     return () => {
-      registry.delete(entry);
+      registry.delete(el);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
