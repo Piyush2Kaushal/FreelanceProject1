@@ -6,14 +6,15 @@ import socialSvgPaths from "../svg-ejvbwqgg01";
 import JournalHeader from "../../app/components/layout/JournalHeader";
 import { useReveal } from "../../app/hooks/useReveal";
 import { useScrollWordReveal } from "../../app/hooks/useScrollWordReveal";
-import { LampLightOverlay, useLampActive } from "./LampLight";
+import { useLampActive } from "./LampLight";
 
 // ── Static assets (never change) ─────────────────────────────────────────────
 import imgEntireWebsite    from "../../assets/0dd65294414a90d32335209969f40ac5042eb287.webp";
 import imgFrame2106258500  from "../../assets/86bf7c0a9e2c9ce1971e67dfc02e8d7713a8c5f3.webp";
 import imgFrame2106258502  from "../../assets/e7d8029b679abc3818d7b0073eb12f469c5282c0.webp";
 import imgFrame2106258503  from "../../assets/78998cedd18b8246f027b5575f3ff5264b04c564.webp";
-import imgImage48          from "../../assets/d0553f6129a7fac1b174ec3e794d941d51287eea.webp";
+import imgImage48          from "../../assets/Lamplight.webp";
+import imgLighton          from "../../assets/Lighton.webp";
 import imgFrame2106258466  from "../../assets/3c69fed734b46e09bcbca5fd64d204e588c1d31e.webp";
 import imgComponent21      from "../../assets/51db19e7ba1176f759ee55b5c3fc2f8561581637.webp";
 import imgPrimaryLogos     from "../../assets/lockup3.png";
@@ -76,25 +77,13 @@ function Frame43() {
   );
 }
 
-// ─── Desktop lamp containers with hover beam ──────────────────────────────────
+// ─── Desktop lamp containers — smooth image crossfade on hover ────────────────
+
 function DesktopLamp48() {
   const { active, handlers } = useLampActive();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [dims, setDims] = useState({ w: 0, h: 0 });
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const ro = new ResizeObserver(() => {
-      const r = containerRef.current!.getBoundingClientRect();
-      setDims({ w: r.width, h: r.height });
-    });
-    ro.observe(containerRef.current);
-    return () => ro.disconnect();
-  }, []);
 
   return (
     <div
-      ref={containerRef}
       data-anim="intro"
       data-anim-variant="fade"
       data-anim-order="0"
@@ -104,36 +93,35 @@ function DesktopLamp48() {
       data-name="image 48"
     >
       <div data-anim="parallax" data-parallax-speed="0.05" className="absolute inset-0">
-        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+        {/* Off state — base lamp image */}
+        <img
+          decoding="async"
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgImage48}
+        />
+        {/* On state — light-on image fades in over the top */}
+        <img
+          decoding="async"
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgLighton}
+          style={{
+            opacity: active ? 1 : 0,
+            transition: "opacity 750ms cubic-bezier(0.4, 0, 0.2, 1)",
+            willChange: "opacity",
+          }}
+        />
       </div>
-      <LampLightOverlay
-        active={active}
-        containerWidth={dims.w}
-        containerHeight={dims.h}
-        beamOriginPercent={88}
-      />
     </div>
   );
 }
 
 function DesktopLamp49() {
   const { active, handlers } = useLampActive();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [dims, setDims] = useState({ w: 0, h: 0 });
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const ro = new ResizeObserver(() => {
-      const r = containerRef.current!.getBoundingClientRect();
-      setDims({ w: r.width, h: r.height });
-    });
-    ro.observe(containerRef.current);
-    return () => ro.disconnect();
-  }, []);
 
   return (
     <div
-      ref={containerRef}
       data-anim="intro"
       data-anim-variant="fade"
       data-anim-order="2"
@@ -143,14 +131,26 @@ function DesktopLamp49() {
       data-name="image 49"
     >
       <div data-anim="parallax" data-parallax-speed="0.085" className="absolute inset-0">
-        <img decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage48} />
+        {/* Off state — base lamp image */}
+        <img
+          decoding="async"
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgImage48}
+        />
+        {/* On state — light-on image fades in over the top */}
+        <img
+          decoding="async"
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgLighton}
+          style={{
+            opacity: active ? 1 : 0,
+            transition: "opacity 750ms cubic-bezier(0.4, 0, 0.2, 1)",
+            willChange: "opacity",
+          }}
+        />
       </div>
-      <LampLightOverlay
-        active={active}
-        containerWidth={dims.w}
-        containerHeight={dims.h}
-        beamOriginPercent={88}
-      />
     </div>
   );
 }
@@ -196,9 +196,6 @@ function Frame4() {
 }
 
 function Group() {
-  // Home-page intro: per-letter colour fill on scroll (replaces the generic
-  // clip-wipe reveal on just these two text blocks). forceMotion so it plays
-  // even when the OS has Reduce Motion ON.
   const taglineRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
   const introRef = useScrollWordReveal<HTMLDivElement>({ forceMotion: true, chainRef: taglineRef });
   return (
@@ -1043,23 +1040,6 @@ function MobileHeroTop() {
 
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
-  const [dims1, setDims1] = useState({ w: 0, h: 0 });
-  const [dims2, setDims2] = useState({ w: 0, h: 0 });
-
-  useEffect(() => {
-    const observe = (el: HTMLDivElement | null, setDims: (d: { w: number; h: number }) => void) => {
-      if (!el) return () => {};
-      const ro = new ResizeObserver(() => {
-        const r = el.getBoundingClientRect();
-        setDims({ w: r.width, h: r.height });
-      });
-      ro.observe(el);
-      return () => ro.disconnect();
-    };
-    const d1 = observe(ref1.current, setDims1);
-    const d2 = observe(ref2.current, setDims2);
-    return () => { d1(); d2(); };
-  }, []);
 
   return (
     <div
@@ -1084,7 +1064,7 @@ function MobileHeroTop() {
         data-anim="reveal"
         data-anim-variant="zoom"
       >
-        {/* Left image — shorter, top-aligned */}
+        {/* Left lamp — shorter, top-aligned */}
         <div
           ref={ref1}
           className="shrink-0 overflow-visible relative"
@@ -1095,6 +1075,7 @@ function MobileHeroTop() {
           }}
           {...lamp1.handlers}
         >
+          {/* Off state */}
           <img
             loading="lazy"
             decoding="async"
@@ -1103,15 +1084,22 @@ function MobileHeroTop() {
             src={imgImage48}
             style={{ display: 'block' }}
           />
-          <LampLightOverlay
-            active={lamp1.active}
-            containerWidth={dims1.w}
-            containerHeight={dims1.h}
-            beamOriginPercent={88}
+          {/* On state — smooth crossfade */}
+          <img
+            loading="lazy"
+            decoding="async"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none"
+            src={imgLighton}
+            style={{
+              opacity: lamp1.active ? 1 : 0,
+              transition: "opacity 750ms cubic-bezier(0.4, 0, 0.2, 1)",
+              willChange: "opacity",
+            }}
           />
         </div>
 
-        {/* Right image — taller, top-aligned */}
+        {/* Right lamp — taller, top-aligned */}
         <div
           ref={ref2}
           className="shrink-0 overflow-visible relative"
@@ -1121,6 +1109,7 @@ function MobileHeroTop() {
           }}
           {...lamp2.handlers}
         >
+          {/* Off state */}
           <img
             loading="lazy"
             decoding="async"
@@ -1129,11 +1118,18 @@ function MobileHeroTop() {
             src={imgImage48}
             style={{ display: 'block' }}
           />
-          <LampLightOverlay
-            active={lamp2.active}
-            containerWidth={dims2.w}
-            containerHeight={dims2.h}
-            beamOriginPercent={88}
+          {/* On state — smooth crossfade */}
+          <img
+            loading="lazy"
+            decoding="async"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            src={imgLighton}
+            style={{
+              opacity: lamp2.active ? 1 : 0,
+              transition: "opacity 750ms cubic-bezier(0.4, 0, 0.2, 1)",
+              willChange: "opacity",
+            }}
           />
         </div>
       </div>
@@ -1149,7 +1145,7 @@ function MobileHeroTop() {
   );
 }
 
-/** Mobile — tagline text + image collage / moodboard strip (text first, then images) */
+/** Mobile — tagline text + image collage / moodboard strip */
 function MobileImageCollage() {
   return (
     <div
@@ -1162,19 +1158,19 @@ function MobileImageCollage() {
 
       {/* Studio tagline text — FIRST */}
       <div data-anim="reveal" data-anim-variant="text" data-anim-blur="6" className="relative px-5 pt-6 pb-5 text-end">
-  <p
-    className="font-['Instrument_Serif'] italic text-[#703000] leading-[1.1] mb-1"
-    style={{ fontSize: 'clamp(36px, 11vw, 60px)', letterSpacing: '-0.02em' }}
-  >
-    Studio Inside Eye
-  </p>
-  <p
-    className="font-['IBM_Plex_Serif',serif] text-[#553319] leading-[1.3]"
-    style={{ fontSize: 'clamp(12px, 3.2vw, 16px)' }}
-  >
-    A <strong>Boutique Interior Design Studio</strong> Creating Spaces That Are Rooted, Intentional, And Designed For You.
-  </p>
-</div>
+        <p
+          className="font-['Instrument_Serif'] italic text-[#703000] leading-[1.1] mb-1"
+          style={{ fontSize: 'clamp(36px, 11vw, 60px)', letterSpacing: '-0.02em' }}
+        >
+          Studio Inside Eye
+        </p>
+        <p
+          className="font-['IBM_Plex_Serif',serif] text-[#553319] leading-[1.3]"
+          style={{ fontSize: 'clamp(12px, 3.2vw, 16px)' }}
+        >
+          A <strong>Boutique Interior Design Studio</strong> Creating Spaces That Are Rooted, Intentional, And Designed For You.
+        </p>
+      </div>
 
       {/* Photo strip — Figma layout: left 2 stacked + right 1 big */}
       <div data-anim="reveal" data-anim-variant="zoom" className="relative px-4 pb-5">
@@ -1203,7 +1199,6 @@ function MobileImageCollage() {
 
 /** Mobile — "Why SIE" / about section */
 function MobileWhySIE() {
-  // Same per-letter colour fill as desktop, for the matching mobile text.
   const mTaglineRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true });
   const mIntroRef = useScrollWordReveal<HTMLParagraphElement>({ forceMotion: true, chainRef: mTaglineRef });
   return (
@@ -1240,7 +1235,7 @@ function MobileWhySIE() {
   );
 }
 
-/** Mobile/Tablet — Project hero panel (static, shows current cycling project) */
+/** Mobile/Tablet — Project hero panel */
 function MobileProjectHero({ project }: { project: HomeProject }) {
   const navigate = useNavigate();
   return (
@@ -1251,7 +1246,7 @@ function MobileProjectHero({ project }: { project: HomeProject }) {
       <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.03] pointer-events-none" src={project.textureImg} />
       {project.patternImg && (
         <div
-        className="absolute inset-0 opacity-15 bottom-2/3"
+          className="absolute inset-0 opacity-15 bottom-2/3"
           style={{ backgroundImage: `url("${project.patternImg}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
       )}
@@ -1282,7 +1277,7 @@ function MobileProjectHero({ project }: { project: HomeProject }) {
         {project.projectName}
       </p>
       <p
-        className="relative z-10 px-5 text-center pb-5 font-['Hanken_Grotesk',sans-serif] leading-[1.5] text-[rgba(253,235,206,0.55)] "
+        className="relative z-10 px-5 text-center pb-5 font-['Hanken_Grotesk',sans-serif] leading-[1.5] text-[rgba(253,235,206,0.55)]"
         style={{ fontSize: 'clamp(12px, 3.2vw, 14px)' }}
       >
         {project.description}
@@ -1370,7 +1365,7 @@ function MobileServicesSection() {
               </p>
               <p
                 className="font-['Hanken_Grotesk',sans-serif] text-[#5c5d36] leading-[1.4]"
-                style={{ fontSize: 'clamp(13px, 3.5vw,16px)' }}
+                style={{ fontSize: 'clamp(13px, 3.5vw, 16px)' }}
               >
                 Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.
               </p>
@@ -1379,21 +1374,21 @@ function MobileServicesSection() {
         </div>
 
         <div className="flex">
-  <button
-    className="relative flex items-center justify-center rounded-[4px] font-['Inter',sans-serif] font-medium cursor-pointer transition-[transform,filter] duration-500 ease-out hover:-translate-y-[2px] hover:brightness-110"
-    style={{
-      background: '#703000',
-      color: '#d5c9a8',
-      padding: '14px 28px',
-      fontSize: 'clamp(14px, 3.5vw, 17px)',
-      letterSpacing: '-0.038em',
-      border: '1px solid #391900',
-      boxShadow: '0px 5px 5px rgba(0,0,0,0.10), 0px 18px 9px rgba(0,0,0,0.09)',
-    }}
-  >
-    View all projects
-  </button>
-</div>
+          <button
+            className="relative flex items-center justify-center rounded-[4px] font-['Inter',sans-serif] font-medium cursor-pointer transition-[transform,filter] duration-500 ease-out hover:-translate-y-[2px] hover:brightness-110"
+            style={{
+              background: '#703000',
+              color: '#d5c9a8',
+              padding: '14px 28px',
+              fontSize: 'clamp(14px, 3.5vw, 17px)',
+              letterSpacing: '-0.038em',
+              border: '1px solid #391900',
+              boxShadow: '0px 5px 5px rgba(0,0,0,0.10), 0px 18px 9px rgba(0,0,0,0.09)',
+            }}
+          >
+            View all projects
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -1622,7 +1617,7 @@ export default function Home() {
   return (
     <>
       {/* ═══════════════════════════════════════════════════════════════════
-          DESKTOP / LAPTOP  (lg and above) — UNCHANGED
+          DESKTOP / LAPTOP  (lg and above)
       ═══════════════════════════════════════════════════════════════════ */}
       <div
         className="hidden lg:block w-full"
