@@ -669,6 +669,9 @@ export default function FinalMoodboard() {
 
   const floatTimelines = useRef<Map<HTMLElement, gsap.core.Timeline>>(new Map());
   const dragIds        = useRef<Map<HTMLElement, number>>(new Map());
+  const zCounter       = useRef(100);
+  const elementZIndex  = useRef<Map<HTMLElement, number>>(new Map());
+  const lastTap        = useRef<{ el: HTMLElement | null; time: number }>({ el: null, time: 0 });
 
   // ── 2-finger twist rotate state (mobile only) ─────────────────────────────
   const rotateState = useRef({
@@ -826,7 +829,8 @@ export default function FinalMoodboard() {
     if (tl) { state.floatTl = tl; tl.pause(); }
     target.style.filter = SHADOW_DRAG;
     gsap.to(target, { scale: 1.08, duration: 0.2, ease: "power2.out" });
-    gsap.set(target, { zIndex: 50 });
+    const storedZ = elementZIndex.current.get(target) ?? 0;
+    gsap.set(target, { zIndex: Math.max(50, storedZ) });
   }, []);
 
   // ── Shared pointer-move ───────────────────────────────────────────────────
@@ -878,7 +882,8 @@ export default function FinalMoodboard() {
       if ((dragIds.current.get(el) ?? 0) !== myDragId) return;
       const tl = floatTimelines.current.get(el);
       if (tl) { gsap.to({}, { duration: 0.8, onComplete: () => tl.resume() }); }
-      gsap.set(el, { zIndex: "" });
+      const baseZ = elementZIndex.current.get(el);
+      gsap.set(el, { zIndex: baseZ !== undefined ? baseZ : "" });
     }, 3000 + Math.random() * 2000);
   }, []);
 
@@ -898,6 +903,15 @@ export default function FinalMoodboard() {
   const onObjectMouseUp = useCallback(() => {
     handlePointerUp();
   }, [handlePointerUp]);
+
+  const onObjectDblClick = useCallback((e: MouseEvent) => {
+    const target = (e.target as HTMLElement).closest<HTMLElement>("[data-object='true']");
+    if (!target) return;
+    e.stopPropagation();
+    zCounter.current += 1;
+    elementZIndex.current.set(target, zCounter.current);
+    gsap.set(target, { zIndex: zCounter.current });
+  }, []);
 
   // ── Touch: object drag (1 finger) + rotate (2 finger twist) ─────────────
   const onObjectTouchStart = useCallback((e: TouchEvent) => {
@@ -964,6 +978,19 @@ export default function FinalMoodboard() {
 
     // ── 1-finger: normal drag ────────────────────────────────────────────────
     if (e.touches.length === 1) {
+      // Double-tap detection — bring object to front
+      const now = Date.now();
+      const lt  = lastTap.current;
+      if (lt.el === target && now - lt.time < 300) {
+        zCounter.current += 1;
+        elementZIndex.current.set(target, zCounter.current);
+        gsap.set(target, { zIndex: zCounter.current });
+        lt.el   = null;
+        lt.time = 0;
+      } else {
+        lt.el   = target;
+        lt.time = now;
+      }
       const { x, y } = getPointer(e);
       handlePointerDown(x, y, target);
     }
@@ -1044,10 +1071,14 @@ export default function FinalMoodboard() {
       if (tl) {
         window.setTimeout(() => {
           tl.resume();
-          gsap.set(el, { zIndex: "" });
+          const baseZ2 = elementZIndex.current.get(el);
+          gsap.set(el, { zIndex: baseZ2 !== undefined ? baseZ2 : "" });
         }, 2500);
       } else {
-        window.setTimeout(() => gsap.set(el, { zIndex: "" }), 2500);
+        window.setTimeout(() => {
+          const baseZ2 = elementZIndex.current.get(el);
+          gsap.set(el, { zIndex: baseZ2 !== undefined ? baseZ2 : "" });
+        }, 2500);
       }
 
       ps.active  = false;
@@ -1179,6 +1210,30 @@ export default function FinalMoodboard() {
   // ── Wheel pan ─────────────────────────────────────────────────────────────
   const onWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
+
+    // ── Ctrl+scroll / trackpad pinch over an object → resize that object ───
+    if (e.ctrlKey) {
+      const target = (e.target as HTMLElement).closest<HTMLElement>("[data-object='true']");
+      if (target) {
+        const computed     = window.getComputedStyle(target);
+        const matrix       = computed.transform;
+        let currentScale   = 1;
+        if (matrix && matrix !== "none") {
+          const parts = matrix.match(/matrix\(([^)]+)\)/);
+          if (parts) {
+            const vals   = parts[1].split(",").map(Number);
+            currentScale = Math.sqrt(vals[0] * vals[0] + vals[1] * vals[1]);
+          }
+        }
+        const MIN_SCALE = 0.3;
+        const MAX_SCALE = 3.0;
+        const factor    = Math.exp(-e.deltaY * 0.01);
+        const newScale  = Math.min(MAX_SCALE, Math.max(MIN_SCALE, currentScale * factor));
+        gsap.to(target, { scale: newScale, duration: 0.12, ease: "power2.out", overwrite: "auto" });
+        return;
+      }
+    }
+
     stopInertia();
     const s = panState.current;
     s.panX -= e.deltaX;
@@ -1271,6 +1326,7 @@ gsap.set(canvas, { x: init.x, y: init.y, scale: isMobile ? 0.32 : 0.45, transfor
 
     // Mouse events
     canvas.addEventListener("mousedown",   onObjectMouseDown, true);
+    canvas.addEventListener("dblclick",    onObjectDblClick,  true);
     window.addEventListener("mousemove",   onObjectMouseMove);
     window.addEventListener("mouseup",     onObjectMouseUp);
     viewport.addEventListener("mousedown", onCanvasMouseDown);
@@ -1289,6 +1345,7 @@ gsap.set(canvas, { x: init.x, y: init.y, scale: isMobile ? 0.32 : 0.45, transfor
     return () => {
       clearTimeout(introTimer);
       canvas.removeEventListener("mousedown",   onObjectMouseDown, true);
+      canvas.removeEventListener("dblclick",    onObjectDblClick,  true);
       window.removeEventListener("mousemove",   onObjectMouseMove);
       window.removeEventListener("mouseup",     onObjectMouseUp);
       viewport.removeEventListener("mousedown", onCanvasMouseDown);
@@ -1319,6 +1376,7 @@ gsap.set(canvas, { x: init.x, y: init.y, scale: isMobile ? 0.32 : 0.45, transfor
     onObjectMouseDown,
     onObjectMouseMove,
     onObjectMouseUp,
+    onObjectDblClick,
     onCanvasMouseDown,
     onCanvasMouseMove,
     onCanvasMouseUp,

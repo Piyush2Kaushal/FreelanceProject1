@@ -111,6 +111,7 @@ export default function MoodboardDetailPage() {
   const { color = "", style = "" } = useParams<{ color: string; style: string }>();
   const { resetSelection, markNavigated } = useSelection();
   const contentRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
 
   const paramKey = `${color}/${style}`;
   const current = MOODBOARD_IMAGES[paramKey] ?? MOODBOARD_IMAGES["red/scandinavian"];
@@ -131,12 +132,19 @@ export default function MoodboardDetailPage() {
   }, []);
 
   useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, y: 24 });
-    gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.36 });
-    // Runs once — this component now stays mounted for every "Generate"
-    // click within the detail view, so the entry animation never replays.
+    const content = contentRef.current;
+    const background = backgroundRef.current;
+    if (!content || !background) return;
+    // Fade in from FinalMoodboard — pure opacity dissolve matching the premium
+    // crossfade used when switching between detail pages (no slide, no blur).
+    gsap.set([content, background], { opacity: 0 });
+    gsap.to([content, background], {
+      opacity: 1,
+      duration: CROSSFADE_DURATION,
+      ease: CROSSFADE_EASE,
+    });
+    // Runs once — this component stays mounted for every "Generate" click
+    // within the detail view, so the entry animation never replays.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -148,7 +156,7 @@ export default function MoodboardDetailPage() {
   return (
     <>
       {/* Background */}
-      <div style={{ position: "fixed", inset: 0, backgroundColor: "rgb(245, 245, 220)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", zIndex: 0 }}>
+      <div ref={backgroundRef} style={{ position: "fixed", inset: 0, backgroundColor: "rgb(245, 245, 220)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", zIndex: 0 }}>
         <div
           style={{
             position: "relative",
