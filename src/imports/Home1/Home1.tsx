@@ -170,6 +170,7 @@ function EntireWebsite() {
         data-anim="intro"
         data-anim-variant="text"
         data-anim-order="3"
+        data-anim-delay="1.2"
         data-anim-blur="6"
         className="-translate-x-full [word-break:break-word] absolute capitalize font-['IBM_Plex_Serif',serif] h-[66px] leading-[0] left-[calc(59.50%+579px)] not-italic text-[#553319] text-[0px] text-right top-[566px] tracking-[-0.88px] w-[558px]">
         <span className="font-['IBM_Plex_Serif',serif] leading-[1.2] text-[22px] font font-semibold">A Boutique interior design studio</span>
@@ -535,6 +536,7 @@ function Frame16() {
       <p
         data-anim="reveal"
         data-anim-variant="text"
+        data-anim-delay="1.3"
         data-anim-blur="6"
         className="font-['Hanken_Grotesk',sans-serif] leading-[1.3] relative shrink-0 text-[#5c5d36] text-[22px] tracking-[0.5px] w-[476px]">Thoughtfully designed residential spaces from initial concept to final installation</p>
     </div>
@@ -570,8 +572,6 @@ function Frame13() {
 function Frame23() {
   return (
     <div
-      data-anim="reveal"
-      data-anim-variant="text"
       className="absolute content-stretch flex flex-col gap-[12px] items-start left-[101px] top-[174px] w-[129px]">
       <p className="[word-break:break-word] font-['Hanken_Grotesk',sans-serif] leading-none min-w-full not-italic relative shrink-0 text-[#5d5e36] text-[14px] tracking-[2.8px] uppercase w-[min-content]">Our Services</p>
       <div className="h-0 relative shrink-0 w-[82px]">
@@ -590,7 +590,7 @@ function Frame11() {
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start justify-center leading-[normal] not-italic relative shrink-0 text-[#5c5d36]">
       <p ref={headingRef} className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-pre">{`Renovation, remodel \n& New construction        `}</p>
-      <p data-anim="reveal" data-anim-variant="text" className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[356px]">Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.</p>
+      <p data-anim="reveal" data-anim-variant="text" data-anim-delay="1.0" className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[356px]">Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.</p>
     </div>
   );
 }
@@ -626,7 +626,7 @@ function Frame12() {
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start justify-center leading-[normal] not-italic relative shrink-0 text-[#5c5d36]">
       <p ref={headingRef} className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-nowrap">{`Furnishing & Styling`}</p>
-      <p data-anim="reveal" data-anim-variant="text" data-anim-delay="0.12" className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[312px]">Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.</p>
+      <p data-anim="reveal" data-anim-variant="text" data-anim-delay="0.9" className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[312px]">Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.</p>
     </div>
   );
 }
