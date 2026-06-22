@@ -6,6 +6,7 @@ import socialSvgPaths from "../svg-ejvbwqgg01";
 import JournalHeader from "../../app/components/layout/JournalHeader";
 import { useReveal } from "../../app/hooks/useReveal";
 import { useScrollWordReveal } from "../../app/hooks/useScrollWordReveal";
+import { useWordSlideFade } from "../../app/hooks/useWordSlideFade";
 import { useLampActive } from "./LampLight";
 
 // ── Static assets (never change) ─────────────────────────────────────────────
@@ -156,6 +157,7 @@ function DesktopLamp49() {
 }
 
 function EntireWebsite() {
+  const studioHeadingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "intro" });
   return (
     <div className="absolute h-[770px] left-0 overflow-clip top-0 w-full" data-name="Entire Website">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
@@ -176,10 +178,7 @@ function EntireWebsite() {
         <span className="leading-[1.2] text-[22px]">that are rooted, intentional, and designed for you.</span>
       </p>
       <p
-        data-anim="intro"
-        data-anim-variant="text"
-        data-anim-order="4"
-        data-anim-blur="10"
+        ref={studioHeadingRef}
         className="-translate-x-1/2 [word-break:break-word] absolute capitalize font-['Instrument_Serif'] italic leading-[1.2] left-[calc(59.50%+317px)] text-[#703000] text-[96px] text-center top-[632px] tracking-[-3.84px] w-[524px]">Studio Inside eye</p>
       <DesktopLamp48 />
       <DesktopLamp49 />
@@ -528,14 +527,16 @@ function Component2({ project }: { project: HomeProject }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Frame16() {
+  const headingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "reveal" });
   return (
     <div
-      data-anim="reveal"
-      data-anim-variant="text"
-      data-anim-blur="6"
       className="[word-break:break-word] content-stretch flex flex-col gap-[20px] items-start not-italic relative shrink-0">
-      <p className="capitalize font-['Instrument_Serif',sans-serif] leading-none relative shrink-0 text-[#5d5e36] text-[76px] w-[476px]">Full-Service Residential interior design</p>
-      <p className="font-['Hanken_Grotesk',sans-serif] leading-[1.3] relative shrink-0 text-[#5c5d36] text-[22px] tracking-[0.5px] w-[476px]">Thoughtfully designed residential spaces from initial concept to final installation</p>
+      <p ref={headingRef} className="capitalize font-['Instrument_Serif',sans-serif] leading-none relative shrink-0 text-[#5d5e36] text-[76px] w-[476px]">Full-Service Residential interior design</p>
+      <p
+        data-anim="reveal"
+        data-anim-variant="text"
+        data-anim-blur="6"
+        className="font-['Hanken_Grotesk',sans-serif] leading-[1.3] relative shrink-0 text-[#5c5d36] text-[22px] tracking-[0.5px] w-[476px]">Thoughtfully designed residential spaces from initial concept to final installation</p>
     </div>
   );
 }
@@ -585,10 +586,11 @@ function Frame23() {
 }
 
 function Frame11() {
+  const headingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "reveal" });
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start justify-center leading-[normal] not-italic relative shrink-0 text-[#5c5d36]">
-      <p className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-pre">{`Renovation, remodel \n& New construction        `}</p>
-      <p className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[356px]">Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.</p>
+      <p ref={headingRef} className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-pre">{`Renovation, remodel \n& New construction        `}</p>
+      <p data-anim="reveal" data-anim-variant="text" className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[356px]">Complete home transformations brought to life through thoughtful design, material curation, and seamless execution.</p>
     </div>
   );
 }
@@ -596,11 +598,9 @@ function Frame11() {
 function Frame14() {
   return (
     <div
-      data-anim="reveal"
-      data-anim-variant="text"
       className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+47px)] top-[223px]">
-      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">01</p>
-      <div className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
+      <p data-anim="reveal" data-anim-variant="text" className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">01</p>
+      <div data-anim="reveal" data-anim-variant="fade" className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
         <div className="flex-none rotate-90">
           <div className="h-0 relative w-[117px]">
             <div className="absolute inset-[-1px_0_0_0]">
@@ -612,7 +612,7 @@ function Frame14() {
         </div>
       </div>
       <Frame11 />
-      <div className="absolute left-[117px] size-[9px] top-[34px]">
+      <div data-anim="reveal" data-anim-variant="fade" className="absolute left-[117px] size-[9px] top-[34px]">
         <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 9 9">
           <circle cx="4.5" cy="4.5" fill="var(--fill-0, #703000)" id="Ellipse 1" r="4.5" />
         </svg>
@@ -622,10 +622,11 @@ function Frame14() {
 }
 
 function Frame12() {
+  const headingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "reveal" });
   return (
     <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start justify-center leading-[normal] not-italic relative shrink-0 text-[#5c5d36]">
-      <p className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-nowrap">{`Furnishing & Styling`}</p>
-      <p className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[312px]">Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.</p>
+      <p ref={headingRef} className="font-['Instrument_Serif',sans-serif] relative shrink-0 text-[32px] whitespace-nowrap">{`Furnishing & Styling`}</p>
+      <p data-anim="reveal" data-anim-variant="text" data-anim-delay="0.12" className="font-['Hanken_Grotesk',sans-serif] relative shrink-0 text-[18px] w-[312px]">Thoughtfully designed interiors with carefully curated furniture, lighting, accessories.</p>
     </div>
   );
 }
@@ -633,12 +634,9 @@ function Frame12() {
 function Frame15() {
   return (
     <div
-      data-anim="reveal"
-      data-anim-variant="text"
-      data-anim-delay="0.12"
       className="absolute content-stretch flex gap-[48px] items-start justify-center left-[calc(50%+40px)] top-[465px]">
-      <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">02</p>
-      <div className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
+      <p data-anim="reveal" data-anim-variant="text" data-anim-delay="0.12" className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-none not-italic relative shrink-0 text-[#5c5d36] text-[102px] whitespace-nowrap">02</p>
+      <div data-anim="reveal" data-anim-variant="fade" data-anim-delay="0.12" className="flex h-[117px] items-center justify-center relative shrink-0 w-0">
         <div className="flex-none rotate-90">
           <div className="h-0 relative w-[117px]">
             <div className="absolute inset-[-1px_0_0_0]">
@@ -650,7 +648,7 @@ function Frame15() {
         </div>
       </div>
       <Frame12 />
-      <div className="absolute left-[132px] size-[9px] top-[14px]">
+      <div data-anim="reveal" data-anim-variant="fade" data-anim-delay="0.12" className="absolute left-[132px] size-[9px] top-[14px]">
         <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 9 9">
           <circle cx="4.5" cy="4.5" fill="var(--fill-0, #703000)" id="Ellipse 1" r="4.5" />
         </svg>
@@ -1141,6 +1139,7 @@ function MobileHeroTop() {
 
 /** Mobile — tagline text + image collage / moodboard strip */
 function MobileImageCollage() {
+  const studioHeadingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "reveal" });
   return (
     <div
       className="relative w-full overflow-hidden"
@@ -1151,14 +1150,18 @@ function MobileImageCollage() {
       </div>
 
       {/* Studio tagline text — FIRST */}
-      <div data-anim="reveal" data-anim-variant="text" data-anim-blur="6" className="relative px-5 pt-6 pb-5 text-end">
+      <div className="relative px-5 pt-6 pb-5 text-end">
         <p
+          ref={studioHeadingRef}
           className="font-['Instrument_Serif'] italic text-[#703000] leading-[1.1] mb-1"
           style={{ fontSize: 'clamp(36px, 11vw, 60px)', letterSpacing: '-0.02em' }}
         >
           Studio Inside Eye
         </p>
         <p
+          data-anim="reveal"
+          data-anim-variant="text"
+          data-anim-blur="6"
           className="font-['IBM_Plex_Serif',serif] text-[#553319] leading-[1.3]"
           style={{ fontSize: 'clamp(12px, 3.2vw, 16px)' }}
         >
@@ -1282,6 +1285,9 @@ function MobileProjectHero({ project }: { project: HomeProject }) {
 
 /** Mobile/Tablet — Services section */
 function MobileServicesSection() {
+  const headingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "reveal" });
+  const renovationHeadingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "reveal" });
+  const furnishingHeadingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "reveal" });
   return (
     <div className="relative w-full overflow-hidden">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
@@ -1299,12 +1305,9 @@ function MobileServicesSection() {
         </div>
 
         <p
+          ref={headingRef}
           className="font-['Instrument_Serif',sans-serif] text-[#5d5e36] capitalize leading-[1.1] mb-3"
           style={{ fontSize: 'clamp(34px, 9vw, 56px)', letterSpacing: '-0.02em' }}
-          data-anim="reveal"
-          data-anim-variant="text"
-          data-anim-blur="6"
-          data-anim-delay="0.06"
         >
           Full-Service Residential interior design
         </p>
@@ -1318,20 +1321,27 @@ function MobileServicesSection() {
         <div className="w-full h-px mb-8" style={{ background: 'rgba(0,0,0,0.12)' }} />
 
         {/* Service 01 */}
-        <div className="mb-8 md:flex md:gap-12 md:items-start" data-anim="reveal" data-anim-variant="text" data-anim-delay="0.04">
+        <div className="mb-8 md:flex md:gap-12 md:items-start">
           <div className="flex items-start gap-4 mb-3 md:flex-1">
             <p
+              data-anim="reveal"
+              data-anim-variant="text"
+              data-anim-delay="0.04"
               className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-none shrink-0"
               style={{ fontSize: 'clamp(52px, 14vw, 76px)' }}
             >01</p>
             <div className="pt-3">
               <p
+                ref={renovationHeadingRef}
                 className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-[1.15] mb-2"
                 style={{ fontSize: 'clamp(20px, 5.5vw, 28px)' }}
               >
                 Renovation, remodel{'\n'}& New construction
               </p>
               <p
+                data-anim="reveal"
+                data-anim-variant="text"
+                data-anim-delay="0.04"
                 className="font-['Hanken_Grotesk',sans-serif] text-[#5c5d36] leading-[1.4]"
                 style={{ fontSize: 'clamp(13px, 3.5vw, 16px)' }}
               >
@@ -1344,20 +1354,27 @@ function MobileServicesSection() {
         <div className="w-full h-px mb-8" style={{ background: 'rgba(0,0,0,0.12)' }} />
 
         {/* Service 02 */}
-        <div className="mb-10 md:flex md:gap-12 md:items-start" data-anim="reveal" data-anim-variant="text" data-anim-delay="0.12">
+        <div className="mb-10 md:flex md:gap-12 md:items-start">
           <div className="flex items-start gap-4 mb-3 md:flex-1">
             <p
+              data-anim="reveal"
+              data-anim-variant="text"
+              data-anim-delay="0.12"
               className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-none shrink-0"
               style={{ fontSize: 'clamp(52px, 14vw, 76px)' }}
             >02</p>
             <div className="pt-3">
               <p
+                ref={furnishingHeadingRef}
                 className="font-['Instrument_Serif',sans-serif] text-[#5c5d36] leading-[1.15] mb-2"
                 style={{ fontSize: 'clamp(20px, 5.5vw, 28px)' }}
               >
                 Furnishing & Styling
               </p>
               <p
+                data-anim="reveal"
+                data-anim-variant="text"
+                data-anim-delay="0.12"
                 className="font-['Hanken_Grotesk',sans-serif] text-[#5c5d36] leading-[1.4]"
                 style={{ fontSize: 'clamp(13px, 3.5vw, 16px)' }}
               >
