@@ -1492,7 +1492,11 @@ export function JournalArticles() {
           <div className="flex-none" style={{ transform: "rotate(-90deg)" }}>
             <div className="relative" style={{ width: "736px", height: "400px" }}>
               {ALL_ARTICLES.map((article, index) => {
-                const activeId = pendingId ?? expandedId;
+                // FIX: while closing, ignore expandedId so the hidden strips
+                // (A–Z) fade back in immediately via their own opacity 0.6s
+                // transition, instead of staying gayab until the 1.5s close
+                // timeout finally clears expandedId.
+                const activeId = isClosing ? null : (pendingId ?? expandedId);
                 const expandedIndex = activeId
                   ? ALL_ARTICLES.findIndex((a) => a.id === activeId)
                   : -1;

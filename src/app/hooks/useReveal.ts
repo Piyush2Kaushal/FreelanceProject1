@@ -47,7 +47,7 @@ import { useLayoutEffect } from "react";
 import type { RefObject } from "react";
 import gsap from "gsap";
 
-type Variant = "text" | "zoom" | "fade";
+type Variant = "text" | "zoom" | "fade" | "rise" | "unblur" | "wipe-left";
 
 export interface RevealOptions {
   /**
@@ -90,7 +90,7 @@ function fromState(variant: Variant, blur: number): gsap.TweenVars {
       // upward; transformOrigin at the bottom anchors it as it settles,
       // reinforcing the rise. A subtle focus-pull (blur) gives the quiet,
       // "developing" feel — classic and unhurried, never flashy.
-      const softBlur = blur > 0 ? blur : 5;
+      const softBlur = blur > 0 ? blur : 3;
       return {
         opacity: 0,
         filter: `blur(${softBlur}px)`,
@@ -102,6 +102,18 @@ function fromState(variant: Variant, blur: number): gsap.TweenVars {
     }
     case "fade":
       return { ...base };
+    case "rise":
+      // Soft upward drift with a gentle focus-pull — words/lines settle UP into
+      // place. Safe in flex containers (no centering translate to fight).
+      return { opacity: 0, y: 26, filter: `blur(${blur > 0 ? blur : 4}px)` };
+    case "unblur":
+      // A quiet "developing" focus-pull — barely moves, just sharpens in.
+      // Pure opacity + blur, safe on ANY element regardless of transforms.
+      return { opacity: 0, filter: `blur(${blur > 0 ? blur : 8}px)` };
+    case "wipe-left":
+      // Elegant left-to-right clip reveal — reads as a refined "sweep".
+      // Clip-path only, never touches the transform matrix → layout-safe.
+      return { ...base, clipPath: "inset(0% 100% 0% 0%)" };
     case "text":
     default:
       // top-inset 100% → element reveals from the bottom upward (a soft "rise")
@@ -127,6 +139,28 @@ function toState(variant: Variant, blur: number, delay: number): gsap.TweenVars 
       };
     case "fade":
       return { ...base, duration: 1.0, ease: "power2.out" };
+    case "rise":
+      return {
+        ...base,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        ease: "power3.out",
+      };
+    case "unblur":
+      return {
+        ...base,
+        filter: "blur(0px)",
+        duration: 1.3,
+        ease: "power2.out",
+      };
+    case "wipe-left":
+      return {
+        ...base,
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1.2,
+        ease: "expo.out",
+      };
     case "text":
     default:
       return { ...base, clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "expo.out" };
@@ -135,7 +169,9 @@ function toState(variant: Variant, blur: number, delay: number): gsap.TweenVars 
 
 function readVariant(el: HTMLElement): Variant {
   const v = el.dataset.animVariant;
-  return v === "zoom" || v === "fade" || v === "text" ? v : "text";
+  return v === "zoom" || v === "fade" || v === "text" || v === "rise" || v === "unblur" || v === "wipe-left"
+    ? v
+    : "text";
 }
 function readBlur(el: HTMLElement): number {
   const b = Number(el.dataset.animBlur);
