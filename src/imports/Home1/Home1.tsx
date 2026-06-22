@@ -879,9 +879,6 @@ function ContactPage({ bgColor }: { bgColor: string }) {
         <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-8 size-full" src={imgContactPage} />
       </div>
       <div
-        data-anim="reveal"
-        data-anim-variant="fade"
-        data-anim-delay="0.1"
         className="[word-break:break-word] absolute content-stretch flex font-['Hanken_Grotesk',sans-serif] gap-[82px] items-start left-[calc(8.33%+102px)] not-italic text-[#d5c9a8] top-[472px]">
         <Frame20 /><Frame21 /><Frame24 /><Frame26 />
       </div>
@@ -919,9 +916,6 @@ function Frame37({ bgColor, slug }: { bgColor: string; slug: string }) {
 function Frame41({ bgColor, slug }: { bgColor: string; slug: string }) {
   return (
     <div
-      data-anim="reveal"
-      data-anim-variant="text"
-      data-anim-blur="6"
       className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+3px)] top-[97px]">
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
         <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos2} />
@@ -1488,7 +1482,7 @@ function MobileFooter({ project }: { project: HomeProject }) {
 
       <div className="relative px-5 pt-8 pb-8" style={{ zIndex: 1 }}>
 
-        <div className="flex flex-col items-center gap-5 mb-10 pt-2" data-anim="reveal" data-anim-variant="fade" data-anim-delay="0.05">
+        <div className="flex flex-col items-center gap-5 mb-10 pt-2">
           <div className="relative flex justify-center">
             <div className="relative" style={{ height: 70, width: 140 }}>
               <img loading="lazy" decoding="async" alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgPrimaryLogos2} />
