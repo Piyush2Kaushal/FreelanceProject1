@@ -250,10 +250,7 @@ export default function FeatureWhySie() {
             <div className="bg-[#dad0ad] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0 cursor-pointer hover:opacity-90 transition-opacity" onClick={() => navigate('/contact')}>
               <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#504d39] text-[18px] tracking-[-0.54px] whitespace-nowrap">{` Start your project`}</p>
             </div>
-            <div className="content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0">
-              <div aria-hidden className="absolute border border-[#dad0ad] border-solid inset-0 pointer-events-none rounded-[4px]" />
-              <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#dad0ad] text-[18px] tracking-[-0.54px] whitespace-nowrap">Discovery Call</p>
-            </div>
+       
           </div>
         </div>
         {/* Background texture */}
@@ -306,9 +303,7 @@ export default function FeatureWhySie() {
               <button className="bg-[#dad0ad] flex items-center justify-center px-6 py-3 rounded-[4px] border-none cursor-pointer hover:opacity-90 transition-opacity" onClick={() => navigate('/contact')}>
                 <p className="font-['Inter',sans-serif] font-medium leading-normal not-italic text-[#504d39] text-[16px] tracking-[-0.02em] whitespace-nowrap">Start your project</p>
               </button>
-              <button className="relative flex items-center justify-center px-6 py-3 rounded-[4px] border border-[#dad0ad] bg-transparent cursor-pointer hover:opacity-90 transition-opacity">
-                <p className="font-['Inter',sans-serif] font-medium leading-normal not-italic text-[#dad0ad] text-[16px] tracking-[-0.02em] whitespace-nowrap">Discovery Call</p>
-              </button>
+          
             </div>
           </div>
 
