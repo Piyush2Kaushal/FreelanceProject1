@@ -16,23 +16,23 @@
      When the real Project 3 & 4 are ready, update those two route entries +
      the card content below — nothing else changes.
 ─────────────────────────────────────────────────────────────────── */
-import imgImage60 from "./assets/d0771eeb465df0dcf09bc934a4e09e95eb4e483d.png";
-import imgImage61 from "./assets/2f34cdcf685a216dedefab7556a79fa2ff9e2c41.png";
-import imgImage62 from "./assets/84770e53466dfe366e2f00008755009ec0ce1d94.png";
-import imgImage63 from "./assets/b4a164386bbaad064f2af7d1706cc6468f27d5f5.png";
-import imgPattern73 from "./assets/3335fa7ea6db7d3ea9a39208da45b87c05f865b5.png";
-import { imgPattern72 } from "./assets/svg-c46fh";
+import imgImage60 from "../../../../assets/d0771eeb465df0dcf09bc934a4e09e95eb4e483d.png";
+import imgImage61 from "../../../../assets/2f34cdcf685a216dedefab7556a79fa2ff9e2c41.png";
+import imgImage62 from "../../../../assets/84770e53466dfe366e2f00008755009ec0ce1d94.png";
+import imgImage63 from "../../../../assets/b4a164386bbaad064f2af7d1706cc6468f27d5f5.png";
+import imgPattern73 from "../../../../assets/3335fa7ea6db7d3ea9a39208da45b87c05f865b5.png";
+import { imgPattern72 } from "../../../../assets/svg-c46fh";
 
 // Per-project logos — give each card its own file in ./assets/.
 // Any that are missing fall back to the shared logo.png so nothing breaks.
-import projectLogo from "./assets/logo.png";
-import logo1 from "./assets/logo.png";
-import logo2 from "./assets/logo.png";
-import logo3 from "./assets/logo.png";
-import logo4 from "./assets/logo.png";
+import projectLogo from "../../../../assets/logo.png";
+import logo1 from "../../../../assets/logo.png";
+import logo2 from "../../../../assets/logo.png";
+import logo3 from "../../../../assets/logo.png";
+import logo4 from "../../../../assets/logo.png";
 
 // Shared banner texture — blended over each project's colour
-import bannerTexture from "./assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
+import bannerTexture from "../../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
 
 export { imgPattern73, imgPattern72, bannerTexture, projectLogo };
 
