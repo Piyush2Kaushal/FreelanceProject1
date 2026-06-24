@@ -16,6 +16,7 @@ const JournalPage     = lazy(() => import("../imports/Journal/JournalPage"));
 const AboutPage       = lazy(() => import("./pages/About/AboutPage"));
 const ArticlePage     = lazy(() => import("../imports/ArticlePage/ArticlePage"));
 const HomePage        = lazy(() => import("../imports/Home1/Home1"));
+const ProjectsLandingPage = lazy(() => import("./pages/projects/landing/ProjectsLandingPage"));
 
 // ─── Suspense fallback — matches the PageTransitionOverlay background so
 //     there's no colour flash while a route chunk loads.
@@ -46,6 +47,12 @@ export default function App() {
                 FooterNav, MobileBottomBar and the Logo mounted across every
                 "Generate" click. Only the moodboard image crossfades. */}
             <Route path="/detail/:color/:style"            element={<MoodboardDetailPage />} />
+
+            {/* ── Projects Landing Page (Selected Works) ───────────────────
+                "Projects" in the navbar opens THIS page. Each of its 4 cards
+                runs the Home-style shared-element morph and navigates to one
+                of the detail routes registered in projectRoutes below. */}
+            <Route path="/projects"                        element={<ProjectsLandingPage />} />
 
             {/* ── Project Pages ───────────────────────────────────────────── */}
             {projectRoutes.map((route) => (

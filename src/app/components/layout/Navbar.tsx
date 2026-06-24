@@ -8,7 +8,7 @@ const navItems = ["MENU", "Home", "Projects", "About", "Journal"] as const;
 
 const NAV_ROUTES: Record<string, string> = {
   Home:     "/home",
-  Projects: "/projects/project-1",
+  Projects: "/projects",
   About:    "/about",
   Journal:  "/journal",
   Contact:  "/contact",
