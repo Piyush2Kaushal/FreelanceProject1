@@ -146,7 +146,7 @@ export const HOME_PROJECTS: HomeProject[] = [
 // =============================================================================
 
 /** Total time each project stays visible (milliseconds) */
-export const CYCLE_MS = 7000;
+export const CYCLE_MS = 8000;
 
 /** Crossfade duration (milliseconds) — rakhna CYCLE_MS se kam */
 export const FADE_MS = 900;
