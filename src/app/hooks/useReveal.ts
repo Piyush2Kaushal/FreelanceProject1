@@ -29,11 +29,23 @@
 //   data-anim="reveal"           → plays when scrolled into view
 //   data-anim="parallax"         → subtle scroll-linked depth (desktop only)
 //
-//   data-anim-variant="text" | "zoom" | "fade"   (default "text")
+//   data-anim-variant="text" | "zoom" | "fade" | "cinematic-3d"  (default "text")
 //   data-anim-order="0..n"       → stagger order for intro elements
 //   data-anim-delay="0.0"        → extra delay (seconds) before a reveal plays
 //   data-anim-blur="8"           → opt-in blur (px) for a focus-pull on reveal
 //   data-parallax-speed="0.06"   → parallax intensity
+//
+//   ── Premium 3D entrance (variant="cinematic-3d") ──────────────────────────
+//   A dramatic, template-grade reveal: the element starts deep in Z-space,
+//   tilted on the X/Y axes, off-axis, scaled-up and softly blurred, then flies
+//   forward + rights itself + de-blurs into a CLEAN identity transform — i.e.
+//   it lands on its EXACT resting layout position and simply stays there.
+//     data-anim-3d-x / -y / -z     → start offset (px). z is depth (negative = far)
+//     data-anim-3d-rotx / -roty    → start tilt (deg) it rotates flat from
+//     data-anim-3d-scale           → start scale it settles to 1 from
+//   data-anim-group="name"         → all members reveal on ONE synchronized
+//                                    start (each member's data-anim-delay then
+//                                    creates the choreographed cascade)
 //
 // ACCESSIBILITY / PERF
 //   • Honors prefers-reduced-motion: when set, NOTHING is hidden or animated —
@@ -47,7 +59,7 @@ import { useLayoutEffect } from "react";
 import type { RefObject } from "react";
 import gsap from "gsap";
 
-type Variant = "text" | "zoom" | "fade" | "rise" | "unblur" | "wipe-left";
+type Variant = "text" | "zoom" | "fade" | "rise" | "unblur" | "wipe-left" | "cinematic-3d";
 
 export interface RevealOptions {
   /**
@@ -79,7 +91,7 @@ const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 const DEBUG = false;
 
 // ── Per-variant start/end states ─────────────────────────────────────────────
-function fromState(variant: Variant, blur: number): gsap.TweenVars {
+function fromState(variant: Variant, blur: number, el?: HTMLElement): gsap.TweenVars {
   const base: gsap.TweenVars = { opacity: 0 };
   if (blur > 0) base.filter = `blur(${blur}px)`;
   switch (variant) {
@@ -114,6 +126,34 @@ function fromState(variant: Variant, blur: number): gsap.TweenVars {
       // Elegant left-to-right clip reveal — reads as a refined "sweep".
       // Clip-path only, never touches the transform matrix → layout-safe.
       return { ...base, clipPath: "inset(0% 100% 0% 0%)" };
+    case "cinematic-3d":
+      // ───────────────────────────────────────────────────────────────────────
+      // PREMIUM 3D "TEMPLATE-GRADE" ENTRANCE
+      // The image starts deep in Z-space, tilted on the X & Y axes (like a card
+      // floating in 3D), pushed off-axis, scaled up and softly blurred. It then
+      // flies forward and rotates flat into its EXACT resting position. Because
+      // the end state is a clean identity transform (x/y/z/rot/scale all 0/1),
+      // the image lands precisely where it already lives in the layout — no
+      // position shift, and once settled it simply stays put.
+      //
+      // The specific direction/tilt is read per-element from data attributes so
+      // each scattered image enters from its own angle, giving the rich,
+      // choreographed "big animated website" feel instead of a uniform move.
+      // ───────────────────────────────────────────────────────────────────────
+      return {
+        opacity: 0,
+        filter: `blur(${blur > 0 ? blur : 14}px)`,
+        // Per-element direction (defaults give a pleasing varied set if absent).
+        // x/y = how far off-axis it starts; rotX/rotY = the 3D tilt it rights from.
+        x: readNum(el?.dataset.anim3dX, 0),
+        y: readNum(el?.dataset.anim3dY, 90),
+        z: readNum(el?.dataset.anim3dZ, -520),
+        rotationX: readNum(el?.dataset.anim3dRotx, 34),
+        rotationY: readNum(el?.dataset.anim3dRoty, -26),
+        scale: readNum(el?.dataset.anim3dScale, 1.18),
+        transformOrigin: "50% 50%",
+        transformPerspective: 1100,
+      };
     case "text":
     default:
       // top-inset 100% → element reveals from the bottom upward (a soft "rise")
@@ -161,6 +201,24 @@ function toState(variant: Variant, blur: number, delay: number): gsap.TweenVars 
         duration: 1.2,
         ease: "expo.out",
       };
+    case "cinematic-3d":
+      // Flies forward out of depth, untilts on both axes and de-blurs into a
+      // CLEAN identity transform → lands exactly on its resting layout position.
+      // power3.out gives a long, even, premium deceleration that glides to a
+      // stop WITHOUT expo's extreme tail-crawl (which reads as micro-lag on big
+      // images). Once this completes the element holds — no further motion.
+      return {
+        ...base,
+        x: 0,
+        y: 0,
+        z: 0,
+        rotationX: 0,
+        rotationY: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 2.4,
+        ease: "power3.out",
+      };
     case "text":
     default:
       return { ...base, clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "expo.out" };
@@ -169,7 +227,7 @@ function toState(variant: Variant, blur: number, delay: number): gsap.TweenVars 
 
 function readVariant(el: HTMLElement): Variant {
   const v = el.dataset.animVariant;
-  return v === "zoom" || v === "fade" || v === "text" || v === "rise" || v === "unblur" || v === "wipe-left"
+  return v === "zoom" || v === "fade" || v === "text" || v === "rise" || v === "unblur" || v === "wipe-left" || v === "cinematic-3d"
     ? v
     : "text";
 }
@@ -257,7 +315,7 @@ export function useReveal(
         const order = readNum(el.dataset.animOrder, 0);
         const extra = readNum(el.dataset.animDelay, 0);
         gsap.set(el, { willChange: "opacity, clip-path, transform, filter" });
-        gsap.set(el, fromState(variant, blur));
+        gsap.set(el, fromState(variant, blur, el));
         gsap.to(el, {
           ...toState(variant, blur, INTRO_BASE_DELAY + order * INTRO_STAGGER + extra),
           onComplete: () => { gsap.set(el, { willChange: "auto", clearProps: "filter" }); },
@@ -278,7 +336,7 @@ export function useReveal(
       );
       const pending = new Set<HTMLElement>(); // still hidden / waiting to trigger
       revealEls.forEach((el) => {
-        gsap.set(el, fromState(readVariant(el), readBlur(el)));
+        gsap.set(el, fromState(readVariant(el), readBlur(el), el));
         pending.add(el);
       });
       counts.found = revealEls.length;
@@ -292,6 +350,50 @@ export function useReveal(
           const variant = readVariant(el);
           const blur = readBlur(el);
           const delay = readNum(el.dataset.animDelay, 0);
+          const is3d = variant === "cinematic-3d";
+
+          if (is3d) {
+            // ── SMOOTHNESS-FIRST 3D REVEAL ─────────────────────────────────────
+            // Animating filter:blur() on several big images at once is the main
+            // cause of jank — it forces an expensive re-rasterize every frame.
+            // So we split it: the blur clears QUICKLY in its own short tween
+            // (the costly bit is over fast), while the transform (x/y/z/rotate/
+            // scale/opacity) — which is fully GPU-composited — does the long,
+            // buttery glide on its own. force3D keeps it on the compositor.
+            gsap.set(el, {
+              transformStyle: "preserve-3d",
+              backfaceVisibility: "hidden",
+              willChange: "transform, opacity",
+              force3D: true,
+            });
+
+            // Long, smooth transform settle (no filter here → stays composited).
+            const ts = toState(variant, blur, delay) as gsap.TweenVars;
+            delete (ts as Record<string, unknown>).filter; // blur handled separately
+            const dur = (ts.duration as number) ?? 3.5;
+            gsap.to(el, {
+              ...ts,
+              onComplete: () =>
+                gsap.set(el, {
+                  willChange: "auto",
+                  clearProps: "transform,transformStyle,backfaceVisibility,perspective",
+                }),
+            });
+
+            // Blur clears in the first ~38% of the glide — front-loaded so the
+            // heavy rasterization is brief and the rest of the motion is clean.
+            if (blur > 0) {
+              gsap.to(el, {
+                filter: "blur(0px)",
+                delay,
+                duration: Math.max(0.6, dur * 0.38),
+                ease: "power2.out",
+                onComplete: () => gsap.set(el, { clearProps: "filter" }),
+              });
+            }
+            return;
+          }
+
           gsap.set(el, { willChange: "opacity, clip-path, transform, filter" });
           gsap.to(el, {
             ...toState(variant, blur, delay),
@@ -309,15 +411,71 @@ export function useReveal(
           // not yet leaving) so the bottom-to-top wipe is always actually seen.
           const padX = vw * 0.09;
           const padY = vh * 0.04;
-          pending.forEach((el) => {
+
+          const isInView = (el: HTMLElement): boolean => {
             const r = el.getBoundingClientRect();
-            if (r.width === 0 && r.height === 0) return; // not laid out yet
-            const inView =
+            if (r.width === 0 && r.height === 0) return false; // not laid out yet
+            return (
               r.left < vw - padX &&
               r.right > padX &&
               r.top < vh - padY &&
-              r.bottom > padY;
-            if (inView) reveal(el);
+              r.bottom > padY
+            );
+          };
+
+          // For a GROUP we don't want to fire the instant the leading image peeks
+          // past the edge (on this horizontal scroller the right-most images enter
+          // first, so the whole flock would start while the section is still mostly
+          // off-screen → feels like it "starts too early / jaldi"). Instead we wait
+          // until the group's combined centre is comfortably inside the viewport,
+          // so the entrance kicks off once the section is actually settled in view.
+          const groupReady = (members: HTMLElement[]): boolean => {
+            let minL = Infinity, maxR = -Infinity, minT = Infinity, maxB = -Infinity;
+            let laidOut = false;
+            for (const el of members) {
+              const r = el.getBoundingClientRect();
+              if (r.width === 0 && r.height === 0) continue;
+              laidOut = true;
+              minL = Math.min(minL, r.left);
+              maxR = Math.max(maxR, r.right);
+              minT = Math.min(minT, r.top);
+              maxB = Math.max(maxB, r.bottom);
+            }
+            if (!laidOut) return false;
+            const cx = (minL + maxR) / 2;
+            const cy = (minT + maxB) / 2;
+            // Centre must be inside the middle ~80% of the viewport horizontally
+            // (and on-screen vertically) before the group is allowed to fire.
+            const marginX = vw * 0.10;
+            return cx > marginX && cx < vw - marginX && cy > 0 && cy < vh;
+          };
+
+          // Group pending members so we can evaluate each group as a whole.
+          const groups = new Map<string, HTMLElement[]>();
+          pending.forEach((el) => {
+            const g = el.dataset.animGroup;
+            if (!g) return;
+            const arr = groups.get(g);
+            if (arr) arr.push(el);
+            else groups.set(g, [el]);
+          });
+
+          // A group fires only once it's properly in view (centre test above).
+          // Then ALL its members reveal on a single synchronized start, and each
+          // member's own data-anim-delay turns that into the choreographed cascade.
+          const firingGroups = new Set<string>();
+          groups.forEach((members, g) => {
+            if (groupReady(members)) firingGroups.add(g);
+          });
+
+          // Snapshot first — reveal() mutates `pending` as it runs.
+          Array.from(pending).forEach((el) => {
+            const g = el.dataset.animGroup;
+            if (g) {
+              if (firingGroups.has(g)) reveal(el); // grouped → fire with the flock
+            } else if (isInView(el)) {
+              reveal(el); // ungrouped → original per-element behaviour
+            }
           });
         };
 

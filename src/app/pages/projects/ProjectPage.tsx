@@ -578,32 +578,73 @@ const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: Projec
         />
       </div>
 
-      {/* Scattered images */}
-      {data.images.map((img, i) => (
-        <div
-          key={i}
-          className={img.className}
-          data-anim="reveal"
-          data-anim-variant="text"
-          data-anim-delay={(0.06 * i).toFixed(2)}
-        >
-          <img
-            alt=""
-            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-            src={img.src}
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      ))}
+      {/* Scattered images — PREMIUM 3D ENTRANCE.
+          The container establishes a shared perspective so every image flies in
+          through the SAME 3D space (a real vanishing point) rather than each
+          warping on its own. Each image is given its own entrance vector
+          (direction + tilt + depth) so they arrive as a choreographed flock and
+          then settle, locked, into their exact resting positions. */}
+      <div
+        className="absolute inset-0"
+        style={{ perspective: "1600px", perspectiveOrigin: "50% 45%", pointerEvents: "none" }}
+        aria-hidden
+      >
+        {data.images.map((img, i) => {
+          // Per-image entrance vectors — alternating sides + depth + tilt give
+          // the rich, "big animated template" choreography. Values are the START
+          // offsets; every image settles to a clean 0/0/0/1 (its layout spot).
+          const dirs = [
+            { x: -140, y: -120, z: -640, rotX:  26, rotY:  34, scale: 1.22 },
+            { x: -180, y:   60, z: -560, rotX: -22, rotY:  30, scale: 1.20 },
+            { x:    0, y:  170, z: -720, rotX:  40, rotY:   0, scale: 1.24 },
+            { x:  180, y:  110, z: -560, rotX: -20, rotY: -30, scale: 1.20 },
+            { x: -120, y:  150, z: -600, rotX:  30, rotY:  24, scale: 1.22 },
+            { x:  170, y: -110, z: -640, rotX:  26, rotY: -34, scale: 1.22 },
+            { x:    0, y: -160, z: -700, rotX: -34, rotY:   0, scale: 1.24 },
+          ];
+          const d = dirs[i % dirs.length];
+          return (
+            <div
+              key={i}
+              className={img.className}
+              data-anim="reveal"
+              data-anim-variant="cinematic-3d"
+              data-anim-group="experience"
+              data-anim-blur="8"
+              data-anim-delay={(0.18 * i).toFixed(2)}
+              data-anim-3d-x={d.x}
+              data-anim-3d-y={d.y}
+              data-anim-3d-z={d.z}
+              data-anim-3d-rotx={d.rotX}
+              data-anim-3d-roty={d.rotY}
+              data-anim-3d-scale={d.scale}
+            >
+              <img
+                alt=""
+                className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+                src={img.src}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          );
+        })}
+      </div>
 
       {/* "The Experience" centred text block */}
       <div
         className="[word-break:break-word] absolute content-stretch flex flex-col gap-[20px] items-center left-[calc(33.33%+29px)] not-italic text-[#dad0ad] text-center top-[378px] w-[452px]"
         data-anim="reveal"
-        data-anim-variant="text"
+        data-anim-variant="cinematic-3d"
+        data-anim-group="experience"
         data-anim-blur="6"
-        data-anim-delay="0.1"
+        data-anim-delay="0.8"
+        data-anim-3d-x="0"
+        data-anim-3d-y="80"
+        data-anim-3d-z="-340"
+        data-anim-3d-rotx="-18"
+        data-anim-3d-roty="0"
+        data-anim-3d-scale="1.08"
       >
         <p className="font-['Instrument_Serif',sans-serif] leading-[0] min-w-full relative shrink-0 text-[0px] w-[min-content]">
           <span className="leading-[0.9] text-[84px]">The </span>

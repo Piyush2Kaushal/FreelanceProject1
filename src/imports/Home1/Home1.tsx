@@ -157,7 +157,11 @@ function DesktopLamp49() {
 }
 
 function EntireWebsite() {
-  const studioHeadingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "intro" });
+  // Boutique tagline (data-anim intro, order 3, +1.2s delay) starts at
+  // 0.12 + 3×0.11 + 1.2 = 1.65s and wipes in over ~1.2s. Hold the heading's
+  // word-slide-fade until that line has settled so the sequence reads:
+  // 1) boutique tagline → 2) "Studio Inside eye".
+  const studioHeadingRef = useWordSlideFade<HTMLParagraphElement>({ trigger: "intro", startTime: 2200 });
   return (
     <div className="absolute h-[770px] left-0 overflow-clip top-0 w-full" data-name="Entire Website">
       <div aria-hidden className="absolute inset-0 pointer-events-none">
