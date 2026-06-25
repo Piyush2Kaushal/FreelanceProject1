@@ -14,6 +14,7 @@ import type { ProjectData, GalleryScreen, FullImageScreen } from "../../../data/
 import { useTransition } from "../../context/TransitionContext";
 import { useReveal } from "../../hooks/useReveal";
 import { useMobileReveal } from "../../hooks/useMobileReveal";
+import { useSmoothHorizontalScroll } from "./useSmoothHorizontalScroll";
 import gsap from "gsap";
 import svgPaths from "../../../assets/svgPaths";
 import imgDrawerTexture from "../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
@@ -1932,9 +1933,18 @@ function DesktopProjectPage({ project }: { project: ProjectData }) {
     forceMotion: true, // project page plays its reveal even if OS Reduce Motion is ON
   });
 
+  // ── Premium vertical-wheel → smooth horizontal scroll ──────────────────────
+  // Maps mouse-wheel / trackpad vertical input onto this container's native
+  // scrollLeft with eased inertia. Drives the real scroll position (not a
+  // transform), so the useReveal scroll listener above keeps firing exactly as
+  // before — layout, scaling, spacing and reveals are all untouched. No-ops on
+  // touch / mobile / reduced-motion.
+  useSmoothHorizontalScroll(scrollRef, { ease: 0.085, speed: 0.9 });
+
   return (
     <div
       ref={scrollRef}
+      className="scrollbar-hide"
       style={{
         width: "100vw",
         height: "100vh",
