@@ -512,7 +512,10 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
         data-anim-delay="0.05"
       >
         <p className="leading-[0.9] mb-0 whitespace-pre">{data.headingLine1}</p>
-        <p className="font-['Instrument_Serif',sans-serif] italic leading-[0.9] whitespace-pre">
+        <p
+          className="font-['Instrument_Serif',sans-serif] italic whitespace-pre"
+          style={{ lineHeight: 1.08, paddingBottom: "0.08em" }}
+        >
           {data.headingLine2}
         </p>
       </div>
@@ -1468,9 +1471,11 @@ function MobileConceptSection({ data }: { data: ProjectData["concept"] }) {
             {data.headingLine1}
           </p>
           <p
-            className="font-['Instrument_Serif',sans-serif] italic leading-[0.9]"
+            className="font-['Instrument_Serif',sans-serif] italic"
             style={{
               fontSize: "clamp(44px, 13vw, 72px)",
+              lineHeight: 1.08,
+              paddingBottom: "0.08em",
               color: data.headingColor,
             }}
           >
