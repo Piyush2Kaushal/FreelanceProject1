@@ -672,6 +672,7 @@ export default function FinalMoodboard() {
   const zCounter       = useRef(100);
   const elementZIndex  = useRef<Map<HTMLElement, number>>(new Map());
   const lastTap        = useRef<{ el: HTMLElement | null; time: number }>({ el: null, time: 0 });
+  const hoverEl        = useRef<HTMLElement | null>(null);
 
   // ── 2-finger twist rotate state (mobile only) ─────────────────────────────
   const rotateState = useRef({
@@ -787,12 +788,14 @@ export default function FinalMoodboard() {
       el.style.transition = "filter 0.45s cubic-bezier(0.16,1,0.3,1)";
 
       el.addEventListener("mouseenter", () => {
+        hoverEl.current = el;
         if (objState.current.active && objState.current.el === el) return;
         gsap.to(el, { scale: 1.06, duration: 0.45, ease: "power3.out", overwrite: "auto" });
         el.style.filter = SHADOW_HOVER;
       });
 
       el.addEventListener("mouseleave", () => {
+        if (hoverEl.current === el) hoverEl.current = null;
         if (objState.current.active && objState.current.el === el) return;
         gsap.to(el, { scale: 1, duration: 0.5, ease: "power3.out", overwrite: "auto" });
         el.style.filter = SHADOW_REST;
@@ -1210,6 +1213,28 @@ export default function FinalMoodboard() {
   // ── Wheel pan ─────────────────────────────────────────────────────────────
   const onWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
+
+    // ── Alt+scroll over an object → rotate that object (desktop equivalent of 2-finger twist) ─
+    if (e.altKey) {
+      const target = hoverEl.current ?? (e.target as HTMLElement).closest<HTMLElement>("[data-object='true']");
+      if (target) {
+        const computed = window.getComputedStyle(target);
+        const matrix   = computed.transform;
+        let currentRot = 0;
+        if (matrix && matrix !== "none") {
+          const parts = matrix.match(/matrix\(([^)]+)\)/);
+          if (parts) {
+            const vals = parts[1].split(",").map(Number);
+            currentRot = Math.atan2(vals[1], vals[0]) * (180 / Math.PI);
+          }
+        }
+        const newRotation = currentRot + e.deltaY * 0.25;
+        gsap.to(target, { rotation: newRotation, duration: 0.12, ease: "power2.out", overwrite: "auto" });
+        // Persist as baseRotation so subsequent drag-tilt snaps back correctly
+        objState.current.baseRotation = newRotation;
+        return;
+      }
+    }
 
     // ── Ctrl+scroll / trackpad pinch over an object → resize that object ───
     if (e.ctrlKey) {

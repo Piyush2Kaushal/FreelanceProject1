@@ -840,21 +840,30 @@ function Frame36({ slug }: { slug: string }) {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0 cursor-pointer hover:opacity-90 transition-opacity"
+      className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[22px] py-[12px] relative rounded-[4px] shrink-0 cursor-pointer hover:opacity-90 transition-opacity"
       onClick={() => navigate('/contact')}
     >
-      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[20px] tracking-[-0.6px] whitespace-nowrap">{` Start your project`}</p>
+      <p className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[#442b00] text-[18px] tracking-[-0.6px] whitespace-nowrap">{` Start your project`}</p>
     </div>
   );
 }
 
 function Frame38({ slug }: { slug: string }) {
+  const dreamRef = useScrollWordReveal<HTMLParagraphElement>({
+    lightColor: "#6b6647",
+    darkColor:  "#d5c9a8",
+    band:   3,
+    start:  0.92,
+    end:    0.5,
+    smooth: 0.07,
+    forceMotion: true,
+  });
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+2.5px)] top-[74px]">
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
         <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos1} />
       </div>
-      <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
+      <p ref={dreamRef} className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
       <Frame36 slug={slug} />
     </div>
   );
@@ -902,11 +911,11 @@ function Frame37({ bgColor, slug }: { bgColor: string; slug: string }) {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[28px] py-[16px] relative rounded-[4px] shrink-0 cursor-pointer transition-[transform,box-shadow,filter] duration-500 ease-out will-change-transform hover:-translate-y-[2px] hover:brightness-[1.03] hover:shadow-[0_14px_28px_-12px_rgba(0,0,0,0.45)]"
+      className="bg-[#d5c9a8] content-stretch flex items-center justify-center px-[22px] py-[12px] relative rounded-[4px] shrink-0 cursor-pointer transition-[transform,box-shadow,filter] duration-500 ease-out will-change-transform hover:-translate-y-[2px] hover:brightness-[1.03] hover:shadow-[0_14px_28px_-12px_rgba(0,0,0,0.45)]"
       onClick={() => navigate('/contact')}
     >
       <p
-        className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[20px] tracking-[-0.6px] whitespace-nowrap"
+        className="[word-break:break-word] font-['Inter',sans-serif] font-medium leading-[normal] not-italic relative shrink-0 text-[18px] tracking-[-0.6px] whitespace-nowrap"
         style={{ color: bgColor, transition: `color ${FADE_MS}ms ease-in-out` }}
       >{` Start your project`}</p>
     </div>
@@ -914,13 +923,22 @@ function Frame37({ bgColor, slug }: { bgColor: string; slug: string }) {
 }
 
 function Frame41({ bgColor, slug }: { bgColor: string; slug: string }) {
+  const dreamRef = useScrollWordReveal<HTMLParagraphElement>({
+    lightColor: "#6b6647",
+    darkColor:  "#d5c9a8",
+    band:   3,
+    start:  0.92,
+    end:    0.5,
+    smooth: 0.07,
+    forceMotion: true,
+  });
   return (
     <div
       className="-translate-x-1/2 absolute content-stretch flex flex-col items-center justify-center left-[calc(50%+3px)] top-[97px]">
       <div className="h-[102px] relative shrink-0 w-[203px]" data-name="Primary Logos">
         <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos2} />
       </div>
-      <p className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
+      <p ref={dreamRef} className="[word-break:break-word] font-['P22GrosvenorW00-Regular',serif] leading-[1.12] not-italic relative shrink-0 text-[#d5c9a8] text-[60px] whitespace-nowrap">Build your dream home</p>
       <Frame37 bgColor={bgColor} slug={slug} />
     </div>
   );
@@ -1478,6 +1496,15 @@ function MobileFooterSocialIcon({ path, href }: { path: string; href?: string })
 /** Mobile/Tablet — Footer / Contact section */
 function MobileFooter({ project }: { project: HomeProject }) {
   const navigate = useNavigate();
+  const dreamRef = useScrollWordReveal<HTMLParagraphElement>({
+    lightColor: "#6b6647",
+    darkColor:  "#d5c9a8",
+    band:   2,
+    start:  0.9,
+    end:    0.7,
+    smooth: 0.07,
+    forceMotion: true,
+  });
   return (
     <div
       className="relative w-full overflow-hidden"
@@ -1516,6 +1543,7 @@ function MobileFooter({ project }: { project: HomeProject }) {
           </div>
 
           <p
+            ref={dreamRef}
             className="font-['P22GrosvenorW00-Regular',serif] leading-[1.1] not-italic text-[#d5c9a8] text-center mt-3"
             style={{ fontSize: 'clamp(24px, 7vw, 40px)' }}
           >
@@ -1526,7 +1554,7 @@ function MobileFooter({ project }: { project: HomeProject }) {
             style={{
               background: '#d5c9a8',
               color: project.bgColor,
-              padding: '14px 28px',
+              padding: '12px 24px',
               fontSize: 'clamp(14px, 3.8vw, 18px)',
               transition: `color ${FADE_MS}ms ease-in-out`,
             }}
