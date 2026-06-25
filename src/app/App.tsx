@@ -4,6 +4,7 @@ import { SelectionProvider } from "./context/SelectionContext";
 import { TransitionProvider } from "./context/TransitionContext";
 import PageTransitionOverlay from "./components/PageTransitionOverlay";
 import SharedElementLayer from "./components/SharedElementLayer";
+import ErrorBoundary from "./components/ErrorBoundary";
 import { projectRoutes } from "./router/projectRoutes";
 
 // ─── Route-level code splitting ──────────────────────────────────────────────
@@ -17,6 +18,7 @@ const AboutPage       = lazy(() => import("./pages/About/AboutPage"));
 const ArticlePage     = lazy(() => import("../imports/ArticlePage/ArticlePage"));
 const HomePage        = lazy(() => import("../imports/Home1/Home1"));
 const ProjectsLandingPage = lazy(() => import("./pages/projects/landing/ProjectsLandingPage"));
+const NotFoundPage    = lazy(() => import("./pages/NotFoundPage"));
 
 // ─── Suspense fallback — matches the PageTransitionOverlay background so
 //     there's no colour flash while a route chunk loads.
@@ -26,11 +28,12 @@ const PageFallback = () => (
 
 export default function App() {
   return (
-    <SelectionProvider>
-      <TransitionProvider>
-        <div className="size-full">
-          <Suspense fallback={<PageFallback />}>
-            <Routes>
+    <ErrorBoundary>
+      <SelectionProvider>
+        <TransitionProvider>
+          <div className="size-full">
+            <Suspense fallback={<PageFallback />}>
+              <Routes>
             <Route path="/"                                element={<FinalMoodboard />} />
             <Route path="/home"                            element={<HomePage />} />
             <Route path="/about"                           element={<AboutPage />} />
@@ -62,12 +65,18 @@ export default function App() {
                 element={route.element}
               />
             ))}
-            </Routes>
-          </Suspense>
-          <PageTransitionOverlay />
-          <SharedElementLayer />
-        </div>
-      </TransitionProvider>
-    </SelectionProvider>
+
+            {/* ── Catch-all 404 ───────────────────────────────────────────────
+                Any unmatched URL (e.g. /xyz) renders the on-brand NotFound page
+                instead of a blank screen. MUST stay last. */}
+            <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+            <PageTransitionOverlay />
+            <SharedElementLayer />
+          </div>
+        </TransitionProvider>
+      </SelectionProvider>
+    </ErrorBoundary>
   );
 }

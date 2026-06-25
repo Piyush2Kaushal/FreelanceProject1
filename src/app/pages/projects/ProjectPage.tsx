@@ -50,15 +50,34 @@ const NavButton = memo(function NavButton({
   strokeColor,
   leftCalc,
   top = "26px",
+  onOpen,
 }: {
   strokeColor: string;
   leftCalc: string;
   top?: string;
+  /** Desktop only: opens the slide-in nav drawer. Optional so mobile/other
+   *  callers are unaffected; when absent the button stays purely presentational. */
+  onOpen?: () => void;
 }) {
   return (
     <div
       className="absolute content-stretch flex gap-[8px] items-center"
-      style={{ left: leftCalc, top }}
+      style={{ left: leftCalc, top, cursor: onOpen ? "pointer" : undefined }}
+      role={onOpen ? "button" : undefined}
+      tabIndex={onOpen ? 0 : undefined}
+      aria-label={onOpen ? "Open menu" : undefined}
+      aria-haspopup={onOpen ? "dialog" : undefined}
+      onClick={onOpen}
+      onKeyDown={
+        onOpen
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onOpen();
+              }
+            }
+          : undefined
+      }
     >
       <p
         className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.2] not-italic relative shrink-0 text-[20px] text-center whitespace-nowrap"
@@ -123,7 +142,7 @@ const BackButton = memo(function BackButton() {
           </svg>
         </div>
         <p className="[word-break:break-word] font-['Instrument_Serif',sans-serif] leading-[1.2] not-italic relative shrink-0 text-[#dad0ad] text-[14px] text-center whitespace-nowrap">
-          Go back to Previous project
+          Go back
         </p>
       </div>
       
@@ -138,7 +157,7 @@ const BackButton = memo(function BackButton() {
             <line
               stroke="var(--stroke-0, #DAD0AD)"
               strokeWidth="0.5"
-              x2="147"
+              x2="60"
               y1="0.25"
               y2="0.25"
             />
@@ -152,7 +171,7 @@ const BackButton = memo(function BackButton() {
 // ─────────────────────────────────────────────────────────────────────────────
 // Screen 1 – Intro
 // ─────────────────────────────────────────────────────────────────────────────
-const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["intro"] }) {
+const IntroScreen = memo(function IntroScreen({ data, onMenuOpen }: { data: ProjectData["intro"]; onMenuOpen?: () => void }) {
   // While a shared-element morph is in flight, keep the real hero hidden so the
   // flying clone is the only visible image (no double-image flash). The
   // SharedElementLayer reveals it imperatively the instant the clone lands.
@@ -400,7 +419,7 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
       )}
 
       {/* Nav button */}
-      <NavButton strokeColor={data.navStrokeColor} leftCalc={data.navLeftCalc} />
+      <NavButton strokeColor={data.navStrokeColor} leftCalc={data.navLeftCalc} onOpen={onMenuOpen} />
     </div>
   );
 });
@@ -408,7 +427,7 @@ const IntroScreen = memo(function IntroScreen({ data }: { data: ProjectData["int
 // ─────────────────────────────────────────────────────────────────────────────
 // Screen 2 – Concept
 // ─────────────────────────────────────────────────────────────────────────────
-const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData["concept"] }) {
+const ConceptScreen = memo(function ConceptScreen({ data, onMenuOpen }: { data: ProjectData["concept"]; onMenuOpen?: () => void }) {
   const navigate = useNavigate();
   return (
     <div
@@ -553,7 +572,7 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
         <p className="leading-[normal]">{data.bodyParagraph2}</p>
       </div>
 
-      <NavButton strokeColor={data.navStrokeColor} leftCalc={data.navLeftCalc} />
+      <NavButton strokeColor={data.navStrokeColor} leftCalc={data.navLeftCalc} onOpen={onMenuOpen} />
     </div>
   );
 });
@@ -561,7 +580,7 @@ const ConceptScreen = memo(function ConceptScreen({ data }: { data: ProjectData[
 // ─────────────────────────────────────────────────────────────────────────────
 // Screen 3 – Experience Overview (scattered images)
 // ─────────────────────────────────────────────────────────────────────────────
-const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: ProjectData["experience"] }) {
+const ExperienceScreen = memo(function ExperienceScreen({ data, onMenuOpen }: { data: ProjectData["experience"]; onMenuOpen?: () => void }) {
   const navigate = useNavigate();
   return (
     <div
@@ -676,7 +695,7 @@ const ExperienceScreen = memo(function ExperienceScreen({ data }: { data: Projec
         />
       </div>
 
-      <NavButton strokeColor={data.navStrokeColor} leftCalc={data.navLeftCalc} top="21px" />
+      <NavButton strokeColor={data.navStrokeColor} leftCalc={data.navLeftCalc} top="21px" onOpen={onMenuOpen} />
     </div>
   );
 });
@@ -1882,6 +1901,294 @@ function MobileProjectPage({ project }: { project: ProjectData }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// DesktopProjectNav – Premium right-anchored slide-in drawer (DESKTOP ONLY)
+//
+// Rendered at the DesktopProjectPage ROOT, OUTSIDE the scaled scroll strip, as a
+// viewport-fixed overlay — so it is always full-screen, crisp and unclipped
+// regardless of the strip's transform: scale(). Visual language is borrowed from
+// the existing mobile drawer (brand #DAD0AD ink, multiply texture layers, the
+// same six links + active-state logic, the site's cubic-bezier(0.76,0,0.24,1)
+// curve) so it reads as native to the site. Theming (panel bg / texture) is
+// derived per-project, so each project's drawer adapts automatically — classic,
+// smooth, aligned to the project. Mobile is untouched.
+// ─────────────────────────────────────────────────────────────────────────────
+function DesktopProjectNav({
+  open,
+  onClose,
+  bgColor,
+  bgTextureImg,
+  logoImg,
+  triggerRef,
+}: {
+  open: boolean;
+  onClose: () => void;
+  bgColor: string;
+  bgTextureImg: string;
+  logoImg?: string;
+  /** The element to restore focus to when the drawer closes. */
+  triggerRef: React.MutableRefObject<HTMLElement | null>;
+}) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+
+  const reduceMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  const navLinks = [
+    { label: "Home", to: "/home" },
+    { label: "About", to: "/about" },
+    { label: "Projects", to: "/projects/project-1" },
+    { label: "Journal", to: "/journal" },
+    { label: "Moodboard", to: "/" },
+    { label: "Contact", to: "/contact" },
+  ];
+
+  function isNavActive(label: string): boolean {
+    if (label === "Home") return pathname === "/home";
+    if (label === "Projects") return pathname.startsWith("/projects");
+    if (label === "About") return pathname === "/about";
+    if (label === "Journal") return pathname.startsWith("/journal");
+    if (label === "Moodboard") return pathname === "/";
+    return false;
+  }
+
+  // Escape to close + focus management (move focus in on open, restore on close).
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    // Move focus into the panel once it's open.
+    const t = window.setTimeout(() => closeBtnRef.current?.focus(), 60);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.clearTimeout(t);
+    };
+  }, [open, onClose]);
+
+  // Restore focus to the trigger when the drawer closes.
+  const wasOpen = useRef(false);
+  useEffect(() => {
+    if (wasOpen.current && !open) {
+      triggerRef.current?.focus?.();
+    }
+    wasOpen.current = open;
+  }, [open, triggerRef]);
+
+  const PANEL_W = 340; // px — refined panel, not a full takeover
+  const EASE = "cubic-bezier(0.76, 0, 0.24, 1)";
+  const PANEL_DUR = reduceMotion ? 0.001 : 0.72;
+
+  return (
+    <div
+      aria-hidden={!open}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        pointerEvents: open ? "all" : "none",
+      }}
+    >
+      {/* Scrim — dim + subtle blur, fades in/out. Click to dismiss. */}
+      <div
+        onClick={onClose}
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(20,12,8,0.46)",
+          backdropFilter: open ? "blur(2px)" : "blur(0px)",
+          WebkitBackdropFilter: open ? "blur(2px)" : "blur(0px)",
+          opacity: open ? 1 : 0,
+          transition: reduceMotion
+            ? "opacity 0.001s linear"
+            : "opacity 0.5s ease, backdrop-filter 0.5s ease",
+        }}
+      />
+
+      {/* Panel — glides in from the right on the site's signature curve. */}
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: PANEL_W,
+          maxWidth: "92vw",
+          background: bgColor,
+          boxShadow: open ? "-24px 0 80px rgba(0,0,0,0.32)" : "none",
+          transform: open ? "translateX(0)" : `translateX(${PANEL_W}px)`,
+          transition: `transform ${PANEL_DUR}s ${EASE}, box-shadow ${PANEL_DUR}s ${EASE}`,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Texture layers — same multiply treatment as the mobile drawer. */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: `url("${bgTextureImg}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            mixBlendMode: "multiply",
+            opacity: open ? 0.22 : 0,
+            pointerEvents: "none",
+            transition: reduceMotion ? "none" : "opacity 0.4s ease 0.25s",
+            zIndex: 1,
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: `url("${imgDrawerTexture}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            mixBlendMode: "multiply",
+            opacity: open ? 0.55 : 0,
+            pointerEvents: "none",
+            transition: reduceMotion ? "none" : "opacity 0.4s ease 0.25s",
+            zIndex: 2,
+          }}
+        />
+
+        {/* Close (×) button */}
+        <button
+          ref={closeBtnRef}
+          onClick={onClose}
+          aria-label="Close menu"
+          style={{
+            position: "absolute",
+            top: 22,
+            right: 22,
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            padding: 8,
+            zIndex: 10,
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            opacity: open ? 1 : 0,
+            transition: reduceMotion ? "none" : "opacity 0.4s ease 0.34s",
+          }}
+        >
+          <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
+            <line x1="3" y1="3" x2="17" y2="17" stroke="#DAD0AD" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="17" y1="3" x2="3" y2="17" stroke="#DAD0AD" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        {/* Links */}
+        <nav
+          style={{
+            position: "relative",
+            zIndex: 5,
+            display: "flex",
+            flexDirection: "column",
+            padding: "76px 32px 0",
+            gap: 0,
+          }}
+        >
+          {navLinks.map((item, index) => {
+            const active = isNavActive(item.label);
+            const inDelay = 0.26 + index * 0.06;
+            return (
+              <a
+                key={item.label}
+                href={item.to}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onClose();
+                  navigate(item.to);
+                }}
+                style={{
+                  fontFamily: "'Instrument_Serif', serif",
+                  fontSize: 20,
+                  fontWeight: 400,
+                  lineHeight: 1.25,
+                  letterSpacing: "0.01em",
+                  color: "#DAD0AD",
+                  textDecoration: "none",
+                  padding: "10px 0",
+                  borderBottom:
+                    index < navLinks.length - 1
+                      ? "1px solid rgba(218,208,173,0.28)"
+                      : "none",
+                  opacity: open ? 1 : 0,
+                  transform: open ? "translateY(0)" : "translateY(18px)",
+                  transition: reduceMotion
+                    ? "none"
+                    : `opacity 0.55s ease ${inDelay}s, transform 0.55s ${EASE} ${inDelay}s`,
+                  position: "relative",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 9,
+                }}
+              >
+                {/* Active marker — a small classic serif rule */}
+                <span
+                  aria-hidden
+                  style={{
+                    display: "inline-block",
+                    width: active ? 16 : 0,
+                    height: 1,
+                    background: "#DAD0AD",
+                    transition: reduceMotion ? "none" : "width 0.45s ease",
+                    flexShrink: 0,
+                  }}
+                />
+                {item.label}
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Bottom logo — settles in last */}
+        {logoImg && (
+          <div
+            style={{
+              marginTop: "auto",
+              position: "relative",
+              zIndex: 5,
+              display: "flex",
+              justifyContent: "center",
+              padding: "0 32px 28px",
+              opacity: open ? 1 : 0,
+              transform: open ? "scale(1)" : "scale(0.94)",
+              transition: reduceMotion
+                ? "none"
+                : `opacity 1s ease ${0.26 + navLinks.length * 0.06}s, transform 1s ${EASE} ${0.26 + navLinks.length * 0.06}s`,
+            }}
+          >
+            <img
+              src={logoImg}
+              alt="Studio Inside Eye"
+              style={{ width: "auto", maxWidth: 160, height: "auto", objectFit: "contain" }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // DesktopProjectPage – Original horizontal scroll, now height-responsive
 //
 // PROBLEM: All desktop screens are hardcoded to 780px height (Figma frame),
@@ -1900,6 +2207,24 @@ function MobileProjectPage({ project }: { project: ProjectData }) {
 function DesktopProjectPage({ project }: { project: ProjectData }) {
   const totalWidth = useMemo(() => computeTotalWidth(project), [project]);
   const DESIGN_HEIGHT = 780; // Figma frame height all screens are built against
+
+  // ── Slide-in nav drawer (desktop only) ─────────────────────────────────────
+  // One shared drawer opened by any of the three NavButtons. Theming is derived
+  // from the same project fields the mobile drawer uses, so the panel adapts to
+  // each project's palette automatically.
+  const [menuOpen, setMenuOpen] = useState(false);
+  const lastTriggerRef = useRef<HTMLElement | null>(null);
+  const drawerBgColor = project.intro.heroPanelBg;
+  const drawerLogoImg = project.intro.logoImg ?? project.experience.logoImg;
+  const drawerTextureImg = project.experience.bgTextureImg;
+
+  const openMenu = () => {
+    // Remember the focused trigger so focus can return to it on close.
+    lastTriggerRef.current =
+      (document.activeElement as HTMLElement | null) ?? null;
+    setMenuOpen(true);
+  };
+  const closeMenu = () => setMenuOpen(false);
 
   // Track the real viewport height so we can compute a scale factor.
   // Defaults to DESIGN_HEIGHT (scale = 1) until mounted, avoiding SSR issues.
@@ -1948,6 +2273,7 @@ function DesktopProjectPage({ project }: { project: ProjectData }) {
   useSmoothHorizontalScroll(scrollRef, { ease: 0.065, speed: 0.55 });
 
   return (
+    <>
     <div
       ref={scrollRef}
       className="scrollbar-hide"
@@ -1980,13 +2306,13 @@ function DesktopProjectPage({ project }: { project: ProjectData }) {
           {/* Scroll strip */}
           <div className="content-stretch flex items-center relative size-full">
             {/* Screen 1 – Intro */}
-            <IntroScreen data={project.intro} />
+            <IntroScreen data={project.intro} onMenuOpen={openMenu} />
 
             {/* Screen 2 – Concept */}
-            <ConceptScreen data={project.concept} />
+            <ConceptScreen data={project.concept} onMenuOpen={openMenu} />
 
             {/* Screen 3 – Experience overview */}
-            <ExperienceScreen data={project.experience} />
+            <ExperienceScreen data={project.experience} onMenuOpen={openMenu} />
 
             {/* Screens 4-6 – Gallery */}
             {project.galleryScreens.map((screen, i) => (
@@ -2013,6 +2339,18 @@ function DesktopProjectPage({ project }: { project: ProjectData }) {
         </div>
       </div>
     </div>
+
+    {/* Premium slide-in nav drawer — rendered OUTSIDE the scaled scroll strip so
+        it's always full-viewport, crisp and unclipped. Desktop only. */}
+    <DesktopProjectNav
+      open={menuOpen}
+      onClose={closeMenu}
+      bgColor={drawerBgColor}
+      bgTextureImg={drawerTextureImg}
+      logoImg={drawerLogoImg}
+      triggerRef={lastTriggerRef}
+    />
+    </>
   );
 }
 

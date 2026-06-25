@@ -1,0 +1,15 @@
+# ─────────────────────────────────────────────────────────────
+# Netlify configuration — Studio Inside Eye (Vite + React SPA)
+# ─────────────────────────────────────────────────────────────
+
+[build]
+  command = "npm run build"   # Vite build → outputs to dist/
+  publish = "dist"            # folder Netlify serves
+
+# SPA fallback: every unmatched path serves index.html (status 200),
+# so React Router can handle /about, /journal, /projects, etc. on
+# direct visits AND on reload. Without this, those URLs 404 on Netlify.
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
