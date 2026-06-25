@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { gsap } from "gsap";
 import {
   SLOTS,
@@ -9,6 +9,7 @@ import {
   imgPattern73,
   imgPattern72,
 } from "./projectData";
+import imgStudioLogo from "../../../../assets/lockup5.png";
 
 /* ───────────────────────────────────────────────────────────────────
    MOBILE EXPERIENCE — a bespoke, Apple-style vertical story.
@@ -20,7 +21,9 @@ import {
    which reads as calm and intentional on a phone.
 
    Premium details:
-   - Sticky, condensing header (title shrinks as you scroll past the intro).
+   - Header (logo + menu) and Hero (heading + subheading) share one seamless
+     background and scroll away normally with the page — no sticky/fixed
+     positioning, matching the About and Contact pages.
    - Each project image does a slow, subtle scale "settle" on reveal (Ken-Burns
      restraint — no loud parallax).
    - Info panel: project colour + the shared grain texture, sliding up with a
@@ -30,6 +33,226 @@ import {
 ─────────────────────────────────────────────────────────────────── */
 
 const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+
+// ─── Landing page mobile navbar + drawer ──────────────────────────────────────
+// Exact same structure & animations as MobileProjectNav in ProjectPage.tsx.
+// Colors match the landing page palette (#dad0ad bg, #553500 text/strokes).
+const LANDING_BG    = "#dad0ad";
+const LANDING_FG    = "#553500";
+const LANDING_FG_MID = "rgba(85,53,0,0.5)";
+
+const navLinks = [
+  { label: "Home",      to: "/home" },
+  { label: "About",     to: "/about" },
+  { label: "Projects",  to: "/projects" },
+  { label: "Journal",   to: "/journal" },
+  { label: "Moodboard", to: "/" },
+  { label: "Contact",   to: "/contact" },
+];
+
+function MobileLandingNav() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  function isActive(label: string) {
+    if (label === "Home")      return pathname === "/home";
+    if (label === "Projects")  return pathname.startsWith("/projects");
+    if (label === "About")     return pathname === "/about";
+    if (label === "Journal")   return pathname.startsWith("/journal");
+    if (label === "Moodboard") return pathname === "/";
+    return false;
+  }
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [drawerOpen]);
+
+  return (
+    <>
+      {/* ── Top bar — scrolls normally with the page (no sticky/fixed
+            positioning, no divider); background + texture now live on the
+            shared Header+Hero wrapper so the two read as one section ──── */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "14px 20px",
+        }}
+      >
+        {/* Studio logo → navigates home */}
+        <div
+          style={{ height: 38, width: 84, position: "relative", cursor: "pointer", flexShrink: 0 }}
+          onClick={() => navigate("/home")}
+        >
+          <img
+            src={imgStudioLogo}
+            alt="Studio Inside Eye"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", pointerEvents: "none" }}
+          />
+        </div>
+
+        {/* Hamburger button */}
+        <button
+          onClick={() => setDrawerOpen(true)}
+          aria-label="Open menu"
+          style={{
+            width: 36, height: 36,
+            borderRadius: "50%",
+            background: "rgba(85,53,0,0.08)",
+            border: `1.5px solid ${LANDING_FG_MID}`,
+            cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <svg width="16" height="12" viewBox="0 0 18 14" fill="none">
+            <line x1="0" y1="1"  x2="18" y2="1"  stroke={LANDING_FG} strokeWidth="1.8" strokeLinecap="round" />
+            <line x1="0" y1="7"  x2="18" y2="7"  stroke={LANDING_FG} strokeWidth="1.8" strokeLinecap="round" />
+            <line x1="0" y1="13" x2="18" y2="13" stroke={LANDING_FG} strokeWidth="1.8" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      {/* ── Full-screen drawer ───────────────────────────────────────────── */}
+      <div
+        style={{
+          position: "fixed", inset: 0, zIndex: 9999,
+          pointerEvents: drawerOpen ? "all" : "none",
+          overflow: "hidden",
+          opacity: drawerOpen ? 1 : 0,
+          transition: drawerOpen ? "opacity 0s 0s" : "opacity 0.35s ease 0s",
+        }}
+      >
+        {/* 4-column scaleY wipe — same as Navbar.tsx */}
+        {[
+          { delay: 0,   duration: 0.65 },
+          { delay: 0.1, duration: 0.65 },
+          { delay: 0.2, duration: 0.65 },
+          { delay: 0.3, duration: 0.65 },
+        ].map((col, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute", top: 0, bottom: 0,
+              left: `${i * 25}%`,
+              width: i < 3 ? "calc(25% + 1px)" : "25%",
+              background: LANDING_BG,
+              transform: drawerOpen ? "scaleY(1)" : "scaleY(0)",
+              transformOrigin: "bottom",
+              transition: drawerOpen
+                ? `transform ${col.duration}s cubic-bezier(0.76,0,0.24,1) ${col.delay}s`
+                : "none",
+              overflow: "hidden",
+            }}
+          />
+        ))}
+
+        {/* Texture — two multiply layers (same as desktop banner) */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0, zIndex: 2,
+            backgroundImage: `url("${bannerTexture}")`,
+            backgroundSize: "cover", backgroundPosition: "center",
+            mixBlendMode: "multiply",
+            opacity: drawerOpen ? 0.3 : 0,
+            pointerEvents: "none",
+            transition: drawerOpen ? "opacity 0.3s ease 0.65s" : "opacity 0.2s ease 0s",
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0, zIndex: 3,
+            backgroundImage: `url("${bannerTexture}")`,
+            backgroundSize: "cover", backgroundPosition: "center",
+            mixBlendMode: "multiply",
+            opacity: drawerOpen ? 0.7 : 0,
+            pointerEvents: "none",
+            transition: drawerOpen ? "opacity 0.3s ease 0.65s" : "opacity 0.2s ease 0s",
+          }}
+        />
+
+        {/* Close (×) button */}
+        <button
+          onClick={() => setDrawerOpen(false)}
+          aria-label="Close menu"
+          style={{
+            position: "absolute", top: 24, left: 24, zIndex: 10,
+            background: "transparent", border: "none", cursor: "pointer",
+            padding: 10, display: "flex", alignItems: "center", justifyContent: "center",
+            opacity: drawerOpen ? 1 : 0,
+            transition: drawerOpen ? "opacity 0.3s ease 0.85s" : "none",
+          }}
+        >
+          <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
+            <line x1="3" y1="3" x2="17" y2="17" stroke={LANDING_FG} strokeWidth="1.6" strokeLinecap="round" />
+            <line x1="17" y1="3" x2="3"  y2="17" stroke={LANDING_FG} strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        {/* Nav links */}
+        <nav
+          style={{
+            position: "relative", zIndex: 5,
+            display: "flex", flexDirection: "column",
+            padding: "84px 32px 0", gap: 0,
+          }}
+        >
+          {navLinks.map((item, index) => (
+            <a
+              key={item.label}
+              href={item.to}
+              onClick={(e) => { e.preventDefault(); setDrawerOpen(false); navigate(item.to); }}
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: 22, fontWeight: 400, lineHeight: 1.4,
+                color: LANDING_FG,
+                textDecoration: isActive(item.label) ? "underline" : "none",
+                textDecorationColor: LANDING_FG,
+                textUnderlineOffset: "4px",
+                padding: "14px 0",
+                borderBottom: index < navLinks.length - 1 ? `1px solid ${LANDING_FG}` : "none",
+                opacity: drawerOpen ? 1 : 0,
+                transform: drawerOpen ? "translateY(0)" : "translateY(24px)",
+                transition: drawerOpen
+                  ? `opacity 0.45s ease ${0.85 + index * 0.07}s, transform 0.45s ease ${0.85 + index * 0.07}s`
+                  : "none",
+              }}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Bottom studio logo */}
+        <div
+          style={{
+            position: "absolute", bottom: 25, left: 0, right: 0, zIndex: 5,
+            display: "flex", justifyContent: "center", padding: "0 32px",
+            opacity: drawerOpen ? 1 : 0,
+            transform: drawerOpen ? "scale(1)" : "scale(0.92)",
+            transition: drawerOpen
+              ? `opacity 1.4s ease ${0.85 + navLinks.length * 0.07}s`
+              : "none",
+          }}
+        >
+          <img
+            src={imgStudioLogo}
+            alt="Studio Inside Eye"
+            style={{ width: "auto", maxWidth: 300, height: "auto", objectFit: "contain" }}
+          />
+        </div>
+      </div>
+    </>
+  );
+}
 
 function prefersReduced() {
   return (
@@ -135,8 +358,8 @@ function MobileProject({
       style={{
         position: "relative",
         width: "100%",
-        height: "88svh",
-        marginBottom: "4svh",
+        height: "65svh",
+        marginBottom: "3svh",
         borderRadius: 22,
         overflow: "hidden",
         cursor: destination ? "pointer" : "default",
@@ -215,8 +438,8 @@ function MobileProject({
             backgroundImage: `url("${bannerTexture}")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            mixBlendMode: "soft-light",
-            opacity: 0.55,
+            mixBlendMode: "multiply",
+            opacity: 0.3,
             pointerEvents: "none",
           }}
         />
@@ -228,9 +451,8 @@ function MobileProject({
             backgroundImage: `url("${bannerTexture}")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            transform: "scaleX(-1)",
-            mixBlendMode: "overlay",
-            opacity: 0.4,
+            mixBlendMode: "multiply",
+            opacity: 0.7,
             pointerEvents: "none",
           }}
         />
@@ -275,8 +497,8 @@ function MobileProject({
             height: 40,
             width: "auto",
             alignSelf: "center",
-            opacity: 0.32,
-            mixBlendMode: "luminosity",
+            opacity: 1,
+            mixBlendMode: "normal",
           }}
         />
       </div>
@@ -286,41 +508,32 @@ function MobileProject({
 
 export function SelectedWorksMobile() {
   const headerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLParagraphElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
 
-  // Condensing sticky header + progress rail, driven by scroll.
+  // Progress rail, now driven by normal page scroll — Header & Hero are no
+  // longer pinned/sticky, so the only thing left to track is overall scroll
+  // position through the page (the rail itself stays viewport-anchored via
+  // position: fixed, same as before, it just no longer reads from an
+  // internal scroll container).
   useEffect(() => {
-    const scroller = scrollerRef.current;
-    const title = titleRef.current;
     const rail = railRef.current;
-    if (!scroller) return;
+    if (!rail) return;
 
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const y = scroller.scrollTop;
-        const max = scroller.scrollHeight - scroller.clientHeight;
-        const p = max > 0 ? Math.min(1, y / max) : 0;
-
-        if (title) {
-          // condense the title from 1 → 0.78 over the first 160px
-          const k = Math.min(1, y / 160);
-          const s = 1 - k * 0.22;
-          title.style.transform = `scale(${s})`;
-          title.style.opacity = String(1 - k * 0.12);
-        }
-        if (rail) rail.style.transform = `scaleY(${p})`;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        rail.style.transform = `scaleY(${p})`;
         ticking = false;
       });
     };
 
-    scroller.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => scroller.removeEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // gentle intro for the header itself
@@ -344,88 +557,116 @@ export function SelectedWorksMobile() {
       style={{
         position: "relative",
         width: "100%",
-        height: "100svh",
         backgroundColor: "#dad0ad",
-        overflow: "hidden",
       }}
     >
-      {/* faint background pattern, same texture language as desktop */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          maskImage: `url("${imgPattern72}")`,
-          WebkitMaskImage: `url("${imgPattern72}")`,
-          maskSize: "cover",
-          WebkitMaskSize: "cover",
-          maskPosition: "center",
-          WebkitMaskPosition: "center",
-          opacity: 0.5,
-          pointerEvents: "none",
-        }}
-      >
-        <img
-          alt=""
-          src={imgPattern73}
-          style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.13 }}
+      {/* ── Header + Hero — one seamless section, no divider, no sticky/
+            fixed positioning. Both the navbar and the heading/subheading
+            scroll away normally with the rest of the page, just like the
+            About and Contact pages. ─────────────────────────────────── */}
+      <div ref={headerRef} style={{ position: "relative", backgroundColor: "#dad0ad" }}>
+        {/* one shared texture layer across the whole Header+Hero block so
+            there's no visible seam between the two */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: `url("${bannerTexture}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            mixBlendMode: "multiply",
+            opacity: 0.08,
+            pointerEvents: "none",
+          }}
         />
+
+        {/* Header — logo + menu button */}
+        <MobileLandingNav />
+
+        {/* Hero — heading + subheading */}
+        <div style={{ position: "relative", padding: "15px 20px 0px" }}>
+          <p
+            data-intro
+            style={{
+              margin: 0,
+              color: "#553500",
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 34,
+              lineHeight: 0.95,
+            }}
+          >
+            Selected Works
+          </p>
+          <p
+            data-intro
+            style={{
+              margin: "8px 0 0",
+              maxWidth: 280,
+              color: "#553500",
+              fontFamily: "'Helvetica Neue','Arial',sans-serif",
+              fontWeight: 300,
+              fontSize: 14,
+              lineHeight: 1.35,
+              opacity: 0.9,
+            }}
+          >
+            {STUDIO_TAGLINE}
+          </p>
+        </div>
       </div>
 
-      {/* sticky condensing header */}
-      <div
-        ref={headerRef}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 20,
-          padding: "20px 20px 14px",
-          background:
-            "linear-gradient(180deg, rgba(218,208,173,0.96) 0%, rgba(218,208,173,0.86) 60%, rgba(218,208,173,0) 100%)",
-          backdropFilter: "blur(2px)",
-          WebkitBackdropFilter: "blur(2px)",
-          pointerEvents: "none",
-        }}
-      >
-        <p
-          ref={titleRef}
-          data-intro
+      {/* ── Project list — normal page flow ─────────────────────────────── */}
+      <div style={{ position: "relative", padding: "24px 16px 40px" }}>
+
+        {/* faint background pattern, same texture language as desktop */}
+        <div
+          aria-hidden
           style={{
-            margin: 0,
+            position: "absolute",
+            inset: 0,
+            maskImage: `url("${imgPattern72}")`,
+            WebkitMaskImage: `url("${imgPattern72}")`,
+            maskSize: "cover",
+            WebkitMaskSize: "cover",
+            maskPosition: "center",
+            WebkitMaskPosition: "center",
+            opacity: 0.5,
+            pointerEvents: "none",
+          }}
+        >
+          <img
+            alt=""
+            src={imgPattern73}
+            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.13 }}
+          />
+        </div>
+
+        {SLOTS.map((slot, i) => (
+          <MobileProject key={i} slot={slot} index={i} total={SLOTS.length} />
+        ))}
+
+        {/* closing footer line */}
+        <div
+          style={{
+            position: "relative",
+            textAlign: "center",
+            padding: "10px 0 18px",
             color: "#553500",
+            opacity: 0.7,
             fontFamily: "'Instrument Serif', serif",
-            fontSize: 34,
-            lineHeight: 0.95,
-            transformOrigin: "left center",
-            willChange: "transform, opacity",
+            fontSize: 20,
           }}
         >
-          Selected Works
-        </p>
-        <p
-          data-intro
-          style={{
-            margin: "8px 0 0",
-            maxWidth: 280,
-            color: "#553500",
-            fontFamily: "'Helvetica Neue','Arial',sans-serif",
-            fontWeight: 300,
-            fontSize: 14,
-            lineHeight: 1.35,
-            opacity: 0.9,
-          }}
-        >
-          {STUDIO_TAGLINE}
-        </p>
+          Studio Inside Eye
+        </div>
       </div>
 
-      {/* thin progress rail on the right */}
+      {/* thin progress rail on the right — viewport-anchored, tracks page scroll */}
       <div
         aria-hidden
         style={{
-          position: "absolute",
+          position: "fixed",
           top: "50%",
           right: 8,
           transform: "translateY(-50%)",
@@ -449,37 +690,6 @@ export function SelectedWorksMobile() {
             willChange: "transform",
           }}
         />
-      </div>
-
-      {/* the scrolling story */}
-      <div
-        ref={scrollerRef}
-        style={{
-          position: "absolute",
-          inset: 0,
-          overflowY: "auto",
-          WebkitOverflowScrolling: "touch",
-          padding: "118px 16px 40px",
-          scrollBehavior: "smooth",
-        }}
-      >
-        {SLOTS.map((slot, i) => (
-          <MobileProject key={i} slot={slot} index={i} total={SLOTS.length} />
-        ))}
-
-        {/* closing footer line */}
-        <div
-          style={{
-            textAlign: "center",
-            padding: "10px 0 18px",
-            color: "#553500",
-            opacity: 0.7,
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 20,
-          }}
-        >
-          Studio Inside Eye
-        </div>
       </div>
     </div>
   );
