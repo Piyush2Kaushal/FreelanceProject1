@@ -1935,11 +1935,12 @@ function DesktopProjectPage({ project }: { project: ProjectData }) {
 
   // ── Premium vertical-wheel → smooth horizontal scroll ──────────────────────
   // Maps mouse-wheel / trackpad vertical input onto this container's native
-  // scrollLeft with eased inertia. Drives the real scroll position (not a
-  // transform), so the useReveal scroll listener above keeps firing exactly as
-  // before — layout, scaling, spacing and reveals are all untouched. No-ops on
-  // touch / mobile / reduced-motion.
-  useSmoothHorizontalScroll(scrollRef, { ease: 0.085, speed: 0.9 });
+  // scrollLeft with a heavy, controlled eased glide — high resistance, slow
+  // settle — normalised for frame-rate so it feels identical on 60–144Hz
+  // displays. Drives the real scroll position (not a transform), so the
+  // useReveal scroll listener above keeps firing exactly as before — layout,
+  // scaling, spacing and reveals are all untouched. No-ops on touch / mobile.
+  useSmoothHorizontalScroll(scrollRef, { ease: 0.065, speed: 0.55 });
 
   return (
     <div

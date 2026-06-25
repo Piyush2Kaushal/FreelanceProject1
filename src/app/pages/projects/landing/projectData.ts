@@ -67,7 +67,7 @@ export const SLOTS: Slot[] = [
   {
     big: true,
     src: imgImage63,
-    border: "2.4px",
+    border: "4px",
     borderColor: CARD_BORDER_COLOR,
     label: { name: "SIENNA", year: "2024" },
     project: {
@@ -81,7 +81,7 @@ export const SLOTS: Slot[] = [
   {
     big: false,
     src: imgImage60,
-    border: "2.4px",
+    border: "2.8px",
     borderColor: CARD_BORDER_COLOR,
     overflow: true,
     project: {
@@ -95,7 +95,7 @@ export const SLOTS: Slot[] = [
   {
     big: true,
     src: imgImage62,
-    border: "6px",
+    border: "4px",
     borderColor: CARD_BORDER_COLOR,
     overflow: true,
     project: {
@@ -109,7 +109,7 @@ export const SLOTS: Slot[] = [
   {
     big: false,
     src: imgImage61,
-    border: "4px",
+    border: "2.8px",
     borderColor: CARD_BORDER_COLOR,
     project: {
       name: "Atelier\nSaint-Germain",
