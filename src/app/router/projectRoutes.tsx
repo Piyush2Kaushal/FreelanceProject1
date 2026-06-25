@@ -22,8 +22,8 @@ const Project1Page = lazy(() => import("../pages/projects/Project1Page"));
 const Project2Page = lazy(() => import("../pages/projects/Project2Page"));
 // ── Project 3 & 4 placeholders (reuse Project 1 & 2 for now) ──────────────────
 // When real pages exist, point these at Project3Page / Project4Page instead.
-const Project3Page = lazy(() => import("../pages/projects/Project1Page"));
-const Project4Page = lazy(() => import("../pages/projects/Project2Page"));
+const Project3Page = lazy(() => import("../pages/projects/Project3Page"));
+const Project4Page = lazy(() => import("../pages/projects/Project4Page"));
 
 // Minimal fallback – keeps layout stable while the chunk loads
 const PageFallback = () => (

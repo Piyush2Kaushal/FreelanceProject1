@@ -1,46 +1,49 @@
 /* ───────────────────────────────────────────────────────────────────
-   Projects Landing — shared project data + assets.
-   Both the desktop conveyor (SelectedWorks) and the mobile experience
-   (SelectedWorksMobile) read from here, so the content lives in ONE place.
+   Projects Landing — project data + assets.
 
-   NOTE (integration):
-   • Assets are self-contained in ./assets/ so this landing page does not
-     depend on the main /assets folder.
+   ✅ SINGLE SOURCE OF TRUTH:
+   The landing cards no longer hardcode their own content. Instead each
+   card's NAME, SUBHEADING, COLOUR, LOGO and TEXTURE are pulled directly
+   from the real project data files in /data (project1..project4).
+
+   • SelectedWorks (desktop) and SelectedWorksMobile both read SLOTS,
+     so content still lives in ONE place — but that place is now the
+     canonical /data registry, not a duplicate list here.
+
    • Each card carries a `route` (e.g. "/projects/project-1"). Clicking a
-     card runs the SAME shared-element morph used on the Home page and then
-     navigates to that route — see SelectedWorks.tsx / SelectedWorksMobile.tsx.
+     card runs the shared-element morph and navigates to that route.
 
-   FUTURE (Project 3 & 4):
-   • Cards 3 & 4 currently reuse Projects 1 & 2 (routes project-3 / project-4
-     map to project1Data / project2Data in app/router/projectRoutes.tsx).
-     When the real Project 3 & 4 are ready, update those two route entries +
-     the card content below — nothing else changes.
+   • Project 3 & 4 are now REAL pages (data/project3.ts, data/project4.ts)
+     with their own colour + text. Images are intentionally reused from
+     Projects 1 & 2 for now.
+
+   To change a card's colour / name / logo → edit the matching data file
+   in /data. This landing page updates automatically.
 ─────────────────────────────────────────────────────────────────── */
-import imgImage60 from "../../../../assets/d0771eeb465df0dcf09bc934a4e09e95eb4e483d.png";
-import imgImage61 from "../../../../assets/2f34cdcf685a216dedefab7556a79fa2ff9e2c41.png";
-import imgImage62 from "../../../../assets/84770e53466dfe366e2f00008755009ec0ce1d94.png";
-import imgImage63 from "../../../../assets/b4a164386bbaad064f2af7d1706cc6468f27d5f5.png";
+import { ALL_PROJECTS, type ProjectData } from "../../../../data";
+
+// Shared fallback logo (used only if a project somehow has no logo)
+import projectLogo from "../../../../assets/logo.png";
+
+// Decorative overlay patterns used by the conveyor (mask + faint texture).
+// These are landing-only decoration, kept exactly as before.
 import imgPattern73 from "../../../../assets/3335fa7ea6db7d3ea9a39208da45b87c05f865b5.png";
 import { imgPattern72 } from "../../../../assets/svg-c46fh";
 
-// Per-project logos — give each card its own file in ./assets/.
-// Any that are missing fall back to the shared logo.png so nothing breaks.
-import projectLogo from "../../../../assets/logo.png";
-import logo1 from "../../../../assets/logo.png";
-import logo2 from "../../../../assets/logo.png";
-import logo3 from "../../../../assets/logo.png";
-import logo4 from "../../../../assets/logo.png";
-
-// Shared banner texture — blended over each project's colour
+// ── Hover-banner texture ──────────────────────────────────────────────
+// Same fixed texture used by the mobile project-page side drawer
+// (ProjectPage.tsx → imgDrawerTexture). One shared image for ALL cards,
+// applied in TWO multiply layers on the hover banner to match the drawer.
 import bannerTexture from "../../../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
 
-export { imgPattern73, imgPattern72, bannerTexture, projectLogo };
+export { bannerTexture, projectLogo, imgPattern73, imgPattern72 };
 
 export type Project = {
   name: string;        // bold title (use \n for a line break)
   subheading: string;  // small line under the title
   color: string;       // banner background colour for this project
   logo?: string;       // per-project logo shown on the banner
+  category?: string;   // ← extra field: project category, sourced from data
   /** Destination route for the shared-element transition (preferred) */
   route?: string;
   /** Legacy external link fallback (unused once `route` is set) */
@@ -61,64 +64,53 @@ export type Slot = {
 /** Border colour drawn around every card frame (kept identical to original). */
 export const CARD_BORDER_COLOR = "#3e2113";
 
-// per-card content (image + border + project) in big/small alternating order.
-// Card N → /projects/project-N
-export const SLOTS: Slot[] = [
-  {
-    big: true,
-    src: imgImage63,
-    border: "4px",
-    borderColor: CARD_BORDER_COLOR,
-    label: { name: "SIENNA", year: "2024" },
-    project: {
-      name: "Sienna",
-      subheading: "Interiors",
-      color: "#8d2d1b",
-      logo: logo1,
-      route: "/projects/project-1",
-    },
-  },
-  {
-    big: false,
-    src: imgImage60,
-    border: "2.8px",
-    borderColor: CARD_BORDER_COLOR,
-    overflow: true,
-    project: {
-      name: "Pewter",
-      subheading: "Interiors",
-      color: "#6b6e39",
-      logo: logo2,
-      route: "/projects/project-2",
-    },
-  },
-  {
-    big: true,
-    src: imgImage62,
-    border: "4px",
-    borderColor: CARD_BORDER_COLOR,
-    overflow: true,
-    project: {
-      name: "Segur",
-      subheading: "Résidentiel",
-      color: "#8a8d7f",
-      logo: logo3,
-      route: "/projects/project-3",
-    },
-  },
-  {
-    big: false,
-    src: imgImage61,
-    border: "2.8px",
-    borderColor: CARD_BORDER_COLOR,
-    project: {
-      name: "Atelier\nSaint-Germain",
-      subheading: "Résidentiel",
-      color: "#9a6a4e",
-      logo: logo4,
-      route: "/projects/project-4",
-    },
-  },
+// ── Per-card LAYOUT (big/small, border, overflow) ─────────────────────
+// Only visual layout lives here now. All CONTENT (name, colour, logo,
+// subheading, image) is derived from the matching /data project below.
+const LAYOUT = [
+  { big: true,  border: "4px",   overflow: false, route: "/projects/project-1" },
+  { big: false, border: "2.8px", overflow: true,  route: "/projects/project-2" },
+  { big: true,  border: "4px",   overflow: true,  route: "/projects/project-3" },
+  { big: false, border: "2.8px", overflow: false, route: "/projects/project-4" },
 ];
 
-export const STUDIO_TAGLINE = "A curated collection of homes designed by Studio Inside Eye.";
+// Map a /data project → a landing card project block.
+function toCardProject(p: ProjectData, route: string): Project {
+  return {
+    name:       p.intro.projectName,
+    subheading: titleCase(p.intro.category), // e.g. "INTERIORS" → "Interiors"
+    color:      p.intro.heroPanelBg,
+    logo:       p.intro.logoImg ?? projectLogo,
+    category:   p.intro.category,            // ← extra field carried through
+    route,
+  };
+}
+
+function titleCase(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+// Card thumbnail image — use each project's concept main photo.
+function cardImage(p: ProjectData): string {
+  return p.concept.mainImg ?? p.intro.heroPortraitImg;
+}
+
+// per-card content (image + border + project), built from /data.
+// Card N → /projects/project-N
+export const SLOTS: Slot[] = LAYOUT.map((l, i) => {
+  const data = ALL_PROJECTS[i];
+  return {
+    big: l.big,
+    src: cardImage(data),
+    border: l.border,
+    borderColor: CARD_BORDER_COLOR,
+    overflow: l.overflow,
+    label: { name: data.intro.projectName.toUpperCase(), year: data.intro.year },
+    project: toCardProject(data, l.route),
+  };
+});
+
+export const STUDIO_TAGLINE =
+  "A curated collection of homes designed by Studio Inside Eye.";

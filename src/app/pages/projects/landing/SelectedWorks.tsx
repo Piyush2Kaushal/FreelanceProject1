@@ -87,11 +87,11 @@ const GROUP_W = (() => {
    equal padding on the left, right and bottom (NOT full-bleed). */
 const BANNER = {
   insetRatio: 0.026,   // equal margin (L/R/B) around the banner ≈ ref ~12/461
-  heightRatio: 0.30,   // banner height as a fraction of card height
+  heightRatio: 0.22,   // banner height as a fraction of card height
   padRatio: 0.058,     // inner padding (fraction of banner width)
   titleRatio: 0.072,   // title font size  (fraction of card width)
   subRatio: 0.040,     // subheading size  (fraction of card width)
-  logoHeightRatio: 0.42, // logo height (fraction of banner inner height)
+  logoHeightRatio: 0.90, // logo height (fraction of banner inner height)
 };
 
 // common easing — soft & smooth, gentle settle (matches the reference clip)
@@ -155,8 +155,9 @@ function CardFace({
             transition: `transform 0.95s ${EASE}, opacity 0.7s ease`,
           }}
         >
-          {/* texture grain over the colour — TWO layers for a richer, deeper
-              finish. Colour stays dominant; layers add the noisy texture. */}
+          {/* texture grain over the colour — TWO layers, matching the mobile
+              project-page side drawer exactly (same image, multiply blend,
+              opacity 0.3 then 0.7). Colour stays dominant. */}
           <div
             aria-hidden
             className="absolute inset-0 pointer-events-none"
@@ -164,8 +165,9 @@ function CardFace({
               backgroundImage: `url("${bannerTexture}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              mixBlendMode: "soft-light",
-              opacity: 0.55,
+              mixBlendMode: "multiply",
+              opacity: open ? 0.3 : 0,
+              transition: "opacity 0.7s ease",
             }}
           />
           <div
@@ -175,10 +177,9 @@ function CardFace({
               backgroundImage: `url("${bannerTexture}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              transform: "scaleX(-1)",   // flip so the two layers don't align
-              mixBlendMode: "overlay",
-              opacity: 0.4,
+              mixBlendMode: "multiply",
+              opacity: open ? 0.7 : 0,
+              transition: "opacity 0.7s ease",
             }}
           />
           {/* left: title + subheading, pinned to bottom */}
@@ -226,8 +227,8 @@ function CardFace({
               height: logoH,
               width: "auto",
               alignSelf: "center",
-              opacity: open ? 0.28 : 0,
-              mixBlendMode: "luminosity",
+              opacity: open ? 1 : 0,
+              mixBlendMode: "normal",
               transition: `opacity 0.9s ease 0.18s`,
             }}
           />
