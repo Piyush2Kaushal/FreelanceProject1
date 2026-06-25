@@ -806,7 +806,7 @@ function ContactMobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: ()
   const navLinks = [
     { label: "Home", to: "/home" },
     { label: "About", to: "/about" },
-    { label: "Projects", to: "/projects/project-1" },
+    { label: "Projects", to: "/projects" },
     { label: "Journal", to: "/journal" },
     { label: "Moodboard", to: "/" },
     { label: "Contact", to: "/contact" },

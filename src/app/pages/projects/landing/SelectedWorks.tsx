@@ -256,15 +256,21 @@ function CardEl({
   card,
   index,
   onPick,
+  onOpenDirect,
   onHoverChange,
 }: {
   card: Card;
   index: number;
   onPick: (index: number, card: Card, rect: DOMRect) => void;
+  onOpenDirect: (index: number, card: Card, rect: DOMRect) => void;
   onHoverChange: (hovering: boolean) => void;
 }) {
   const [hover, setHover] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  // A double-click fires click→click→dblclick. We delay the single-click zoom
+  // briefly; if a dblclick lands within that window we cancel the zoom and open
+  // the project directly instead.
+  const clickTimer = useRef<number | null>(null);
 
   const enter = () => {
     setHover(true);
@@ -282,9 +288,25 @@ function CardEl({
       style={{ left: card.left, top: card.top, width: card.w, height: card.h, cursor: "pointer" }}
       onMouseEnter={enter}
       onMouseLeave={leave}
+      // single click → zoom the card in (focus overlay), debounced for dblclick
       onClick={() => {
         const el = ref.current;
-        if (el) onPick(index, card, el.getBoundingClientRect());
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (clickTimer.current) window.clearTimeout(clickTimer.current);
+        clickTimer.current = window.setTimeout(() => {
+          clickTimer.current = null;
+          onPick(index, card, rect);
+        }, 220);
+      }}
+      // double click → cancel the pending zoom and open the project directly
+      onDoubleClick={() => {
+        const el = ref.current;
+        if (clickTimer.current) {
+          window.clearTimeout(clickTimer.current);
+          clickTimer.current = null;
+        }
+        if (el) onOpenDirect(index, card, el.getBoundingClientRect());
       }}
     >
       <CardFace card={card} hover={hover} />
@@ -299,9 +321,11 @@ function CardEl({
 function FocusOverlay({
   data,
   onClose,
+  onOpen,
 }: {
   data: { card: Card; rect: DOMRect } | null;
   onClose: () => void;
+  onOpen: (card: Card, rect: DOMRect) => void;
 }) {
   const cloneRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
@@ -406,9 +430,14 @@ function FocusOverlay({
 
   if (!data && !mounted) return null;
 
-  const openLink = () => {
-    const href = data?.card.project.href;
-    if (href) window.location.assign(href);
+  // Click the zoomed card → open its project page using the shared-element
+  // morph, starting from the clone's CURRENT on-screen rect (so it flies from
+  // the centred/enlarged card, not from the small strip card).
+  const openProject = () => {
+    if (!data) return;
+    const clone = cloneRef.current;
+    const liveRect = clone ? clone.getBoundingClientRect() : data.rect;
+    onOpen(data.card, liveRect);
   };
 
   return (
@@ -431,7 +460,7 @@ function FocusOverlay({
       {data && (
         <div ref={cloneRef} style={{ position: "fixed", overflow: "visible" }}>
           <div
-            onClick={openLink}
+            onClick={openProject}
             style={{ position: "absolute", inset: 0, cursor: "pointer" }}
             role="link"
             aria-label={`Open ${data.card.project.name.replace(/\n/g, " ")} case study`}
@@ -533,10 +562,10 @@ export function SelectedWorks() {
     [conveyor, isFocused]
   );
 
-  // Click a card → freeze the strip, then run the shared-element morph and
-  // navigate to that project's route.
-  const handlePick = useCallback(
-    (_i: number, card: Card, rect: DOMRect) => {
+  // Shared helper: run the shared-element morph from `rect` into the project
+  // hero, then navigate to that route ~300ms later (same handshake as Home).
+  const navigateToProject = useCallback(
+    (card: Card, rect: DOMRect) => {
       const route = card.project.route;
       if (!route || pickingRef.current) return;
       pickingRef.current = true;
@@ -565,54 +594,82 @@ export function SelectedWorks() {
     [conveyor, navigate, startTransition]
   );
 
+  // Single click a card → freeze the strip and ZOOM the card in (focus overlay).
+  // The project page is NOT opened yet — clicking the zoomed card opens it.
+  const handlePick = useCallback(
+    (_i: number, card: Card, rect: DOMRect) => {
+      if (!card.project.route) return;
+      conveyor.setHover(false); // restore full speed before pausing
+      tweenRef.current?.pause();
+      setFocused({ card, rect });
+    },
+    [conveyor]
+  );
+
+  // Double click a card in the strip → skip the zoom, open the project directly.
+  const handleOpenDirect = useCallback(
+    (_i: number, card: Card, rect: DOMRect) => {
+      navigateToProject(card, rect);
+    },
+    [navigateToProject]
+  );
+
+  // Click the already-zoomed card → open its project page (morph from the
+  // enlarged clone's live rect).
+  const handleOpenFromFocus = useCallback(
+    (card: Card, rect: DOMRect) => {
+      navigateToProject(card, rect);
+    },
+    [navigateToProject]
+  );
+
   const handleClose = useCallback(() => {
     setFocused(null);
     tweenRef.current?.resume();
   }, []);
 
-  // ── First-load reveal ────────────────────────────────────────────
-  // The cards arrive once: a soft opacity fade with a small upward settle,
-  // staggered left→right. We animate only opacity/y on the inner reveal
-  // wrappers, never x — the conveyor owns the strip's horizontal motion, so
-  // there is no conflict. Runs a single time on mount and is reduced-motion safe.
+  // ── First-load entrance ──────────────────────────────────────────
+  // Classic, simple, smooth: the WHOLE page eases in as one quiet fade —
+  // background, header and cards together — instead of cards rising from
+  // below in a staggered "reveal". One unified motion reads as premium and
+  // calm. We fade the page wrapper's opacity only (never transform/y), so
+  // nothing shifts and the conveyor keeps its exact horizontal motion.
+  // Runs a single time on mount and is reduced-motion safe.
   const didReveal = useRef(false);
   useLayoutEffect(() => {
     if (didReveal.current) return;
-    const track = trackRef.current;
-    if (!track) return;
+    const wrap = wrapRef.current;
+    const cards = trackRef.current
+      ? Array.from(trackRef.current.querySelectorAll<HTMLElement>(".card-reveal"))
+      : [];
+    if (!wrap) return;
+    didReveal.current = true;
+
+    // cards have an authored opacity-0 start (.card-reveal) — clear it so the
+    // whole page shares the single wrapper fade rather than fading twice.
+    if (cards.length) gsap.set(cards, { opacity: 1, y: 0 });
 
     const reduce =
       typeof window !== "undefined" &&
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const cards = Array.from(track.querySelectorAll<HTMLElement>(".card-reveal"));
-    if (cards.length === 0) return;
-    didReveal.current = true;
-
     if (reduce) {
-      gsap.set(cards, { opacity: 1, y: 0 });
+      gsap.set(wrap, { opacity: 1 });
       return;
     }
 
     gsap.fromTo(
-      cards,
-      { opacity: 0, y: 18 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        stagger: { each: 0.09, from: "start" },
-        clearProps: "transform", // hand y back to the browser once settled
-      }
+      wrap,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.85, ease: "power2.out" }
     );
   }, []);
 
   const renderGroup = (prefix: string, offset: number) => (
     <div key={prefix} className="absolute top-0 left-0" style={{ transform: `translateX(${offset}px)` }}>
       {CARDS.map((c, i) => (
-        <CardEl key={`${prefix}-${i}`} card={c} index={i} onPick={handlePick} onHoverChange={handleHoverChange} />
+        <CardEl key={`${prefix}-${i}`} card={c} index={i} onPick={handlePick} onOpenDirect={handleOpenDirect} onHoverChange={handleHoverChange} />
       ))}
     </div>
   );
@@ -707,7 +764,7 @@ export function SelectedWorks() {
       </div>
 
       {/* focus overlay lives OUTSIDE the blurred canvas so it stays crisp */}
-      <FocusOverlay data={focused} onClose={handleClose} />
+      <FocusOverlay data={focused} onClose={handleClose} onOpen={handleOpenFromFocus} />
     </div>
   );
 }

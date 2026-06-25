@@ -73,7 +73,7 @@ export const SLOTS: Slot[] = [
     project: {
       name: "Sienna",
       subheading: "Interiors",
-      color: "#8b2c1b",
+      color: "#8d2d1b",
       logo: logo1,
       route: "/projects/project-1",
     },

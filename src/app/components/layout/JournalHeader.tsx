@@ -15,7 +15,7 @@ const navItems = [
   { label: "MENU", to: null },
   { label: "Home", to: "/home" },
   { label: "About", to: "/about" },
-  { label: "Projects", to: "/projects/project-1" },
+  { label: "Projects", to: "/projects" },
   { label: "Moodboard", to: "/" },
   { label: "Journal", to: "/journal" },
 ] as const;
