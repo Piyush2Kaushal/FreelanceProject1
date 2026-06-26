@@ -817,17 +817,9 @@ export default function FinalMoodboard() {
     const computed    = window.getComputedStyle(target);
     state.startLeft   = parseFloat(computed.left) || 0;
     state.startTop    = parseFloat(computed.top)  || 0;
-    // CSS rotation read karo matrix se — drag ke baad yahan wapas aayegi
-    const matrix = computed.transform;
-    if (matrix && matrix !== "none") {
-      const parts = matrix.match(/matrix\(([^)]+)\)/);
-      if (parts) {
-        const vals = parts[1].split(",").map(Number);
-        state.baseRotation = Math.round(Math.atan2(vals[1], vals[0]) * (180 / Math.PI));
-      }
-    } else {
-      state.baseRotation = 0;
-    }
+    // Rotation read karo GSAP se — ye continuous hoti hai (180° pe wrap nahi hoti),
+    // isliye 180° se zyada ghume object pe drag start karne pe jump/flicker nahi aata.
+    state.baseRotation = Math.round(Number(gsap.getProperty(target, "rotation")) || 0);
     const tl = floatTimelines.current.get(target);
     if (tl) { state.floatTl = tl; tl.pause(); }
     target.style.filter = SHADOW_DRAG;
@@ -1210,6 +1202,31 @@ export default function FinalMoodboard() {
     s.rafId = requestAnimationFrame(runInertia);
   }, [runInertia]);
 
+  // ── Keyboard rotate ───────────────────────────────────────────────────────
+  // Hovered object ko keyboard se rotate karo (alt+scroll ka equivalent).
+  // [ / ] ya ArrowLeft / ArrowRight se rotate hota hai. Shift dabaye to fast.
+  const onKeyRotate = useCallback((e: KeyboardEvent) => {
+    let dir = 0;
+    if (e.key === "]" || e.key === "ArrowRight") dir = 1;
+    else if (e.key === "[" || e.key === "ArrowLeft") dir = -1;
+    if (dir === 0) return;
+
+    const target = hoverEl.current;
+    if (!target) return;   // sirf hovered object pe kaam karega
+
+    e.preventDefault();
+
+    const step = e.shiftKey ? 15 : 5;   // degrees per press
+
+    // GSAP ki apni continuous rotation value use karo — ye 180° pe wrap nahi hoti,
+    // isliye full rotation ke beech wala flicker/break nahi aata.
+    const currentRot = Number(gsap.getProperty(target, "rotation")) || 0;
+    const newRotation = currentRot + dir * step;
+    gsap.to(target, { rotation: newRotation, duration: 0.12, ease: "power2.out", overwrite: "auto" });
+    // Persist as baseRotation so subsequent drag-tilt snaps back correctly
+    objState.current.baseRotation = newRotation;
+  }, []);
+
   // ── Wheel pan ─────────────────────────────────────────────────────────────
   const onWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
@@ -1218,16 +1235,8 @@ export default function FinalMoodboard() {
     if (e.altKey) {
       const target = hoverEl.current ?? (e.target as HTMLElement).closest<HTMLElement>("[data-object='true']");
       if (target) {
-        const computed = window.getComputedStyle(target);
-        const matrix   = computed.transform;
-        let currentRot = 0;
-        if (matrix && matrix !== "none") {
-          const parts = matrix.match(/matrix\(([^)]+)\)/);
-          if (parts) {
-            const vals = parts[1].split(",").map(Number);
-            currentRot = Math.atan2(vals[1], vals[0]) * (180 / Math.PI);
-          }
-        }
+        // GSAP ki continuous rotation value — 180° pe wrap na ho, isliye flicker nahi aata.
+        const currentRot = Number(gsap.getProperty(target, "rotation")) || 0;
         const newRotation = currentRot + e.deltaY * 0.25;
         gsap.to(target, { rotation: newRotation, duration: 0.12, ease: "power2.out", overwrite: "auto" });
         // Persist as baseRotation so subsequent drag-tilt snaps back correctly
@@ -1358,6 +1367,7 @@ gsap.set(canvas, { x: init.x, y: init.y, scale: isMobile ? 0.32 : 0.45, transfor
     window.addEventListener("mousemove",   onCanvasMouseMove);
     window.addEventListener("mouseup",     onCanvasMouseUp);
     viewport.addEventListener("wheel",     onWheel, { passive: false });
+    window.addEventListener("keydown",     onKeyRotate);
 
     // Touch events
     canvas.addEventListener("touchstart",   onObjectTouchStart,  { passive: false, capture: true });
@@ -1377,6 +1387,7 @@ gsap.set(canvas, { x: init.x, y: init.y, scale: isMobile ? 0.32 : 0.45, transfor
       window.removeEventListener("mousemove",   onCanvasMouseMove);
       window.removeEventListener("mouseup",     onCanvasMouseUp);
       viewport.removeEventListener("wheel",     onWheel);
+      window.removeEventListener("keydown",     onKeyRotate);
 
       canvas.removeEventListener("touchstart",   onObjectTouchStart, true);
       window.removeEventListener("touchmove",    onObjectTouchMove);
@@ -1406,6 +1417,7 @@ gsap.set(canvas, { x: init.x, y: init.y, scale: isMobile ? 0.32 : 0.45, transfor
     onCanvasMouseMove,
     onCanvasMouseUp,
     onWheel,
+    onKeyRotate,
     onObjectTouchStart,
     onObjectTouchMove,
     onObjectTouchEnd,

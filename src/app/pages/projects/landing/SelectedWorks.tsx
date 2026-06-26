@@ -320,8 +320,8 @@ export function SelectedWorks() {
   // page, but seamless-looping instead of clamped at the edges.
   useInfiniteHorizontalScroll(scrollRef, {
     segmentWidth,
-    ease: 0.065,
-    speed: 0.55,
+    ease: 0.075,
+    speed: 0.7,
   });
 
   // Click a card → run the SAME shared-element image morph the page used
@@ -424,24 +424,31 @@ export function SelectedWorks() {
         </div>
       </div>
 
-      {/* ── SCROLLABLE STRIP ──────────────────────────────────────────
-          Native horizontal scroll container. Vertical wheel input is mapped
-          onto its scrollLeft (heavy eased glide) and wrapped for an infinite
-          loop by useInfiniteHorizontalScroll. */}
-      <div
-        ref={scrollRef}
-        className="absolute inset-0 scrollbar-hide"
-        style={{ overflowX: "auto", overflowY: "hidden" }}
-      >
-        {/* sizing wrapper at the SCALED width so the native scrollbar/extent is
-            correct; the inner strip is rendered at design height and scaled. */}
-        <div style={{ width: GROUP_W * groupCount * scale, height: "100%", position: "relative" }}>
+      {/* ── SCROLLABLE STRIP (transform-driven, GPU sub-pixel smooth) ──
+          The parent captures the wheel; useInfiniteHorizontalScroll glides an
+          inner strip via translate3d (no native scrollLeft, so the easing
+          renders buttery). Weight + resistance are unchanged. */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* strip the hook translates (horizontal offset only) */}
+        <div
+          ref={scrollRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: 0,
+            width: GROUP_W * groupCount * scale,
+            height: DESIGN_H * scale,
+            transform: "translate3d(0,0,0)",
+            willChange: "transform",
+          }}
+        >
+          {/* design-height layer, scaled to fit viewport height + centred */}
           <div
             style={{
               width: GROUP_W * groupCount,
               height: DESIGN_H,
               position: "absolute",
-              top: "50%",
+              top: 0,
               left: 0,
               transform: `translateY(-50%) scale(${scale})`,
               transformOrigin: "left center",

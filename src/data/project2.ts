@@ -91,7 +91,7 @@ export const project2Data: ProjectData = {
     ],
   },
 
-  galleryBgColor:      "#6e713e",
+  galleryBgColor:      "#dad0ad",
   galleryBgTextureImg: imgHeroBgTexture,
 
   galleryScreens: [
