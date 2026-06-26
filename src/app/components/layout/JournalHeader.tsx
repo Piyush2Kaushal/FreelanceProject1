@@ -347,7 +347,8 @@ export default function JournalHeader({ activePage = "Journal" }: JournalHeaderP
       {/* Contact button — desktop only (hidden on mobile where drawer has it) */}
       <button
         onClick={() => navigate("/contact")}
-        className="navbar-desktop absolute right-[33px] top-[37px] z-10 bg-[#703000] h-[41px] rounded-[4px] px-7 text-white font-['Inter',sans-serif] font-medium text-base tracking-[-0.48px] whitespace-nowrap hover:opacity-90 transition-opacity cursor-pointer"
+        className="navbar-desktop absolute right-[33px] top-[37px] z-10 bg-[#703000] h-[41px] rounded-[4px] px-7 font-['Inter',sans-serif] font-medium text-base tracking-[-0.48px] whitespace-nowrap hover:opacity-90 transition-opacity cursor-pointer"
+        style={{ color: "#ede3cc" }}
       >
         Contact
       </button>

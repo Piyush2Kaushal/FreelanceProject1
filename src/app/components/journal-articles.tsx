@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import imgTexture from "../../assets/f0cedf09760f97dc4e595fe82650e46b83a6e013.jpg";
 import { ALL_ARTICLES } from "../../data/articles";
@@ -15,10 +15,17 @@ function MobileExpandedPanel({
   navigate: ReturnType<typeof useNavigate>;
 }) {
   const [closing, setClosing] = useState(false);
+  // FIX: track the close timeout so a re-open can cancel it before it fires
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleClose = () => {
+    // Cancel any already-running close timer before starting a new one
+    if (closeTimerRef.current !== null) {
+      clearTimeout(closeTimerRef.current);
+    }
     setClosing(true);
-    setTimeout(() => {
+    closeTimerRef.current = setTimeout(() => {
+      closeTimerRef.current = null;
       setClosing(false);
       onClose();
     }, 600);
@@ -41,29 +48,29 @@ function MobileExpandedPanel({
     >
       {/* Texture overlay */}
       <div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.3,
-    pointerEvents: "none",
-  }}
-/>
-<div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.7,
-    pointerEvents: "none",
-  }}
-/>
+        aria-hidden
+        style={{
+          position: "absolute", inset: 0,
+          backgroundImage: `url("${imgTexture}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          mixBlendMode: "multiply",
+          opacity: 0.3,
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute", inset: 0,
+          backgroundImage: `url("${imgTexture}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          mixBlendMode: "multiply",
+          opacity: 0.7,
+          pointerEvents: "none",
+        }}
+      />
 
       {/* Back button */}
       <button
@@ -198,7 +205,7 @@ function MobileArticleCards({
               />
               {/* Title */}
               <span
-              className="font-['Inter',sans-serif] font-normal text-[#d5c9a8] leading-[1.3]"
+                className="font-['Inter',sans-serif] font-normal text-[#d5c9a8] leading-[1.3]"
                 style={{
                   fontSize: "clamp(13px, 3.6vw, 16px)",
                   letterSpacing: article.tracking ?? "normal",
@@ -245,12 +252,18 @@ function TabletArticlesSection() {
   const navigate = useNavigate();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
+  // FIX: ref to cancel in-flight close timer
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const expanded = ALL_ARTICLES.find((a) => a.id === expandedId) ?? null;
 
   const handleClose = () => {
+    if (closeTimerRef.current !== null) {
+      clearTimeout(closeTimerRef.current);
+    }
     setIsClosing(true);
-    setTimeout(() => {
+    closeTimerRef.current = setTimeout(() => {
+      closeTimerRef.current = null;
       setExpandedId(null);
       setIsClosing(false);
     }, 1000);
@@ -263,30 +276,30 @@ function TabletArticlesSection() {
     >
       {/* Texture */}
       <div aria-hidden className="absolute inset-0 pointer-events-none z-0">
-      <div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.3,
-    pointerEvents: "none",
-  }}
-/>
-<div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.7,
-    pointerEvents: "none",
-  }}
-/>
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0,
+            backgroundImage: `url("${imgTexture}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            mixBlendMode: "multiply",
+            opacity: 0.3,
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0,
+            backgroundImage: `url("${imgTexture}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            mixBlendMode: "multiply",
+            opacity: 0.7,
+            pointerEvents: "none",
+          }}
+        />
       </div>
 
       {/* Header */}
@@ -339,7 +352,7 @@ function TabletArticlesSection() {
                   }}
                 />
                 <span
-               className="font-['Inter',sans-serif] font-normal text-[#d5c9a8] leading-[1.3]"
+                  className="font-['Inter',sans-serif] font-normal text-[#d5c9a8] leading-[1.3]"
                   style={{ fontSize: "17px", letterSpacing: article.tracking ?? "normal" }}
                 >
                   {article.title}
@@ -386,29 +399,29 @@ function TabletArticlesSection() {
         >
           {/* Texture */}
           <div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.3,
-    pointerEvents: "none",
-  }}
-/>
-<div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.7,
-    pointerEvents: "none",
-  }}
-/>
+            aria-hidden
+            style={{
+              position: "absolute", inset: 0,
+              backgroundImage: `url("${imgTexture}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              mixBlendMode: "multiply",
+              opacity: 0.3,
+              pointerEvents: "none",
+            }}
+          />
+          <div
+            aria-hidden
+            style={{
+              position: "absolute", inset: 0,
+              backgroundImage: `url("${imgTexture}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              mixBlendMode: "multiply",
+              opacity: 0.7,
+              pointerEvents: "none",
+            }}
+          />
           {/* Back button */}
           <button
             onClick={handleClose}
@@ -485,39 +498,77 @@ export function JournalArticles() {
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
+  // FIX: refs to cancel in-flight timers on desktop
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const switchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // ── Mobile state ─────────────────────────────────────────────────────────
   const [mobileExpanded, setMobileExpanded] = useState<ArticleData | null>(null);
 
   const expanded: ArticleData | null =
     ALL_ARTICLES.find((a) => a.id === expandedId) ?? null;
 
-  // ── CHANGE 1: handleDesktopOpen ──────────────────────────────────────────
-  const handleDesktopOpen = (id: string) => {
-    if (expandedId === id) return; // already open
-    if (expandedId) {
-      // Switch: instantly hide panel (transition:none via pendingId),
-      // then after 50ms set new expandedId → open animation plays normally
-      setPendingId(id);
-      setExpandedId(null);
-      setIsClosing(false);
-      setTimeout(() => {
-        setPendingId(null);
-        setExpandedId(id);
-      }, 50);
-    } else {
-      // Nothing open — just open with animation
-      setExpandedId(id);
+  // ── handleDesktopOpen ────────────────────────────────────────────────────
+  // FIX: cancel any pending close or switch timers before acting, so rapid
+  // clicks never leave a stale setTimeout callback mutating state unexpectedly.
+  const handleDesktopOpen = useCallback((id: string) => {
+    // Cancel any in-flight close
+    if (closeTimerRef.current !== null) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
     }
-  };
+    // Cancel any in-flight switch
+    if (switchTimerRef.current !== null) {
+      clearTimeout(switchTimerRef.current);
+      switchTimerRef.current = null;
+    }
 
-  const handleDesktopClose = () => {
+    setExpandedId((current) => {
+      if (current === id) return current; // already open — no-op
+
+      if (current !== null) {
+        // Switch: instantly hide panel (transition:none via pendingId),
+        // then after 50ms set new expandedId → open animation plays normally
+        setPendingId(id);
+        setIsClosing(false);
+        switchTimerRef.current = setTimeout(() => {
+          switchTimerRef.current = null;
+          setPendingId(null);
+          setExpandedId(id);
+        }, 50);
+        return null; // clear current immediately
+      }
+
+      // Nothing open — open with animation
+      setIsClosing(false);
+      return id;
+    });
+  }, []);
+
+  // ── handleDesktopClose ───────────────────────────────────────────────────
+  // FIX: guard against double-calls and cancel any in-flight switch timer
+  // so it can't re-open after we've started closing.
+  const handleDesktopClose = useCallback(() => {
     if (isClosing) return;
+
+    // Cancel any in-flight switch timer — user closed before it resolved
+    if (switchTimerRef.current !== null) {
+      clearTimeout(switchTimerRef.current);
+      switchTimerRef.current = null;
+      setPendingId(null);
+    }
+    // Cancel any previously scheduled close (shouldn't normally happen, but safe)
+    if (closeTimerRef.current !== null) {
+      clearTimeout(closeTimerRef.current);
+    }
+
     setIsClosing(true);
-    setTimeout(() => {
+    closeTimerRef.current = setTimeout(() => {
+      closeTimerRef.current = null;
       setExpandedId(null);
       setIsClosing(false);
     }, 2000);
-  };
+  }, [isClosing]);
 
   const getClipPath = () => {
     if (expanded && !isClosing) return "inset(0 0% 0 0%)";
@@ -531,11 +582,8 @@ export function JournalArticles() {
           DESKTOP (≥1024px) — pixel-perfect original Figma
           ══════════════════════════════════════════════════ */}
       <div className="hidden lg:block bg-[#dcd1b1] h-[800px] overflow-hidden relative w-full">
-        {/* Texture overlay */}
-       
-
         {/* Expanded article panel */}
-        {/* CHANGE 2: transition:none when pendingId is set (instant reset) */}
+        {/* transition:none when pendingId is set (instant reset) */}
         <div
           style={{
             position: "absolute",
@@ -556,29 +604,29 @@ export function JournalArticles() {
         >
           {/* Texture on expanded panel */}
           <div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.3,
-    pointerEvents: "none",
-  }}
-/>
-<div
-  aria-hidden
-  style={{
-    position: "absolute", inset: 0,
-    backgroundImage: `url("${imgTexture}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    mixBlendMode: "multiply",
-    opacity: 0.7,
-    pointerEvents: "none",
-  }}
-/>
+            aria-hidden
+            style={{
+              position: "absolute", inset: 0,
+              backgroundImage: `url("${imgTexture}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              mixBlendMode: "multiply",
+              opacity: 0.3,
+              pointerEvents: "none",
+            }}
+          />
+          <div
+            aria-hidden
+            style={{
+              position: "absolute", inset: 0,
+              backgroundImage: `url("${imgTexture}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              mixBlendMode: "multiply",
+              opacity: 0.7,
+              pointerEvents: "none",
+            }}
+          />
 
           {/* Back arrow */}
           <button
@@ -682,10 +730,9 @@ export function JournalArticles() {
           <div className="flex-none" style={{ transform: "rotate(-90deg)" }}>
             <div className="relative" style={{ width: "736px", height: "400px" }}>
               {ALL_ARTICLES.map((article, index) => {
-                // FIX: while closing, ignore expandedId so the hidden strips
-                // (A–Z) fade back in immediately via their own opacity 0.6s
-                // transition, instead of staying gayab until the 1.5s close
-                // timeout finally clears expandedId.
+                // While closing, ignore expandedId so the hidden strips
+                // fade back in immediately via their own opacity transition,
+                // instead of staying hidden until the 2s close timeout fires.
                 const activeId = isClosing ? null : (pendingId ?? expandedId);
                 const expandedIndex = activeId
                   ? ALL_ARTICLES.findIndex((a) => a.id === activeId)
@@ -693,71 +740,68 @@ export function JournalArticles() {
                 const shouldHide = activeId !== null && index <= expandedIndex;
                 const isHovered = hoveredId === article.id && !shouldHide;
                 return (
-                <button
-                  key={article.id}
-                  className="absolute left-0 right-0 cursor-pointer block"
-                  onClick={() => handleDesktopOpen(article.id)}
-                  onMouseEnter={() => setHoveredId(article.id)}
-                  onMouseLeave={() =>
-                    setHoveredId((current) =>
-                      current === article.id ? null : current
-                    )
-                  }
-                  style={{
-                    backgroundColor: article.bg,
-                    top: `${index * 100}px`,
-                    height: "100px",
-                    border: "none",
-                    opacity: shouldHide ? 0 : 1,
-                    pointerEvents: shouldHide ? "none" : "auto",
-                    // CHANGE 3: premium hover expand/lift — pure transform, no layout shift.
-                    // scaleY here becomes the on-screen WIDTH increase (the strip is
-                    // rotated -90deg by its parent), translateX becomes the on-screen LIFT.
-                    transform: isHovered
-                      ? "scaleY(1.06) translateX(-6px)"
-                      : "scaleY(1) translateX(0)",
-                    transformOrigin: "center",
-                    zIndex: isHovered ? 10 : 1,
-                    boxShadow: isHovered
-                      ? "0 10px 32px rgba(0,0,0,0.32)"
-                      : "0 0 0 rgba(0,0,0,0)",
-                    filter: isHovered ? "brightness(1.08)" : "brightness(1)",
-                    transition:
-                      "opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.45s cubic-bezier(0.22,1,0.36,1), filter 0.35s ease",
-                    willChange: "transform",
-                  }}
-                >
-                  <div
-                    className="absolute inset-0 overflow-hidden"
-                    style={{ pointerEvents: "none" }}
+                  <button
+                    key={article.id}
+                    className="absolute left-0 right-0 cursor-pointer block"
+                    onClick={() => handleDesktopOpen(article.id)}
+                    onMouseEnter={() => setHoveredId(article.id)}
+                    onMouseLeave={() =>
+                      setHoveredId((current) =>
+                        current === article.id ? null : current
+                      )
+                    }
+                    style={{
+                      backgroundColor: article.bg,
+                      top: `${index * 100}px`,
+                      height: "100px",
+                      border: "none",
+                      opacity: shouldHide ? 0 : 1,
+                      pointerEvents: shouldHide ? "none" : "auto",
+                      transform: isHovered
+                        ? "scaleY(1.06) translateX(-6px)"
+                        : "scaleY(1) translateX(0)",
+                      transformOrigin: "center",
+                      zIndex: isHovered ? 10 : 1,
+                      boxShadow: isHovered
+                        ? "0 10px 32px rgba(0,0,0,0.32)"
+                        : "0 0 0 rgba(0,0,0,0)",
+                      filter: isHovered ? "brightness(1.08)" : "brightness(1)",
+                      transition:
+                        "opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.45s cubic-bezier(0.22,1,0.36,1), filter 0.35s ease",
+                      willChange: "transform",
+                    }}
                   >
                     <div
-                      className="absolute flex items-center whitespace-nowrap"
-                      style={{
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        left: `${article.leftOffset}px`,
-                        gap: `${article.gap}px`,
-                      }}
+                      className="absolute inset-0 overflow-hidden"
+                      style={{ pointerEvents: "none" }}
                     >
-                      <span
-                        className="font-['Inter',sans-serif] font-normal text-white"
-                        style={{ fontSize: "22px" }}
-                      >
-                        {article.id}
-                      </span>
-                      <span
-                        className="font-['Inter',sans-serif] font-normal text-[#fff7f7]"
+                      <div
+                        className="absolute flex items-center whitespace-nowrap"
                         style={{
-                          fontSize: "22px",
-                          letterSpacing: article.tracking ?? "normal",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          left: `${article.leftOffset}px`,
+                          gap: `${article.gap}px`,
                         }}
                       >
-                        {article.title}
-                      </span>
+                        <span
+                          className="font-['Inter',sans-serif] font-normal text-white"
+                          style={{ fontSize: "22px" }}
+                        >
+                          {article.id}
+                        </span>
+                        <span
+                          className="font-['Inter',sans-serif] font-normal text-[#fff7f7]"
+                          style={{
+                            fontSize: "22px",
+                            letterSpacing: article.tracking ?? "normal",
+                          }}
+                        >
+                          {article.title}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
                 );
               })}
             </div>
@@ -773,8 +817,7 @@ export function JournalArticles() {
       {/* ══════════════════════════════════════════════════
           MOBILE (<768px) — stacked card list with slide panel
           ══════════════════════════════════════════════════ */}
-     <div className="flex md:hidden flex-col bg-[#dcd1b1] relative w-full overflow-hidden min-h-[calc(100dvh-400px)] max-[480px]:min-h-[calc(100dvh-360px)]">
-      
+      <div className="flex md:hidden flex-col bg-[#dcd1b1] relative w-full overflow-hidden min-h-[calc(100dvh-400px)] max-[480px]:min-h-[calc(100dvh-360px)]">
 
         {/* Section header */}
         <div className="relative z-10 px-5 pt-8 pb-5 flex items-baseline justify-between">

@@ -5,7 +5,6 @@ import svgPaths from "./svg-n029qayjm7";
 import socialSvgPaths from "../svg-ejvbwqgg01";
 import JournalHeader from "../../app/components/layout/JournalHeader";
 import { useReveal } from "../../app/hooks/useReveal";
-import { useProjectScrollLock } from "../../app/hooks/useProjectScrollLock";
 import { useScrollWordReveal } from "../../app/hooks/useScrollWordReveal";
 import { useWordSlideFade } from "../../app/hooks/useWordSlideFade";
 import { useLampActive } from "./LampLight";
@@ -29,7 +28,7 @@ import imgContactPage      from "../../assets/afae93e180d21f30c2ae138886efb63bc0
 import imgPrimaryLogos2    from "../../assets/4e454c35d52b905142f0f45a93315e3a6c51ea01.webp";
 
 // ── Project data ──────────────────────────────────────────────────────────────
-import { HOME_PROJECTS, FADE_MS } from "../../data/homeProjects";
+import { HOME_PROJECTS, CYCLE_MS, FADE_MS } from "../../data/homeProjects";
 import type { HomeProject } from "../../data/homeProjects";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -342,14 +341,6 @@ interface HeroPanelProps {
   projectName: string;
   description: string;
   opacity: number;
-  /**
-   * Optional analog wipe weight (0 = hidden → 1 = fully revealed). When given,
-   * the panel is driven directly by this value (no CSS transition — the rAF
-   * progress loop is the smoother) so the left-to-right clip + fade can be felt
-   * continuously mid-scroll. When omitted, falls back to the original
-   * transition-based behaviour keyed off `opacity`.
-   */
-  reveal?: number;
   onActivate?: (rect: SharedRect, src: string) => void;
 }
 
@@ -361,7 +352,6 @@ const HeroPanel = memo(function HeroPanel({
   projectName,
   description,
   opacity,
-  reveal,
   onActivate,
 }: HeroPanelProps) {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -375,27 +365,15 @@ const HeroPanel = memo(function HeroPanel({
     );
   }, [onActivate, heroPortraitImg]);
 
-  const analog = reveal !== undefined;
-  // Clip wipes from full-right-inset (100%) to none (0%) as reveal 0→1.
-  const clipPct = analog ? (1 - Math.max(0, Math.min(1, reveal))) * 100 : null;
-
   return (
     <div
       className="absolute h-[780px] left-0 overflow-clip top-0 w-full"
-      style={
-        analog
-          ? {
-              opacity: Math.max(0, Math.min(1, reveal! * 1.35)),
-              clipPath: `inset(0 ${clipPct}% 0 0)`,
-              willChange: "opacity, clip-path",
-            }
-          : {
-              opacity,
-              clipPath: opacity < 1 ? "inset(0 100% 0 0)" : "inset(0 0% 0 0)",
-              transition: `opacity 200ms ease, clip-path 900ms cubic-bezier(0.76,0,0.24,1)`,
-              willChange: "opacity, clip-path",
-            }
-      }
+      style={{
+        opacity,
+        clipPath: opacity < 1 ? 'inset(0 100% 0 0)' : 'inset(0 0% 0 0)',
+        transition: `opacity 200ms ease, clip-path 900ms cubic-bezier(0.76,0,0.24,1)`,
+        willChange: 'opacity, clip-path',
+      }}
       data-name="hero-panel"
     >
       <div aria-hidden className="absolute inset-0 pointer-events-none">
@@ -427,103 +405,35 @@ const HeroPanel = memo(function HeroPanel({
   );
 });
 
-/**
- * Premium animated "View All Projects" button — analog reveal driven by the
- * final-slide progress (0→1), so it eases in with the same weight as the wipe.
- */
-function ViewAllProjectsButton({ reveal }: { reveal: number }) {
+function CyclingHero() {
+  const [currentIdx, setCurrentIdx]   = useState(0);
+  const [nextIdx, setNextIdx]         = useState<number | null>(null);
+  const [nextOpacity, setNextOpacity] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const navigate = useNavigate();
-  const r = Math.max(0, Math.min(1, reveal));
-  // Soft ease-out for a refined settle.
-  const e = 1 - Math.pow(1 - r, 3);
-  return (
-    <div
-      className="absolute left-1/2 -translate-x-1/2 z-20"
-      style={{
-        bottom: 92,
-        opacity: e,
-        transform: `translate(-50%, ${(1 - e) * 20}px)`,
-        filter: `blur(${(1 - e) * 6}px)`,
-        pointerEvents: r > 0.85 ? "auto" : "none",
-        willChange: "opacity, transform, filter",
-      }}
-    >
-      <button
-        onClick={() => navigate("/projects")}
-        className="group/va relative flex items-center gap-3 rounded-[4px] font-['Inter',sans-serif] font-medium cursor-pointer overflow-hidden transition-[transform,box-shadow,filter] duration-500 ease-out hover:-translate-y-[2px] hover:brightness-[1.06]"
-        style={{
-          background: "#703000",
-          color: "#d5c9a8",
-          padding: "15px 30px",
-          fontSize: 17,
-          letterSpacing: "-0.6px",
-          border: "1px solid #391900",
-          boxShadow:
-            "0px 5px 5px rgba(0,0,0,0.10), 0px 18px 9px rgba(0,0,0,0.09)",
-        }}
-      >
-        {/* Sheen sweep on hover */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -translate-x-[120%] group-hover/va:translate-x-[120%]"
-          style={{
-            background:
-              "linear-gradient(100deg, transparent 0%, rgba(213,201,168,0.25) 50%, transparent 100%)",
-            transition: "transform 950ms cubic-bezier(0.22,1,0.36,1)",
-          }}
-        />
-        <span className="relative transition-transform duration-500 ease-out group-hover/va:translate-x-[2px]">
-          View all projects
-        </span>
-        <svg
-          className="relative shrink-0 transition-transform duration-500 ease-out group-hover/va:translate-x-[5px]"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M5 12h14M13 6l6 6-6 6"
-            stroke="#d5c9a8"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-    </div>
-  );
-}
 
-// Wipe easing — mirrors the original clip-path cubic-bezier(0.76,0,0.24,1) feel
-// so the analog transition keeps the section's established character.
-function wipeEase(t: number): number {
-  const x = Math.max(0, Math.min(1, t));
-  // Smooth in-out, slightly weighted — close to (0.76,0,0.24,1).
-  return x < 0.5
-    ? 4 * x * x * x
-    : 1 - Math.pow(-2 * x + 2, 3) / 2;
-}
+  useEffect(() => {
+    timerRef.current = setTimeout(function cycle() {
+      const next = (currentIdx + 1) % HOME_PROJECTS.length;
+      setNextIdx(next);
+      setNextOpacity(0);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { setNextOpacity(1); });
+      });
+      setTimeout(() => {
+        setCurrentIdx(next);
+        setNextIdx(null);
+        setNextOpacity(0);
+        timerRef.current = setTimeout(cycle, CYCLE_MS);
+      }, FADE_MS + 50);
+    }, CYCLE_MS);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [currentIdx]);
 
-/**
- * CyclingHero — fully scroll-driven (no timer). `progress` (0…count-1, frac-
- * tional) comes from useProjectScrollLock. The base slide (floor) sits fully
- * revealed; the incoming slide (ceil) wipes in by the eased fractional part, so
- * the crossfade is analog and you can feel the resistance through it.
- */
-function CyclingHero({ progress, outroReveal }: { progress: number; outroReveal: number }) {
-  const navigate = useNavigate();
+  const current = HOME_PROJECTS[currentIdx];
+  const next    = nextIdx !== null ? HOME_PROJECTS[nextIdx] : null;
+
   const { startTransition } = useTransition();
-
-  const maxIdx = HOME_PROJECTS.length - 1;
-  const p = Math.max(0, Math.min(progress, maxIdx));
-  const baseIdx = Math.min(Math.floor(p), maxIdx);
-  const nextIdx = Math.min(baseIdx + 1, maxIdx);
-  const frac = p - baseIdx;
-
-  const base = HOME_PROJECTS[baseIdx];
-  const incoming = nextIdx !== baseIdx ? HOME_PROJECTS[nextIdx] : null;
-  const reveal = incoming ? wipeEase(frac) : 0;
 
   const makeActivate = useCallback(
     (slug: string) => (rect: SharedRect, src: string) => {
@@ -544,11 +454,10 @@ function CyclingHero({ progress, outroReveal }: { progress: number; outroReveal:
 
   return (
     <div className="absolute h-[780px] left-0 top-0 w-full" style={{ zIndex: 0 }}>
-      <HeroPanel bgColor={base.bgColor} patternImg={base.patternImg} texturImg={base.textureImg} heroPortraitImg={base.heroImg} projectName={base.projectName} description={base.description} opacity={1} onActivate={makeActivate(base.slug)} />
-      {incoming && reveal > 0.001 && (
-        <HeroPanel bgColor={incoming.bgColor} patternImg={incoming.patternImg} texturImg={incoming.textureImg} heroPortraitImg={incoming.heroImg} projectName={incoming.projectName} description={incoming.description} opacity={1} reveal={reveal} onActivate={makeActivate(incoming.slug)} />
+      <HeroPanel bgColor={current.bgColor} patternImg={current.patternImg} texturImg={current.textureImg} heroPortraitImg={current.heroImg} projectName={current.projectName} description={current.description} opacity={1} onActivate={makeActivate(current.slug)} />
+      {next && (
+        <HeroPanel bgColor={next.bgColor} patternImg={next.patternImg} texturImg={next.textureImg} heroPortraitImg={next.heroImg} projectName={next.projectName} description={next.description} opacity={nextOpacity} onActivate={makeActivate(next.slug)} />
       )}
-      <ViewAllProjectsButton reveal={outroReveal} />
     </div>
   );
 }
@@ -557,7 +466,7 @@ function CyclingHero({ progress, outroReveal }: { progress: number; outroReveal:
 // MIDDLE SECTION
 // ─────────────────────────────────────────────────────────────────────────────
 
-function Component1({ project, heroProgress, outroReveal }: { project: HomeProject; heroProgress: number; outroReveal: number }) {
+function Component1({ project }: { project: HomeProject }) {
   return (
     <div className="absolute h-[780px] left-0 overflow-clip top-0 w-full" data-name="28" style={{ backgroundColor: project.bgColor }}>
       <div aria-hidden className="absolute inset-0 pointer-events-none">
@@ -591,28 +500,28 @@ function Component1({ project, heroProgress, outroReveal }: { project: HomeProje
           <img loading="lazy" decoding="async" alt="" className="absolute max-w-none object-cover opacity-5 size-full" src={imgRectangle30} />
         </div>
       </div>
-      <CyclingHero progress={heroProgress} outroReveal={outroReveal} />
+      <CyclingHero />
     </div>
   );
 }
 
-function Group1({ project, heroProgress, outroReveal }: { project: HomeProject; heroProgress: number; outroReveal: number }) {
+function Group1({ project }: { project: HomeProject }) {
   return (
     <div className="absolute contents left-0 top-0">
       <p className="[word-break:break-word] absolute bottom-[94px] font-['Neue_Haas_Grotesk_Display_Pro:45_Light',sans-serif] leading-[normal] left-[calc(75%+85px)] not-italic text-[14px] text-white tracking-[1px] translate-y-full w-[245px]">subtle, layered, and deeply calming, every corner is designed to be felt as much as it is seen.</p>
       <Frame2 heroPortraitImg={project.heroImg} />
-      <Component1 project={project} heroProgress={heroProgress} outroReveal={outroReveal} />
+      <Component1 project={project} />
     </div>
   );
 }
 
-function Component2({ project, heroProgress, outroReveal }: { project: HomeProject; heroProgress: number; outroReveal: number }) {
+function Component2({ project }: { project: HomeProject }) {
   return (
     <div className="absolute h-[780px] left-0 overflow-clip top-[2037px] w-full" data-name="1171" style={{ backgroundColor: project.bgColor }}>
       <div className="absolute h-[42px] left-[24px] top-[30px] w-[84px]" data-name="Primary Logos">
         <img loading="lazy" decoding="async" alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPrimaryLogos} />
       </div>
-      <Group1 project={project} heroProgress={heroProgress} outroReveal={outroReveal} />
+      <Group1 project={project} />
     </div>
   );
 }
@@ -1728,6 +1637,7 @@ function useDesktopScale(): number {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Home() {
+  const [activeIdx, setActiveIdx] = useState(0);
   const desktopScale = useDesktopScale();
   const isScaled = desktopScale < 1;
 
@@ -1736,16 +1646,12 @@ export default function Home() {
   useReveal(desktopMotionRef, { enableParallax: true });
   useReveal(mobileMotionRef, { enableParallax: false });
 
-  // ── Scroll-driven projects (replaces the old auto-cycle timers) ──────────
-  // The projects section pins on entry and advances one project per intentional
-  // scroll, with a weighted resistance feel matching the Project Page. On
-  // mobile / touch / reduced-motion the hook is inert and the section keeps its
-  // natural stacked scroll.
-  const projectsAnchorRef = useRef<HTMLDivElement>(null);
-  const { progress, index: activeIdx, outroReveal } = useProjectScrollLock({
-    count: HOME_PROJECTS.length,
-    anchorRef: projectsAnchorRef,
-  });
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % HOME_PROJECTS.length);
+    }, CYCLE_MS);
+    return () => clearInterval(id);
+  }, []);
 
   const project = HOME_PROJECTS[activeIdx];
 
@@ -1776,15 +1682,7 @@ export default function Home() {
         >
           <EntireWebsite />
           <FeatureWhySie />
-          {/* Pin anchor — marks where the projects section locks. Zero-size, no
-              visual footprint; sits at Component2's top (top-[2037px]). */}
-          <div
-            ref={projectsAnchorRef}
-            aria-hidden
-            className="absolute left-0 w-px h-px pointer-events-none"
-            style={{ top: 2037 }}
-          />
-          <Component2 project={project} heroProgress={progress} outroReveal={outroReveal} />
+          <Component2 project={project} />
           <ServicesSection />
           <FeatureWhySie1 project={project} />
           <Component3 project={project} />
@@ -1802,15 +1700,12 @@ export default function Home() {
         <MobileHeroTop />
         <MobileImageCollage />
         <MobileWhySIE />
-        {/* Projects now scroll-through one-by-one (no auto-cycle). Each project
-            keeps its existing reveal animation as it enters the viewport. */}
-        {HOME_PROJECTS.map((p) => (
-          <MobileProjectHero key={p.id} project={p} />
-        ))}
+        <MobileProjectHero project={project} />
         <MobileServicesSection />
-        <MobileLandscapePhoto project={HOME_PROJECTS[HOME_PROJECTS.length - 1]} />
-        <MobileFooter project={HOME_PROJECTS[HOME_PROJECTS.length - 1]} />
+        <MobileLandscapePhoto project={project} />
+        <MobileFooter project={project} />
       </div>
     </>
   );
 }
+
